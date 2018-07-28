@@ -250,11 +250,12 @@
 	width: 100%;
 }
 .drop {
-	background: transparent none repeat scroll 0 0;
-	border: 1px solid #dae0e7;
-	font-size: 14px;
-	margin: 0 0 14px;
-	padding: 13px 20px;
+	background: #ffffff;
+	border: 1px solid #d3ddde;
+	font-size: 15px;
+	margin-bottom: 15px;
+	padding: 5px 11px;
+	box-shadow: 0 0 1px;
 	width: 100%;
 }
 .homepage-4 .sbSelector {

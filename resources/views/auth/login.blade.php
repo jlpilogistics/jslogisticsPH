@@ -43,30 +43,17 @@
                                     </div>
                                 </div>
                                 <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2">
-                                    <span>Easily Using</span>
+                                    <span>Login Using Account Details</span>
                                 </h6>
                             </div>
                             <div class="card-content">
-                                <div class="card-body pt-0 text-center">
-                                    <a href="#" class="btn btn-social mb-1 mr-1 btn-outline-facebook">
-                                        <span class="la la-facebook"></span>
-                                        <span class="px-1">facebook</span>
-                                    </a>
-                                    <a href="#" class="btn btn-social mb-1 mr-1 btn-outline-google">
-                                        <span class="la la-google-plus font-medium-4"></span>
-                                        <span class="px-1">google</span>
-                                    </a>
-                                </div>
-                                <p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2">
-                                    <span>OR Using Account Details</span>
-                                </p>
                                 <div class="card-body pt-0">
                                     <form class="form-horizontal" method="POST" action="{{ url('login') }}">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                             <fieldset class="form-group floating-label-form-group">
-                                                <label for="email">Email Address</label>
-                                                <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ old('email') }}">
+                                                <label for="email">Employee ID</label>
+                                                <input type="email" class="form-control" id="email" name="email" placeholder="Employee ID" value="{{ old('email') }}">
                                                 @if ($errors->has('email'))
                                                     <span class="help-block">
                                                             <strong>{{ $errors->first('email') }}</strong>
@@ -99,7 +86,7 @@
                                     </form>
                                 </div>
                                 <p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2 my-1">
-                                    <span>New to Modern ?</span>
+                                    <span>Request for an Admin Account ?</span>
                                 </p>
                                 <div class="card-body">
                                     <a href="register-with-bg.html" class="btn btn-outline-danger btn-block"><i class="ft-user"></i> Register</a>
