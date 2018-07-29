@@ -41,3 +41,5 @@ Route::get('domestic', 'Client\HomeController@showDomestic');
 Route::get('import', 'Client\HomeController@showImport');
 Route::get('export', 'Client\HomeController@showExport');
 Route::resource('quote', 'Client\QuotesController');
+
+

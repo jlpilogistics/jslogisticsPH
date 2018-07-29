@@ -16,14 +16,13 @@ class CreateQuotationsTable extends Migration
             $table->increments('id');
             $table->integer('client_id')->unSigned();
             $table->string('mode');
-            $table->string('container');
             $table->integer('length');
             $table->integer('width');
             $table->integer('height');
             $table->integer('weight');
+            $table->integer('aweight');
+            $table->integer('avolume');
             $table->integer('quantity');
-            $table->string('commodity');
-            $table->longText('message')->nullable();
             $table->timestamps();
         });
     }

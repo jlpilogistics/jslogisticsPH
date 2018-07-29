@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{URL::asset('app/css/bootstrap.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{URL::asset('app/rs-plugin/css/settings.css')}}" media="screen" />
     <link rel="stylesheet" type="text/css" href="{{URL::asset('app/css/dropdown.css')}}" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="{{URL::asset('app/css/owl.carousel.css')}}" />
     <link rel="stylesheet" href="{{URL::asset('app/css/global.css')}}" />
     <link rel="stylesheet" href="{{URL::asset('app/css/style.css')}}" />
@@ -55,22 +56,26 @@
                                 <h3>quote form</h3>
                             </div>
                             <div class="quote-form-box "  ng-controller="RequestController">
-                                {!! Form::open(['method="POST', 'action'=>'Client\QuotesController@create', 'class'=>'dropzone needsclick dz-clickabl']) !!}
+                                {!! Form::open(['method="POST', 'action'=>'Client\QuotesController@store', 'id'=>'submitQuote']) !!}
                                     <div id="smartwizard" class="sw-main sw-theme-arrows">
                                         <ul class="nav nav-tabs step-anchor" >
                                             <li><a href="#step-1" style="height:75px; width:200px; font-size: 20px; line-height: 50px;">Basic Information<br /></a></li>
                                             <li><a href="#step-2" style="height:75px; width:200px; font-size: 20px; line-height: 50px;">Commodity<br /><small>This is tab's description</small></a></li>
                                             <li><a href="#step-3" style="height:75px; width:200px; font-size: 20px; line-height: 50px;">Shipment<br /><small>This is tab's description</small></a></li>
                                             <li><a href="#step-4" style="height:75px; width:200px; font-size: 20px; line-height: 50px;">Documents<br /><small>This is tab's description</small></a></li>
-                                            <li><a href="#step-5" style="height:75px; width:200px; font-size: 20px; line-height: 50px;">Quote Summary<br /><small>This is tab's description</small></a></li>
+                                            {{--<li><a href="#step-5" style="height:75px; width:200px; font-size: 20px; line-height: 50px;">Quote Summary<br /><small>This is tab's description</small></a></li>--}}
                                         </ul>
                                         <div class="sw-container tab-content" style="min-height: 196px; padding: 50px 50px 50px; ">
                                             <div id="step-1" class="">
                                                 <div class="success" ng-class="{'submissionMessage' : submission}" ng-bind="successsubmissionMessage" id="success"></div>
                                                     <div class="row">
-                                                        <div class="col-xs-12 col-sm-4 right-space" >
-                                                            {!! Form::label('transaction', 'Transaction') !!}
-                                                            {!! Form::select('transaction',array('1'=>'Import','2'=>'Domestic','3'=>'Export'),null, ['class'=>'quote-service drop', 'id'=>'transact']) !!}
+                                                        <div class=" col-xs-12 col-sm-4 right-space">
+                                                            <h6>Shipment Type</h6>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row custom-padding">
+                                                        <div class="col-xs-12 col-sm-3 right-space" >
+                                                            {!! Form::select('transaction', $type ,null, ['class'=>'quote-service drop', 'id'=>'transact']) !!}
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -100,8 +105,8 @@
                                                             {!! Form::date('etd', null, ['class'=>'quote-city', 'id'=>'company']) !!}
                                                         </div>
                                                         <div class="col-xs-12 col-sm-offset-3 col-sm-6 right-space">
-                                                            {!! Form::label('origin', 'Origin via Port') !!}
-                                                            {!! Form::text('origin', null, ['class'=>'quote-city', 'id'=>'company']) !!}
+                                                            {!! Form::label('port', 'Origin via Port') !!}
+                                                            {!! Form::text('port', null, ['class'=>'quote-city', 'id'=>'company']) !!}
                                                         </div>
                                                     </div>
                                                 <div class="row">
@@ -123,12 +128,12 @@
                                                         {!! Form::text('city', null, ['class'=>'quote-city', 'id'=>'company']) !!}
                                                     </div>
                                                     <div class="col-xs-12 col-sm-3 right-space">
-                                                        {!! Form::label('etd', 'Departure Date') !!}
-                                                        {!! Form::date('etd', null, ['class'=>'quote-city', 'id'=>'company']) !!}
+                                                        {!! Form::label('eta', 'Arrival Date') !!}
+                                                        {!! Form::date('eta', null, ['class'=>'quote-city', 'id'=>'company']) !!}
                                                     </div>
                                                     <div class="col-xs-12 col-sm-offset-3 col-sm-6 right-space">
-                                                        {!! Form::label('origin', 'Origin via Port') !!}
-                                                        {!! Form::text('origin', null, ['class'=>'quote-city', 'id'=>'company']) !!}
+                                                        {!! Form::label('ports', 'Origin via Port') !!}
+                                                        {!! Form::text('ports', null, ['class'=>'quote-city', 'id'=>'company']) !!}
                                                     </div>
                                                 </div>
                                                 <div class="error error-msg" ng-class="{'submissionMessage' : submission}" ng-bind="submissionMessage" ng-disabled = "requestForm.$invalid"></div>
@@ -148,13 +153,13 @@
                                                 </div>
                                                 <div class="row custom-padding">
                                                     <div class="col-xs-12 col-sm-3 right-space">
-                                                        {!! Form::select('transaction',array('1'=>'Import','2'=>'Domestic','3'=>'Export'),null, ['class'=>'quote-service drop', 'id'=>'transact']) !!}
+                                                        {!! Form::select('goods', $commodity ,null, ['class'=>'quote-service drop', 'id'=>'transact']) !!}
                                                     </div>
                                                     <div class="col-xs-12 col-sm-offset-1 col-sm-3 right-space">
-                                                        {!! Form::select('transaction',array('1'=>'Import','2'=>'Domestic','3'=>'Export'),null, ['class'=>'quote-service drop', 'id'=>'transact']) !!}
+                                                        {!! Form::text('name', null, ['class'=>'quote-city', 'id'=>'company']) !!}
                                                     </div>
                                                     <div class="col-xs-12 col-sm-offset-1 col-sm-3 right-space">
-                                                        {!! Form::select('transaction',array('1'=>'Import','2'=>'Domestic','3'=>'Export'),null, ['class'=>'quote-service drop', 'id'=>'transact']) !!}
+                                                        {!! Form::select('term',$terms,null, ['class'=>'quote-service drop', 'id'=>'transact']) !!}
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -166,11 +171,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="row custom-padding">
-                                                    <div class="col-xs-12 col-sm-3">
-                                                        {!! Form::select('transaction',array('1'=>'Import','2'=>'Domestic','3'=>'Export'),null, ['class'=>'quote-service drop', 'id'=>'transact']) !!}
+                                                    <div class="col-xs-12 col-sm-3 billing-form right-space" style="padding-left: 18px;">
+                                                        <input type="radio" class="billing-address" id="ydanger" name="danger" value='Yes'>
+                                                        <label for="ydanger">Yes</label>
+                                                        <input type="radio" class="billing-address" id="ndanger" name="danger" value="No">
+                                                        <label for="ndanger">No</label>
                                                     </div>
-                                                    <div class="col-xs-12 col-sm-offset-1 col-sm-3">
-                                                        {!! Form::select('transaction',array('1'=>'Import','2'=>'Domestic','3'=>'Export'),null, ['class'=>'quote-service drop', 'id'=>'transact']) !!}
+                                                    <div class="col-xs-12 col-sm-offset-1 billing-form col-sm-3" style="padding-left: 18px;">
+                                                        <input type="radio" class="billing-address" id="same-address" name="temp" value="Yes">
+                                                        <label for="same-address">Yes</label>
+                                                        <input type="radio" class="billing-address" id="different-address" name="temp" value="No">
+                                                        <label for="different-address">No</label>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -207,26 +218,25 @@
                                                         <tbody>
                                                         <tr id="dim-main-row">
                                                             <td>
-                                                                <select name="dim_dim" class="form-control calculate_dims" style="width: 80px">
-                                                                    <option value="1">cm</option>
-                                                                    <option value="2">inch</option>
+                                                                <select name="dimused" class="form-control calculate_dims" style="width: 80px">
+                                                                    <option value="cm">cm</option>
+                                                                    <option value="inch">inch</option>
                                                                 </select>
                                                                 <input type="hidden" name="calc_vw">
-
                                                             </td>
                                                             <td>
-                                                                <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="dim_pieces"></td>
+                                                                <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="quantity"></td>
                                                             <td>
-                                                                <select name="dim_package" class="form-control"><option value="">Select Package</option><option value="1">BAGS</option><option value="7">BARREL</option><option value="6">BOXES</option><option value="3">BULK</option><option value="2">BUNDLE</option><option value="9">CANS</option><option value="18">CARTONS</option><option value="10">CASES</option><option value="13">COILS</option><option value="15">COLLIES</option><option value="14">CONTAINER</option><option value="17">CRATES</option><option value="21">DRUMS</option><option value="24">FLEXI TANK</option><option value="38">PACKAGES</option><option value="39">PALLETS</option><option value="37">PIECES</option><option value="44">ROLLS</option><option value="47">SKID &amp; SKIDDED PKGS</option><option value="55">TRAYS</option><option value="57">WOODEN CASES</option></select>
+                                                                <select name="package" class="form-control"><option value="">Select Package</option><option value="1">BAGS</option><option value="7">BARREL</option><option value="6">BOXES</option><option value="3">BULK</option><option value="2">BUNDLE</option><option value="9">CANS</option><option value="18">CARTONS</option><option value="10">CASES</option><option value="13">COILS</option><option value="15">COLLIES</option><option value="14">CONTAINER</option><option value="17">CRATES</option><option value="21">DRUMS</option><option value="24">FLEXI TANK</option><option value="38">PACKAGES</option><option value="39">PALLETS</option><option value="37">PIECES</option><option value="44">ROLLS</option><option value="47">SKID &amp; SKIDDED PKGS</option><option value="55">TRAYS</option><option value="57">WOODEN CASES</option></select>
                                                             </td>
                                                             <td>
-                                                                <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="dim_length"></td>
+                                                                <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="length"></td>
                                                             <td>
-                                                                <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="dim_width"></td>
+                                                                <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="width"></td>
                                                             <td>
-                                                                <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="dim_height"></td>
+                                                                <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="height"></td>
                                                             <td>
-                                                                <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="dim_gw">
+                                                                <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="weight">
                                                             </td>
                                                             <td>
                                                                 <button type="button" class="btn btn-danger2 btn-sm deldimrow " style="width: 40px; display: none"><i class="fa fa-remove"></i></button>
@@ -243,13 +253,13 @@
                                                         <div class="form-group">
                                                             <label for="" class="control-label col-xs-3"><span class="fa fa-exclamation-circle reqast"></span>Actual weight <span class="aw_unit">[Kg]:</span> </label>
                                                             <div class="col-xs-6 col-sm-4">
-                                                                <input type="number" class="form-control bfh-number" min="0" name="dim_gw_total">
+                                                                <input type="number" class="form-control bfh-number" min="0" name="aweight">
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="" class="control-label col-xs-3">Volume weight <span class="vw_unit">[Kg]:</span></label>
                                                             <div class="col-xs-6 col-sm-4">
-                                                                <input type="number" class="form-control bfh-number" min="0" name="dim_vw_total">
+                                                                <input type="number" class="form-control bfh-number" min="0" name="avolume">
                                                             </div>
                                                         </div>
                                                         <div class="form-group hidden">
@@ -270,7 +280,7 @@
                                                 </div>
                                                 <div class="row custom-padding">
                                                     <div class="col-xs-12 right-space" >
-                                                        {!! Form::textarea('zip', null, ['class'=>'quote-city', 'id'=>'company']) !!}
+                                                        {!! Form::textarea('notes', null, ['class'=>'quote-city', 'id'=>'company']) !!}
                                                     </div>
                                                 </div>
                                                 <div class="row custom-padding">
@@ -287,7 +297,39 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="step-5" class="">
+                                            {{--<div id="step-5" class="">--}}
+
+
+                                                {{--<div class="success" ng-class="{'submissionMessage' : submission}" ng-bind="successsubmissionMessage" id="success"></div>--}}
+                                                            {{--<div class="row">--}}
+                                                                {{--<div class="col-xs-12 col-sm-12">--}}
+                                                                    {{--<div class="review-order center">--}}
+                                                                        {{--<h5>review of your RFQ</h5>--}}
+                                                                    {{--</div>--}}
+                                                                    {{--<div class="payment">--}}
+                                                                        {{--<div class="billing-form ">--}}
+                                                                            {{--<h6>Quote Summary</h6>--}}
+                                                                            {{--<ul class="purchased-cloths">--}}
+                                                                                {{--<li style="padding-left: 150px;">--}}
+                                                                                    {{--Mens T Shirt <span style="padding-right: 200px;">$40.00</span>--}}
+                                                                                {{--</li>--}}
+                                                                                {{--<li>--}}
+                                                                                    {{--Mens casual shoes <span style="padding-right: 200px;">$60.00</span>--}}
+                                                                                {{--</li>--}}
+                                                                                {{--<li>--}}
+                                                                                    {{--Mens casual shirts <span style="padding-right: 200px;">$55.00</span>--}}
+                                                                                {{--</li>--}}
+                                                                                {{--<li>--}}
+                                                                                    {{--Mens jackets <span>$66.00</span>--}}
+                                                                                {{--</li>--}}
+                                                                            {{--</ul>--}}
+
+                                                                        {{--</div>--}}
+
+                                                                    {{--</div>--}}
+                                                                {{--</div>--}}
+                                                            {{--</div>--}}
+                                                        {{--</div>--}}
 
                                             </div>
                                         </div>
@@ -324,7 +366,9 @@
             // Toolbar extra buttons
             var btnFinish = $('<button></button>').text('Finish')
                 .addClass('btn btn-info')
-                .on('click', function(){ alert('Finish Clicked'); });
+                .on('click', function(){
+                    $('#submitQuote').submit();
+                });
             var btnCancel = $('<button></button>').text('Cancel')
                 .addClass('btn btn-danger')
                 .on('click', function(){ $('#smartwizard').smartWizard("reset"); });
@@ -340,8 +384,8 @@
             });
             $("#transact").on("change", function(){
                 var selected = this.value;
-                if (selected == 1 || selected == 3) {
-                    var resultData = ["Air", "FCL", "LCL"];
+                if (selected == 'Import' || selected == 'Export') {
+                    var resultData = ["Air", "FCL40", "FCL20", "LCL"];
                     var myselect = $('<select>');
                     $('#mode').empty();
                     $.each(resultData, function (index, key) {

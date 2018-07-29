@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Client;
 use App\Commodity;
+use App\Incoterm;
 use App\Quotation;
 use App\Shiptype;
 use Illuminate\Http\Request;
@@ -30,8 +31,11 @@ class QuotesController extends Controller
      */
     public function create()
     {
-        $type = Commodity::lists('type','id')->all();
-        return view('client.quote', compact('type'));
+        $type = Shiptype::all()->pluck('name','name');
+        $commodity = Commodity::all()->pluck('type','name');
+        $terms = Incoterm::all()->pluck('name','name');
+
+        return view('client.quote', compact('type', 'commodity', 'terms'));
     }
 
     /**
@@ -42,32 +46,24 @@ class QuotesController extends Controller
      */
     public function store(Request $request)
     {
-        $client = new Client;
-        $client->lastName = $request->lname;
-        $client->firstName = $request->fname;
-        $client->address = $request->address;
-        $client->phone = $request->phone;
-        $client->company = $request->company;
-        $client->email = $request->email;
-        $client->city = $request->city;
-        $client->country = $request->country;
-        $client->zip = $request->zip;
-        $client->save();
-        $quote = new Quotation;
-        $quote->client_id = $client->id;
-        $quote->mode = $request->mode;
-        $quote->container = $request->contype;
-        $quote->length = $request->length;
-        $quote->width = $request->width;
-        $quote->height = $request->height;
-        $quote->weight = $request->weight;
-        $quote->quantity = $request->quantity;
-        $quote->commodity = $request->commodity;
-        $quote->message = $request->message;
-        $quote->save();
-        $shiptype = Shiptype::where('id', $request->transaction)->first();
-        $quote->shiptypes()->save($shiptype);
-        return view('client.confirmation');
+//        $client = Client::findOrFail(1);
+//        $quote = new Quotation;
+//        $quote->client_id = $client->id;
+//        $quote->mode = $request->mode;
+//        $quote->container = $request->contype;
+//        $quote->length = $request->length;
+//        $quote->width = $request->width;
+//        $quote->height = $request->height;
+//        $quote->weight = $request->weight;
+//        $quote->quantity = $request->quantity;
+//        $quote->commodity = $request->commodity;
+//        $quote->message = $request->message;
+//        $quote->save();
+//        $shiptype = Shiptype::where('id', $request->transaction)->first();
+//        $quote->shiptypes()->save($shiptype);
+//        return view('client.confirmation');
+        $data =  $request->all();
+        return view('client.summary', compact('data'));
     }
 
     /**
@@ -113,5 +109,13 @@ class QuotesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function summary(Request $request){
+
+        return $request->all();
+
+
+
     }
 }

@@ -2130,6 +2130,20 @@ width: 263px;
 	padding: 5px 11px;
 	box-shadow: 0 0 1px;
 }
+.quote-form-box input[type="radio"] + label {
+	cursor: pointer;
+	display: inline-block;
+	font-size: 15px;
+	font-weight: 200;
+	line-height: 17px;
+	margin: 5px 34px 0 0;
+	letter-spacing: -0.4px;
+	padding-left: 41px;
+	position: relative;
+}
+.quote-form-box input:checked + label::after {
+	border: 1px solid #e04622;
+}
 .quote-form .heading h3 {
 	margin-bottom: 30px;
 }
@@ -3161,6 +3175,7 @@ i.active:hover {
 	letter-spacing: -0.5px;
 	margin: 0 0 19px;
 }
+
 .purchased-cloths li span {
 	float: right;
 }

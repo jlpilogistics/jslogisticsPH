@@ -60,7 +60,7 @@
                                     <a href="javascript:void(0);">Request Quote</a>
                                     <ul class="sub-menu">
                                         <li>
-                                            <a href="{{url('/import')}}">Import</a>
+                                            <a href="{{route('quote.create')}}">Import</a>
                                         </li>
                                         <li>
                                             <a href="{{url('/export')}}">Export</a>
