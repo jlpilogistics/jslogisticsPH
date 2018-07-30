@@ -40,13 +40,18 @@
                 <span data-i18n="nav.category.pages">Manage Fleet</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip"
                                                                     data-placement="right" data-original-title="Pages"></i>
             </li>
-            <li class=" nav-item"><a href="email-application.html"><i class="la la-envelope"></i><span class="menu-title" data-i18n="">Vehicles</span></a>
+            <li class=" nav-item"><a href="/vehicle"><i class="la la-truck"></i><span class="menu-title" data-i18n="">Vehicles</span></a>
             </li>
-            <li class=" nav-item"><a href="chat-application.html"><i class="la la-comments"></i><span class="menu-title" data-i18n="">Schedule Trips</span></a>
+            <li class=" nav-item"><a href="/vehicleViews"><i class="la la-table"></i><span class="menu-title" data-i18n="">Vehicle Table</span></a>
             </li>
-            <li class=" nav-item"><a href="#"><i class="la la-briefcase"></i><span class="menu-title" data-i18n="nav.project.main">Drivers</span></a>
+            <li class=" nav-item"><a href="/driver"><i class="la la-user"></i><span class="menu-title" data-i18n="nav.project.main">Drivers</span></a>
             </li>
-
+            <li class=" nav-item"><a href="/driverViews"><i class="la la-list"></i><span class="menu-title" data-i18n="nav.project.main">Drivers Table</span></a>
+            </li>
+            <li class=" nav-item"><a href="/fuel"><i class="la la-automobile"></i><span class="menu-title" data-i18n="nav.project.main">Fuel Records</span></a>
+            </li>
+            <li class=" nav-item"><a href="/maintenance"><i class="fas fa-wrench"></i><span class="menu-title" data-i18n="nav.project.main">Maintenance Record</span></a>
+            </li>
             <li class=" navigation-header">
                 <span data-i18n="nav.category.support">Support</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip"
                                                                         data-placement="right" data-original-title="Support"></i>

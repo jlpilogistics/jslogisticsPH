@@ -47,6 +47,10 @@ class HomeController extends Controller
     {
         return view('client.domestic');
     }
+    public function calculator()
+    {
+        return view('client.calculator');
+    }
 
 }
 

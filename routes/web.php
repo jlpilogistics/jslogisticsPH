@@ -24,6 +24,8 @@ $this->post('logout', 'Auth\LoginController@logout')->name('auth.logout');
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/admin/index', 'HomeController@index');
     Route::resource('/quotations', 'QuotesController');
+    Route::resource('drivers', 'DriversController');
+    Route::resource('vehicles', 'VehiclesController');
 });
 
 
