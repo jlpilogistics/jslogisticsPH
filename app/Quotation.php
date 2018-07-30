@@ -32,4 +32,18 @@ class Quotation extends Model
 //        return Carbon::parse($value)->toDayDateTimeString();
         return Carbon::parse($value)->diffForHumans();
     }
+
+    public function destination(){
+        return $this->hasOne('App\Destination');
+    }
+    public function document(){
+        return $this->hasOne('App\Document');
+    }
+    public function origin(){
+        return $this->hasOne('App\Origin');
+    }
+    public function good(){
+        return $this->hasMany('App\Goods');
+    }
 }
+

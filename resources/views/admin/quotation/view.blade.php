@@ -119,7 +119,7 @@
                                 </div>
                                 <div class="profile-card-with-cover-content text-center">
                                     <div class="profile-details mt-2">
-                                        <h4 class="card-title">Linda Holland</h4>
+                                        <h4 class="card-title">{{$data->lastName}} {{$data->firstName}}</h4>
                                         <ul class="list-inline clearfix mt-2">
                                             <li class="mr-3">
                                                 <h2 class="block">3.5K</h2> Likes</li>

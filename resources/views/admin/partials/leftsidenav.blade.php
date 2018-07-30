@@ -26,7 +26,7 @@
                 <span data-i18n="nav.category.general">Manage Shipments</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip"
                                                                         data-placement="right" data-original-title="General"></i>
             </li>
-            <li class=" nav-item"><a href="#"><i class="la la-paint-brush"></i><span class="menu-title" data-i18n="nav.color_palette.main">Pending Shipment</span></a>
+            <li class=" nav-item"><a href=""><i class="la la-paint-brush"></i><span class="menu-title" data-i18n="nav.color_palette.main">Pending Shipment</span></a>
             </li>
             <li class=" nav-item"><a href="#"><i class="la la-puzzle-piece"></i><span class="menu-title" data-i18n="nav.starter_kit.main">Export Haulage</span></a>
             </li>

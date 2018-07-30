@@ -172,15 +172,15 @@
                                                 </div>
                                                 <div class="row custom-padding">
                                                     <div class="col-xs-12 col-sm-3 billing-form right-space" style="padding-left: 18px;">
-                                                        <input type="radio" class="billing-address" id="ydanger" name="danger" value='Yes'>
+                                                        <input type="radio" class="billing-address" id="ydanger" name="danger" value='1'>
                                                         <label for="ydanger">Yes</label>
-                                                        <input type="radio" class="billing-address" id="ndanger" name="danger" value="No">
+                                                        <input type="radio" class="billing-address" id="ndanger" name="danger" value="0">
                                                         <label for="ndanger">No</label>
                                                     </div>
                                                     <div class="col-xs-12 col-sm-offset-1 billing-form col-sm-3" style="padding-left: 18px;">
-                                                        <input type="radio" class="billing-address" id="same-address" name="temp" value="Yes">
+                                                        <input type="radio" class="billing-address" id="same-address" name="temp" value="1">
                                                         <label for="same-address">Yes</label>
-                                                        <input type="radio" class="billing-address" id="different-address" name="temp" value="No">
+                                                        <input type="radio" class="billing-address" id="different-address" name="temp" value="0">
                                                         <label for="different-address">No</label>
                                                     </div>
                                                 </div>
