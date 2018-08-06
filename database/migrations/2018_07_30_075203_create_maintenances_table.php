@@ -14,7 +14,7 @@ class CreateMaintenancesTable extends Migration
     public function up()
     {
         Schema::create('maintenances', function (Blueprint $table) {
-            $table->increments('count_maintenance');
+            $table->increments('id');
             $table->date('date');
             $table->string('description');
             $table->string('vModel');

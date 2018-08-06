@@ -7,18 +7,21 @@ use Carbon\Carbon;
 
 class Quotation extends Model
 {
-
+    protected $guarded=[];
     protected $fillable = [
-        'clientId',
+        'client_id',
         'mode',
-        'container',
+        'package',
         'length',
         'width',
         'height',
         'weight',
         'quantity',
-        'commodity',
-        'message'
+        'aweight',
+        'avolume',
+        'dimused',
+        'message',
+        'shiptypes'
     ];
 
     public function clients(){

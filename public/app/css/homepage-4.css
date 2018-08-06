@@ -323,13 +323,7 @@
 75% {background-position: 63% center;}
 100% {background-position: 59% center;}
 }
-@-webkit-@keyframes move {
-0% {background-position: 59% center;}
-25% {background-position: 63% center;}
-50% {background-position: 67% center;}
-75% {background-position: 63% center;}
-100% {background-position: 59% center;}
-}
+
 .homepage-4 .figure {
 	background: url("../images/parallex-image-4.jpg") no-repeat;
 	width: calc(50% - 211px);

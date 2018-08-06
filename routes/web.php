@@ -42,6 +42,22 @@ Route::get('location', 'Client\HomeController@showLocation');
 Route::get('domestic', 'Client\HomeController@showDomestic');
 Route::get('import', 'Client\HomeController@showImport');
 Route::get('export', 'Client\HomeController@showExport');
-Route::resource('quote', 'Client\QuotesController');
+Route::get('quote/createStep1', 'Client\QuotesController@createStep1');
+Route::post('quote/createStep1', 'Client\QuotesController@postCreateStep1');
+Route::post('quote/summary', 'Client\QuotesController@summary');
+
+
+Route::get('/products', 'Client\ProductController@index');
+
+Route::get('/products/create-step1', 'Client\ProductController@createStep1');
+Route::post('/products/create-step1', 'Client\ProductController@postCreateStep1');
+
+Route::get('/products/create-step2', 'Client\ProductController@createStep2');
+Route::post('/products/create-step2', 'Client\ProductController@postCreateStep2');
+
+Route::get('/products/create-step3', 'Client\ProductController@createStep3');
+Route::post('/products/create-step3', 'Client\ProductController@postCreateStep3');
+Route::get('/products/create-step4', 'Client\ProductController@createStep4');
+Route::post('/products/store', 'Client\ProductController@store');
 
 

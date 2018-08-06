@@ -2979,6 +2979,12 @@ i.active:hover {
 	border-top: 1px solid #eceeee;
 	border-bottom: 1px solid #eceeee;
 }
+.subtotals {
+	list-style-type: none;
+	padding: 17px 0 160px;
+	border-top: 1px solid #eceeee;
+	border-bottom: 1px solid #eceeee;
+}
 .subtotal li {
 	margin: 0 0 10px;
 	color: #8998a4;
@@ -3008,7 +3014,7 @@ i.active:hover {
 .order-wrap {
 	margin: 43px 0 0;
 }
-.order-wrap a {
+.order-wrap button {
 	display: inline-block;
 	font-size: 14px;
 	padding: 16px 0 14px;

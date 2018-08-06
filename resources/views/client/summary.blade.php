@@ -207,7 +207,7 @@
                 </div>
         </div>
         <!--Section box ends Here -->
-            {!! Form::model(['method="PATCH', 'action'=>['Client\QuotesController@summary',$data]]) !!}
+            {!! Form::model(['method="PATCH', 'action'=>['Client\QuotesController@store']]) !!}
                 {!! Form::submit('Request a Quote') !!}
             {!! Form::close() !!}
         </div>

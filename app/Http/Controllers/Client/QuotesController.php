@@ -13,11 +13,11 @@ use App\Quotation;
 use App\Shiptype;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class QuotesController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -33,14 +33,57 @@ class QuotesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function createStep1(Request $request)
     {
         $type = Shiptype::all()->pluck('name','id');
         $commodity = Commodity::all()->pluck('type','id');
         $terms = Incoterm::all()->pluck('name','id');
 
-        return view('client.quote', compact('type', 'commodity', 'terms'));
+        $origin = $request->session()->get('origin');
+        $dest = $request->session()->get('dest');
+
+        return view('client.quote', compact('dest', 'commodity', 'terms', 'origin', 'type'));
     }
+
+    public function postCreateStep1(Request $request)
+    {
+        $validatedData = $request->validate([
+            'zip' => 'required',
+            'city' => 'required|numeric',
+            'country' => 'required',
+            'etd' => 'required',
+            'port' => 'required',
+        ]);
+
+        $validatedDatas = $request->validate([
+            'zips' => 'required',
+            'citys' => 'required|numeric',
+            'countrys' => 'required',
+            'etas' => 'required',
+            'ports' => 'required',
+        ]);
+
+        if(empty($request->session()->get('origin'))){
+            $origin = new Origin();
+            $dest = new Destination();
+            $origin->fill($validatedData);
+            $dest->fill($validatedDatas);
+            $request->session()->put('origin', $origin);
+            $request->session()->put('dest', $dest);
+        }else{
+            $origin = $request->session()->get('dest');
+            $dest = $request->session()->get('dest');
+            $origin->fill($validatedData);
+            $dest->fill($validatedDatas);
+            $request->session()->put('origin', $origin);
+            $request->session()->put('dest', $dest);
+        }
+        return redirect('/quote/summary');
+
+
+    }
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -91,10 +134,10 @@ class QuotesController extends Controller
                 $dest = new Destination;
                 $dest->quotation_id = $quote->id;
                 $dest->ports = $request->ports;
-                $dest->zip = $request->zip;
-                $dest->country = $request->country;
-                $dest->city = $request->city;
-                $dest->eta = $request->eta;
+                $dest->zip = $request->zips;
+                $dest->country = $request->countrys;
+                $dest->city = $request->citys;
+                $dest->eta = $request->etas;
                 $dest->save();
                 $docs = new Goods;
                 $docs->quotation_id = $quote->id;
@@ -155,10 +198,11 @@ class QuotesController extends Controller
     }
 
     public function summary(Request $request){
-
-        return $request->all();
-
-
+        $origin = $request->session()->get('origin');
+        $dest = $request->session()->get('dest');
+        return view('client.quote-2',compact('origin','dest'));
 
     }
+
+
 }

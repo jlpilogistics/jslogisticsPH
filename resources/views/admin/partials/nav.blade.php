@@ -156,9 +156,9 @@
                 <ul class="nav navbar-nav float-right">
                     <li class="dropdown dropdown-user nav-item">
                         <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                <span class="mr-1">Hello, {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}
-                  <span class="user-name text-bold-700"></span>
-                </span>
+                {{--<span class="mr-1">Hello, {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}--}}
+                  {{--<span class="user-name text-bold-700"></span>--}}
+                {{--</span>--}}
                             <span class="avatar avatar-online">
                   <img src="{{URL::asset('app-assets/images/portrait/small/avatar-s-19.png')}}" alt="avatar"><i></i></span>
                         </a>

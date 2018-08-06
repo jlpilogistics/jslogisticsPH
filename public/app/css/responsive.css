@@ -2655,13 +2655,7 @@
 75% {background-position: 79% center;}
 100% {background-position: 75% center;}
 }
-@-webkit-@keyframes move {
-0% {background-position: 75% center;}
-25% {background-position: 79% center;}
-50% {background-position: 83% center;}
-75% {background-position: 79% center;}
-100% {background-position: 75% center;}
-}
+
 .right-spacer {
     margin-right: 23px !important;
 }

@@ -1,4 +1,4 @@
-@section('div_class', 'common-page request-page')
+@section('div_class', 'homepage common-page request-page')
 @extends('layouts.master')
 @section('styles')
     <meta charset="utf-8">
@@ -19,10 +19,6 @@
     <link rel="stylesheet" href="{{URL::asset('app/css/homepage-4.css')}}" />
     <link rel="stylesheet" href="{{URL::asset('app/css/responsive.css')}}" />
     <link href="{{URL::asset('app/css/skin.less')}}" rel="stylesheet/less">
-    <link href="{{URL::asset('app/css/smart_wizard.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{URL::asset('app/css/smart_wizard_theme_circles.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{URL::asset('app/css/smart_wizard_theme_arrows.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{URL::asset('app/css/smart_wizard_theme_dots.css')}}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://unpkg.com/vue-form-wizard/dist/vue-form-wizard.min.css">
 
 
@@ -50,297 +46,122 @@
         <div class="section">
             <div class="quote-form">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="heading "> <span>our</span>
-                                <h3>quote form</h3>
-                            </div>
-                            <div class="quote-form-box "  ng-controller="RequestController">
-                                {!! Form::open(['method="POST', 'action'=>'Client\QuotesController@store', 'id'=>'submitQuote']) !!}
-                                    <div id="smartwizard" class="sw-main sw-theme-arrows">
-                                        <ul class="nav nav-tabs step-anchor" >
-                                            <li><a href="#step-1" style="height:75px; width:200px; font-size: 20px; line-height: 50px;">Basic Information<br /></a></li>
-                                            <li><a href="#step-2" style="height:75px; width:200px; font-size: 20px; line-height: 50px;">Commodity<br /><small>This is tab's description</small></a></li>
-                                            <li><a href="#step-3" style="height:75px; width:200px; font-size: 20px; line-height: 50px;">Shipment<br /><small>This is tab's description</small></a></li>
-                                            <li><a href="#step-4" style="height:75px; width:200px; font-size: 20px; line-height: 50px;">Documents<br /><small>This is tab's description</small></a></li>
-                                            {{--<li><a href="#step-5" style="height:75px; width:200px; font-size: 20px; line-height: 50px;">Quote Summary<br /><small>This is tab's description</small></a></li>--}}
-                                        </ul>
-                                        <div class="sw-container tab-content" style="min-height: 196px; padding: 50px 50px 50px; ">
-                                            <div id="step-1" class="">
-                                                <div class="success" ng-class="{'submissionMessage' : submission}" ng-bind="successsubmissionMessage" id="success"></div>
-                                                    <div class="row">
-                                                        <div class=" col-xs-12 col-sm-4 right-space">
-                                                            <h6>Shipment Type</h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row custom-padding">
-                                                        <div class="col-xs-12 col-sm-3 right-space" >
-                                                            {!! Form::select('transaction', $type ,null, ['class'=>'quote-service drop', 'id'=>'transact']) !!}
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class=" col-xs-12 col-sm-4 right-space">
-                                                            <h6>Origin</h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row custom-padding">
-                                                        <div class="col-xs-12 col-sm-3 right-space">
-                                                            {!! Form::label('mode', 'Mode of Shipment') !!}
-                                                            {!! Form::select('mode',array(''=>'Choose Mode of Shipment'),null, ['class'=>'quote-service drop', 'id'=>'mode']) !!}
-                                                        </div>
-                                                        <div class="col-xs-12 col-sm-2 right-space">
-                                                            {!! Form::label('zip', 'Zip Code') !!}
-                                                            {!! Form::text('zip', null, ['class'=>'quote-city', 'id'=>'company']) !!}
-                                                        </div>
-                                                        <div class="col-xs-12 col-sm-2 right-space">
-                                                            {!! Form::label('country', 'Country') !!}
-                                                            {!! Form::text('country', null, ['class'=>'quote-city', 'id'=>'company']) !!}
-                                                        </div>
-                                                        <div class="col-xs-12 col-sm-2 right-space">
-                                                            {!! Form::label('city', 'City') !!}
-                                                            {!! Form::text('city', null, ['class'=>'quote-city', 'id'=>'company']) !!}
-                                                        </div>
-                                                        <div class="col-xs-12 col-sm-3 right-space">
-                                                            {!! Form::label('etd', 'Departure Date') !!}
-                                                            {!! Form::date('etd', null, ['class'=>'quote-city', 'id'=>'company']) !!}
-                                                        </div>
-                                                        <div class="col-xs-12 col-sm-offset-3 col-sm-6 right-space">
-                                                            {!! Form::label('port', 'Origin via Port') !!}
-                                                            {!! Form::text('port', null, ['class'=>'quote-city', 'id'=>'company']) !!}
-                                                        </div>
-                                                    </div>
-                                                <div class="row">
-                                                    <div class=" col-xs-12 col-sm-4 right-space">
-                                                        <h6>Destination</h6>
-                                                    </div>
-                                                </div>
-                                                <div class="row custom-padding">
-                                                    <div class="col-xs-12 col-sm-offset-3 col-sm-2 right-space">
-                                                        {!! Form::label('zip', 'Zip Code') !!}
-                                                        {!! Form::text('zip', null, ['class'=>'quote-city', 'id'=>'company']) !!}
-                                                    </div>
-                                                    <div class="col-xs-12 col-sm-2 right-space">
-                                                        {!! Form::label('country', 'Country') !!}
-                                                        {!! Form::text('country', null, ['class'=>'quote-city', 'id'=>'company']) !!}
-                                                    </div>
-                                                    <div class="col-xs-12 col-sm-2 right-space">
-                                                        {!! Form::label('city', 'City') !!}
-                                                        {!! Form::text('city', null, ['class'=>'quote-city', 'id'=>'company']) !!}
-                                                    </div>
-                                                    <div class="col-xs-12 col-sm-3 right-space">
-                                                        {!! Form::label('eta', 'Arrival Date') !!}
-                                                        {!! Form::date('eta', null, ['class'=>'quote-city', 'id'=>'company']) !!}
-                                                    </div>
-                                                    <div class="col-xs-12 col-sm-offset-3 col-sm-6 right-space">
-                                                        {!! Form::label('ports', 'Origin via Port') !!}
-                                                        {!! Form::text('ports', null, ['class'=>'quote-city', 'id'=>'company']) !!}
-                                                    </div>
-                                                </div>
-                                                <div class="error error-msg" ng-class="{'submissionMessage' : submission}" ng-bind="submissionMessage" ng-disabled = "requestForm.$invalid"></div>
-                                            </div>
-                                            <div id="step-2" class="">
-                                                <div class="success" ng-class="{'submissionMessage' : submission}" ng-bind="successsubmissionMessage" id="success"></div>
-                                                <div class="row">
-                                                    <div class=" col-xs-12 col-sm-4 right-space">
-                                                        <h6>Commodity</h6>
-                                                    </div>
-                                                    <div class=" col-xs-12 col-sm-4 right-space">
-                                                        <h6>Product Name</h6>
-                                                    </div>
-                                                    <div class=" col-xs-12 col-sm-4 right-space">
-                                                        <h6>Incoterms</h6>
-                                                    </div>
-                                                </div>
-                                                <div class="row custom-padding">
-                                                    <div class="col-xs-12 col-sm-3 right-space">
-                                                        {!! Form::select('goods', $commodity ,null, ['class'=>'quote-service drop', 'id'=>'transact']) !!}
-                                                    </div>
-                                                    <div class="col-xs-12 col-sm-offset-1 col-sm-3 right-space">
-                                                        {!! Form::text('name', null, ['class'=>'quote-city', 'id'=>'company']) !!}
-                                                    </div>
-                                                    <div class="col-xs-12 col-sm-offset-1 col-sm-3 right-space">
-                                                        {!! Form::select('term',$terms,null, ['class'=>'quote-service drop', 'id'=>'transact']) !!}
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class=" col-xs-12 col-sm-4 right-space">
-                                                        <h6>Dangerous Product</h6>
-                                                    </div>
-                                                    <div class=" col-xs-12 col-sm-4 right-space">
-                                                        <h6>Temperature Product</h6>
-                                                    </div>
-                                                </div>
-                                                <div class="row custom-padding">
-                                                    <div class="col-xs-12 col-sm-3 billing-form right-space" style="padding-left: 18px;">
-                                                        <input type="radio" class="billing-address" id="ydanger" name="danger" value='1'>
-                                                        <label for="ydanger">Yes</label>
-                                                        <input type="radio" class="billing-address" id="ndanger" name="danger" value="0">
-                                                        <label for="ndanger">No</label>
-                                                    </div>
-                                                    <div class="col-xs-12 col-sm-offset-1 billing-form col-sm-3" style="padding-left: 18px;">
-                                                        <input type="radio" class="billing-address" id="same-address" name="temp" value="1">
-                                                        <label for="same-address">Yes</label>
-                                                        <input type="radio" class="billing-address" id="different-address" name="temp" value="0">
-                                                        <label for="different-address">No</label>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class=" col-xs-12 col-sm-4 right-space">
-                                                        <h6>Description</h6>
-                                                    </div>
-                                                </div>
-                                                <div class="row custom-padding">
-                                                    <div class="col-xs-12">
-                                                        <textarea placeholder="Description*" name="message" ng-model="formData.message"  ng-class="{'error' : errorTextarea}" style="height:100px;"></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="error error-msg" ng-class="{'submissionMessage' : submission}" ng-bind="submissionMessage" ng-disabled = "requestForm.$invalid"></div>
-                                            </div>
-                                            <div id="step-3" class="">
-                                                <div class="col-xs-12" style="padding-bottom: 50px; ">
-                                                    <label for="" class="text-info">Dimensions </label>
-                                                    <br>
-                                                    <table id="basic_dim_table" data-sort="false" class="table table-bordered table-hover dimensiontable">
-                                                        <thead>
-                                                        <tr>
-                                                            <th></th>
-                                                            <th>pieces</th>
-                                                            <th>package</th>
-                                                            <th>length</th>
-                                                            <th>width</th>
-                                                            <th>height</th>
-                                                            <th>weight Kg</th>
-                                                            <th>
-                                                                <button name="add-dim-row" type="button" class="btn btn-info btn-sm " style="width: 40px"><i class="fa fa-plus-circle"></i></button>
-                                                            </th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr id="dim-main-row">
-                                                            <td>
-                                                                <select name="dimused" class="form-control calculate_dims" style="width: 80px">
-                                                                    <option value="cm">cm</option>
-                                                                    <option value="inch">inch</option>
-                                                                </select>
-                                                                <input type="hidden" name="calc_vw">
-                                                            </td>
-                                                            <td>
-                                                                <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="quantity"></td>
-                                                            <td>
-                                                                <select name="package" class="form-control"><option value="">Select Package</option><option value="1">BAGS</option><option value="7">BARREL</option><option value="6">BOXES</option><option value="3">BULK</option><option value="2">BUNDLE</option><option value="9">CANS</option><option value="18">CARTONS</option><option value="10">CASES</option><option value="13">COILS</option><option value="15">COLLIES</option><option value="14">CONTAINER</option><option value="17">CRATES</option><option value="21">DRUMS</option><option value="24">FLEXI TANK</option><option value="38">PACKAGES</option><option value="39">PALLETS</option><option value="37">PIECES</option><option value="44">ROLLS</option><option value="47">SKID &amp; SKIDDED PKGS</option><option value="55">TRAYS</option><option value="57">WOODEN CASES</option></select>
-                                                            </td>
-                                                            <td>
-                                                                <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="length"></td>
-                                                            <td>
-                                                                <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="width"></td>
-                                                            <td>
-                                                                <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="height"></td>
-                                                            <td>
-                                                                <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="weight">
-                                                            </td>
-                                                            <td>
-                                                                <button type="button" class="btn btn-danger2 btn-sm deldimrow " style="width: 40px; display: none"><i class="fa fa-remove"></i></button>
-                                                            </td>
-
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="col-xs-12 " style="padding-bottom: 50px; ">
-                                                    <label for="" class="text-info">Total weights </label>
-                                                    <br>
-                                                    <div class="form-horizontal">
-                                                        <div class="form-group">
-                                                            <label for="" class="control-label col-xs-3"><span class="fa fa-exclamation-circle reqast"></span>Actual weight <span class="aw_unit">[Kg]:</span> </label>
-                                                            <div class="col-xs-6 col-sm-4">
-                                                                <input type="number" class="form-control bfh-number" min="0" name="aweight">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="" class="control-label col-xs-3">Volume weight <span class="vw_unit">[Kg]:</span></label>
-                                                            <div class="col-xs-6 col-sm-4">
-                                                                <input type="number" class="form-control bfh-number" min="0" name="avolume">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group hidden">
-                                                            <label for="tShpName" class="control-label col-xs-3">Chargeable weight:</label>
-                                                            <div class="col-xs-6 col-sm-4">
-                                                                <label class="form-control label dim_cw_label">
-                                                                </label></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="step-4" class="">
-                                                <div class="success" ng-class="{'submissionMessage' : submission}" ng-bind="successsubmissionMessage" id="success"></div>
-                                                <div class="row">
-                                                    <div class=" col-xs-12 col-sm-4 right-space">
-                                                        <h6>Notes</h6>
-                                                    </div>
-                                                </div>
-                                                <div class="row custom-padding">
-                                                    <div class="col-xs-12 right-space" >
-                                                        {!! Form::textarea('notes', null, ['class'=>'quote-city', 'id'=>'company']) !!}
-                                                    </div>
-                                                </div>
-                                                <div class="row custom-padding">
-                                                    <div class=" col-xs-12 col-sm-4 right-space">
-                                                        <h6>Upload Necessary Documents</h6>
-                                                    </div>
-                                                </div>
-                                                <div class="row custom-padding">
-                                                    <div class="col-xs-12 right-space" >
-                                                        <div class="dropzone dz-message needsclick">
-                                                            Drop files here or click to upload.<br>
-                                                            <span class="note needsclick">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {{--<div id="step-5" class="">--}}
-
-
-                                                {{--<div class="success" ng-class="{'submissionMessage' : submission}" ng-bind="successsubmissionMessage" id="success"></div>--}}
-                                                            {{--<div class="row">--}}
-                                                                {{--<div class="col-xs-12 col-sm-12">--}}
-                                                                    {{--<div class="review-order center">--}}
-                                                                        {{--<h5>review of your RFQ</h5>--}}
-                                                                    {{--</div>--}}
-                                                                    {{--<div class="payment">--}}
-                                                                        {{--<div class="billing-form ">--}}
-                                                                            {{--<h6>Quote Summary</h6>--}}
-                                                                            {{--<ul class="purchased-cloths">--}}
-                                                                                {{--<li style="padding-left: 150px;">--}}
-                                                                                    {{--Mens T Shirt <span style="padding-right: 200px;">$40.00</span>--}}
-                                                                                {{--</li>--}}
-                                                                                {{--<li>--}}
-                                                                                    {{--Mens casual shoes <span style="padding-right: 200px;">$60.00</span>--}}
-                                                                                {{--</li>--}}
-                                                                                {{--<li>--}}
-                                                                                    {{--Mens casual shirts <span style="padding-right: 200px;">$55.00</span>--}}
-                                                                                {{--</li>--}}
-                                                                                {{--<li>--}}
-                                                                                    {{--Mens jackets <span>$66.00</span>--}}
-                                                                                {{--</li>--}}
-                                                                            {{--</ul>--}}
-
-                                                                        {{--</div>--}}
-
-                                                                    {{--</div>--}}
-                                                                {{--</div>--}}
-                                                            {{--</div>--}}
-                                                        {{--</div>--}}
-
+                    <form action="/products/create-step1" method="post">
+                        {{ csrf_field() }}
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="heading "> <span>Step 1</span>
+                                    <h3>Basic Information</h3>
+                                </div>
+                                <div class="quote-form-box"  ng-controller="RequestController">
+                                        <div class="success" ng-class="{'submissionMessage' : submission}" ng-bind="successsubmissionMessage" id="success"></div>
+                                        <div class="row">
+                                            <div class=" col-xs-12 col-sm-4 right-space">
+                                                <h6>Shipment Type</h6>
                                             </div>
                                         </div>
-                                    </div>
-                                {!! Form::close() !!}
+                                        <div class="row custom-padding">
+                                            <div class="col-xs-12 col-sm-3 right-space">
+                                                @if(Session::has('quote'))
+                                                    {!! Form::select('shiptypes', $type,  Session::get('quote')->shiptypes, ['class'=>'quote-service drop form-control', 'id'=>'transaction']) !!}
+                                                @else
+                                                    {!! Form::select('shiptypes', $type, null, ['class'=>'quote-service drop form-control', 'id'=>'transaction']) !!}
+                                                @endif
+                                                {{--<select class="form-control" name="shiptypes">--}}
+                                                    {{--<option {{{ (isset($product->shiptypes) && $product->shiptypes == 'Apple') ? "selected=\"selected\"" : "" }}}>Apple</option>--}}
+                                                    {{--<option {{{ (isset($product->shiptypes) && $product->shiptypes == 'Google') ? "selected=\"selected\"" : "" }}}>Google</option>--}}
+                                                    {{--<option {{{ (isset($product->shiptypes) && $product->shiptypes == 'Mi') ? "selected=\"selected\"" : "" }}}>Mi</option>--}}
+                                                    {{--<option {{{ (isset($product->shiptypes) && $product->shiptypes == 'Samsung') ? "selected=\"selected\"" : "" }}}>Samsung</option>--}}
+                                                {{--</select>--}}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class=" col-xs-12 col-sm-4 right-space">
+                                                <h6>Origin</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row custom-padding">
+                                            <div class="col-xs-12 col-sm-3 right-space">
+                                                {{--{{ Form::select('CompanyID', $comp, array($selectedId), array('id' => 'seCompanyID')) }}--}}
+                                                @if(Session::has('quote'))
+                                                    @if(Session::get('quote')->shiptypes == 'Import' || Session::get('quote')->shiptypes == 'Export')
+                                                         {!! Form::select('mode', array(''=>'Choose Mode of Shipment','Air'=>'Air', 'FCL20'=>'FCL20','FCL40'=>'FCL40','LCL'=>'LCL'), $quote->mode,['class'=>'quote-service drop form-control', 'id'=>'mode'] ) !!}
+                                                    @elseif(Session::get('quote')->shiptypes == 'Domestic')
+                                                        {!! Form::select('mode', array(''=>'Choose Mode of Shipment','FTL'=>'FTL','LTL'=>'LTL'), $quote->mode,['class'=>'quote-service drop form-control', 'id'=>'mode'] ) !!}
+                                                    @endif
+                                                @else
+                                                    {!! Form::select('mode', array(''=>'Choose Mode of Shipment'), null,['class'=>'quote-service drop form-control', 'id'=>'mode'] ) !!}
+                                                @endif
+                                            </div>
+                                            <div class="col-xs-12 col-sm-2 right-space">
+                                                {!! Form::label('zip', 'Zip Code') !!}
+                                                <input type="text" value="{{{ $origin->zip or '' }}}" class="form-control quote-city" id="company" name="zip"/>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-2 right-space">
+                                                {!! Form::label('country', 'Country') !!}
+                                                <input type="text" value="{{{ $origin->country or '' }}}" class="form-control quote-city" id="company" name="country"/>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-2 right-space">
+                                                {!! Form::label('city', 'City') !!}
+                                                <input type="text" value="{{{ $origin->city or '' }}}" class="form-control quote-city" id="company" name="city"/>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-3 right-space">
+                                                {!! Form::label('etd', 'Departure Date') !!}
+                                                <input type="date" value="{{{ $origin->etd or '' }}}" class="form-control quote-city" id="company" name="etd"/>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-offset-3 col-sm-6 right-space">
+                                                {!! Form::label('port', 'Origin via Port') !!}
+                                                <input type="text" value="{{{ $origin->port or '' }}}" class="form-control quote-city" id="company" name="port"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class=" col-xs-12 col-sm-4 right-space">
+                                                <h6>Destination</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row custom-padding">
+                                            <div class="col-xs-12 col-sm-offset-3 col-sm-2 right-space">
+                                                {!! Form::label('zips', 'Zip Code') !!}
+                                                <input type="text" value="{{{ $dest->dzip or '' }}}" class="form-control quote-city" id="company" name="dzip"/>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-2 right-space">
+                                                {!! Form::label('countrys', 'Country') !!}
+                                                <input type="text" value="{{{ $dest->dcountry or '' }}}" class="form-control quote-city" id="company" name="dcountry"/>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-2 right-space">
+                                                {!! Form::label('citys', 'City') !!}
+                                                <input type="text" value="{{{ $dest->dcity or '' }}}" class="form-control quote-city" id="company" name="dcity"/>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-3 right-space">
+                                                {!! Form::label('etas', 'Arrival Date') !!}
+                                                <input type="text" value="{{{ $dest->deta or '' }}}" class="form-control quote-city" id="company" name="deta"/>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-offset-3 col-sm-6 right-space">
+                                                {!! Form::label('ports', 'Origin via Port') !!}
+                                                <input type="text" value="{{{ $dest->dport or '' }}}" class="form-control quote-city" id="company" name="dport"/>
+                                            </div>
+                                            @if ($errors->any())
+                                                <div class="alert alert-danger">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
+                                            <div class="error error-msg" ng-class="{'submissionMessage' : submission}" ng-bind="submissionMessage" ng-disabled = "requestForm.$invalid"></div>
+                                        </div>
+                                </div>
                             </div>
-                        </div>
                     </div>
+                        <div class="order-wrap" style="padding-bottom: 50px; float: right;">
+                            <button type="submit" class="update-cart">Next</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+
 
         <!--Section box ends Here -->
     </section>
@@ -355,34 +176,10 @@
     <script type="text/javascript" src="{{URL::asset('app/js/revolution-home-4.js')}}"></script>
     <script src="{{URL::asset('app/js/script.js')}}" type="text/javascript"></script>
     <script type="text/javascript" src="{{URL::asset('app/js/site.js')}}"></script>
-    <script type="text/javascript" src="{{URL::asset('app/js/dropzone.js')}}"></script>
-
-    <!-- Include SmartWizard JavaScript source -->
-    <script type="text/javascript" src="{{URL::asset('app/js/jquery.smartWizard.min.js')}}"></script>
-
     <script type="text/javascript">
         $(document).ready(function(){
 
-            // Toolbar extra buttons
-            var btnFinish = $('<button></button>').text('Finish')
-                .addClass('btn btn-info')
-                .on('click', function(){
-                    $('#submitQuote').submit();
-                });
-            var btnCancel = $('<button></button>').text('Cancel')
-                .addClass('btn btn-danger')
-                .on('click', function(){ $('#smartwizard').smartWizard("reset"); });
-
-            // Smart Wizard
-            $('#smartwizard').smartWizard({
-                selected: 0,
-                theme: 'arrows',
-                transitionEffect:'fade',
-                toolbarSettings: {toolbarPosition: 'bottom',
-                    toolbarExtraButtons: [btnFinish, btnCancel]
-                }
-            });
-            $("#transact").on("change", function(){
+            $("#transaction").on("change", function(){
                 var selected = this.value;
                 if (selected == 'Import' || selected == 'Export') {
                     var resultData = ["Air", "FCL40", "FCL20", "LCL"];
@@ -403,6 +200,8 @@
                     $('#mode').append(myselect.html());
                 }
             });
+
+
         });
 
     </script>

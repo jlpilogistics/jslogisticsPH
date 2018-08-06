@@ -22,8 +22,8 @@ class QuotesController extends Controller
 // this is right       $sender = Sender::with('quotations')->get();
 //        $quote = Quotation::all();
         $quote = Quotation::with('shiptypes')->get();
-//        $client = Client::with('quotation')->findMany(['1']);
-        $client = Client::with('quotation')->get();
+        $client = Client::with('quotation')->findMany(['1']);
+//        $client = Client::with('quotation')->get();
 
 
 
@@ -41,7 +41,7 @@ class QuotesController extends Controller
 
 //       return $quote->commodity;
 
-        return view('admin.quotation.index', compact( 'quote','client','type'));
+        return view('admin.quotation.index', compact('quote','client','type'));
 
     }
 
