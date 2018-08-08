@@ -69,61 +69,98 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @if(isset(Session::has('quote')->package)))
-                                        @foreach(Session::get('quote')->package as $measure)
+                                        @if(Session::has('quote1'))
+                                            @for($x = 1 ; $x<20; $x++)
+                                                @if(Session::has('quote'.$x))
+                                                <tr id="dim-main-row">
+                                                    <td>
+                                                        {{--{!! Form::select('dimused', array('cm'=>'cm','inch'=>'inch'), Session::get('quote')->dimused, ['class'=>'quote-service drop form-control calculate_dims', 'id'=>'transact', 'style'=>'width: 80px']) !!}--}}
+                                                        {!! Form::select('dimused[][dimused]', array('cm'=>'cm', 'inch'=>'inch'), Session::get('quote'.$x)->dimused,['class'=>'quote-service drop form-control calculate_dims', 'id'=>'transact', 'style'=>'width: 80px']) !!}
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" value="{{Session::get('quote'.$x)->quantity}}" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="quantity[][quantity]"></td>
+                                                    <td>
+                                                    {{--<select name="package[]package" class="form-control">--}}
+                                                        {{--@foreach ($packages as $package)--}}
+                                                            {{--<option value="{{$package->type}}" {{{ (isset($quote->package) && $quote->package == Session::get('quote')->package) ? "selected=\"selected\"" : "" }}}>{{$package->type}}</option>--}}
+                                                        {{--@endforeach--}}
+                                                    {{--</select>--}}
+                                                        {!! Form::select('package[][package]', $packages, Session::get('quote'.$x)->package,['class'=>'quote-service drop form-control calculate_dims', 'id'=>'transact', 'style'=>'width: 80px']) !!}
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" value="{{Session::get('quote'.$x)->length}}" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="length[][length]"></td>
+                                                    <td>
+                                                        <input type="number" value="{{Session::get('quote'.$x)->width}}" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="width[][width]"></td>
+                                                    <td>
+                                                        <input type="number" value="{{Session::get('quote'.$x)->height}}" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="height[][height]"></td>
+                                                    <td>
+                                                        <input type="number" value="{{Session::get('quote'.$x)->weight}}" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="weight[][weight]">
+                                                    </td>
+                                                    <td>
+                                                         <a href='javascript:void(0);'  class='remove'><button type="button" class="btn btn-danger2 btn-sm deldimrow " style="width: 40px; display: none"><i class="fa fa-remove"></i></button></a>
+                                                    </td>
 
-                                            <tr id="dim-main-row">
-                                                <td>
+                                                </tr>
+                                                @endif
+                                            @endfor
+
+
+
+                                        {{--@if(isset(Session::has('quote')->package)))--}}
+                                        {{--@foreach(Session::get('quote')->package as $measure)--}}
+
+                                            {{--<tr id="dim-main-row">--}}
+                                                {{--<td>--}}
                                                     {{--{!! Form::select('dimused', array('cm'=>'cm','inch'=>'inch'), Session::get('quote')->dimused, ['class'=>'quote-service drop form-control calculate_dims', 'id'=>'transact', 'style'=>'width: 80px']) !!}--}}
-                                                    {!! Form::select('dimused[]', array('cm'=>'cm', 'inch'=>'inch'), Session::get('quote')->dimused,['class'=>'quote-service drop form-control calculate_dims', 'id'=>'transact', 'style'=>'width: 80px']) !!}
-                                                </td>
-                                                <td>
-                                                    <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="quantity[]"></td>
-                                                <td>
+                                                    {{--{!! Form::select('quote[]', array('cm'=>'cm', 'inch'=>'inch'), Session::get('quote')->dimused,['class'=>'quote-service drop form-control calculate_dims', 'id'=>'transact', 'style'=>'width: 80px']) !!}--}}
+                                                {{--</td>--}}
+                                                {{--<td>--}}
+                                                    {{--<input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="quote[]"></td>--}}
+                                                {{--<td>--}}
                                                     {{--<select name="package[]" class="form-control">--}}
                                                     {{--@foreach ($packages as $package)--}}
                                                     {{--<option value="{{$package->type}}" {{{ (isset($quote->package) && $quote->package == Session::get('quote')->package) ? "selected=\"selected\"" : "" }}}>{{$package->type}}</option>--}}
                                                     {{--@endforeach--}}
                                                     {{--</select>--}}
-                                                    {!! Form::select('package[]', $packages, $measure,['class'=>'quote-service drop form-control calculate_dims', 'id'=>'transact', 'style'=>'width: 80px']) !!}
-                                                </td>
-                                                <td>
-                                                    <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="length[]"></td>
-                                                <td>
-                                                    <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="width[]"></td>
-                                                <td>
-                                                    <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="height[]"></td>
-                                                <td>
-                                                    <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="weight[]">
-                                                </td>
-                                                <td>
-                                                    <a href='javascript:void(0);'  class='remove'><button type="button" class="btn btn-danger2 btn-sm deldimrow " style="width: 40px; display: none"><i class="fa fa-remove"></i></button></a>
-                                                </td>
+                                                    {{--{!! Form::select('quote[]', $packages, $measure,['class'=>'quote-service drop form-control calculate_dims', 'id'=>'transact', 'style'=>'width: 80px']) !!}--}}
+                                                {{--</td>--}}
+                                                {{--<td>--}}
+                                                    {{--<input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="quote[]"></td>--}}
+                                                {{--<td>--}}
+                                                    {{--<input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="quote[]"></td>--}}
+                                                {{--<td>--}}
+                                                    {{--<input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="quote[]"></td>--}}
+                                                {{--<td>--}}
+                                                    {{--<input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="quote[]">--}}
+                                                {{--</td>--}}
+                                                {{--<td>--}}
+                                                    {{--<a href='javascript:void(0);'  class='remove'><button type="button" class="btn btn-danger2 btn-sm deldimrow " style="width: 40px; display: none"><i class="fa fa-remove"></i></button></a>--}}
+                                                {{--</td>--}}
 
-                                            </tr>
-                                        @endforeach
+                                            {{--</tr>--}}
+                                        {{--@endforeach--}}
                                         @else
                                             <tr id="dim-main-row">
                                                 <td>
                                                     {{--{!! Form::select('dimused', array('cm'=>'cm','inch'=>'inch'), Session::get('quote')->dimused, ['class'=>'quote-service drop form-control calculate_dims', 'id'=>'transact', 'style'=>'width: 80px']) !!}--}}
-                                                    <select name="dimused[]"  class="form-control calculate_dims" style="width: 80px">
+                                                    <select name="dimused[][dimused]"  class="form-control calculate_dims" style="width: 80px">
                                                         <option value="cm">cm</option>
                                                         <option value="inch">inch</option>
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="quantity[]"></td>
+                                                    <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="quantity[][quantity]"></td>
                                                 <td>
-                                                    {!! Form::select('package[]', $packages, null,['class'=>'quote-service drop form-control calculate_dims', 'id'=>'transact', 'style'=>'width: 80px']) !!}
+                                                    {!! Form::select('package[][package]', $packages, null,['class'=>'quote-service drop form-control calculate_dims', 'id'=>'transact', 'style'=>'width: 80px']) !!}
                                                 </td>
                                                 <td>
-                                                    <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="length[]"></td>
+                                                    <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="length[][length]"></td>
                                                 <td>
-                                                    <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="width[]"></td>
+                                                    <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="width[][width]"></td>
                                                 <td>
-                                                    <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="height[]"></td>
+                                                    <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="height[][height]"></td>
                                                 <td>
-                                                    <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="weight[]">
+                                                    <input type="number" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="weight[][weight]">
                                                 </td>
                                                 <td>
                                                     <a href='javascript:void(0);'  class='remove'><button type="button" class="btn btn-danger2 btn-sm deldimrow " style="width: 40px; display: none"><i class="fa fa-remove"></i></button></a>
@@ -160,10 +197,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-offset-10 right-space">
-                                    <a type="button" href="/products/create-step2" class="btn btn-warning">Previous</a>
-                                    <button type="submit" class="btn btn-primary">Next</button>
-                                </div>
                                 @if ($errors->any())
                                     <div class="alert alert-danger">
                                         <ul>
@@ -176,8 +209,8 @@
                             </div>
                         </div>
                         <div class="order-wrap" style="padding-bottom: 50px; float: right;">
-                            <button onclick="window.history.back(-1)" class="update-cart">Previous</button>
-                            <button type="submit" class="update-cart">Request Quote</button>
+                            <a type="button" href="/products/create-step2" class="update-cart">Previous</a>
+                            <button type="submit" class="update-cart">Next</button>
                         </div>
                     </form>
                 </div>
@@ -205,6 +238,7 @@
         $(function(){
             $('#addMore').on('click', function() {
                 var data = $("#tb tr:eq(1)").clone(true).appendTo("#tb");
+                data.find("input").val('');
 
 
             });

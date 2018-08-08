@@ -65,7 +65,7 @@
     </div>
     <section id="configuration">
         <div class="row">
-            <div class="col-12">
+            <div class="col-sm-12 col-xs-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Pending Requests</h4>
@@ -86,7 +86,9 @@
                                 <tr>
                                     <th>Date of Request</th>
                                     <th>Type of Shipment</th>
-                                    <th>Requested By</th>
+                                    <th>Mode of Shipment</th>
+                                    <th>Origin</th>
+                                    <th>Destination</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -105,35 +107,54 @@
                                     {{--@endforeach--}}
                                 {{--</tbody>--}}
                                 <tbody>
-                                @foreach($client as $senders)
-                                    @foreach($senders->quotation as $quote)
-                                        @foreach($quote->shiptypes as $shiptype)
-                                        <tr>
+                                {{--@foreach($client as $senders)--}}
+                                    {{--@foreach($senders->quotation as $quote)--}}
+                                        {{--@foreach($quote->shiptypes as $shiptype)--}}
+                                        {{--<tr>--}}
 
-                                            <td>{{$quote->created_at}}</td>
-                                            <td>{!! \App\Shiptype::whereId($shiptype->pivot->shiptype_id)->first()->name; !!}</td>
-                                            <td>{{$senders->firstName}} {{$senders->lastName}}</td>
-                                            <td class="text-center">
+                                            {{--<td>{{$quote->created_at}}</td>--}}
+                                            {{--<td>{!! \App\Shiptype::whereId($shiptype->pivot->shiptype_id)->first()->name; !!}</td>--}}
+                                            {{--<td>{{$senders->firstName}} {{$senders->lastName}}</td>--}}
+                                            {{--<td class="text-center">--}}
 
-                                                    <i class="ft-alert-octagon font-medium-2"></i>
-                                                    <span>Pending</span>
+                                                    {{--<i class="ft-alert-octagon font-medium-2"></i>--}}
+                                                    {{--<span>Pending</span>--}}
 
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-info mr-1 mb-1"  onclick="window.location='{{ route('quotations.show', $senders->id) }}'"><i class="la la-folder-open"></i>View Request</button>
-                                            </td>
+                                            {{--</td>--}}
+                                            {{--<td>--}}
+                                                {{--<button type="button" class="btn btn-info mr-1 mb-1"  onclick="window.location='{{ route('quotations.show', $senders->id) }}'"><i class="la la-folder-open"></i>View Request</button>--}}
+                                            {{--</td>--}}
 
 
-                                         </tr>
-                                        @endforeach
-                                    @endforeach
+                                         {{--</tr>--}}
+                                        {{--@endforeach--}}
+                                    {{--@endforeach--}}
+                                {{--@endforeach--}}
+                                @foreach($quote as $quotations)
+                                    <tr>
+                                        <td>{{$quotations->created_at}}</td>
+                                        <td>{{$quotations->shiptypes}}</td>
+                                        <td>{{$quotations->mode}}</td>
+                                        <td>{{$quotations->origin->city}}, {{$quotations->origin->country}}</td>
+                                        <td>{{$quotations->destination->dcity}}, {{$quotations->destination->dcountry}}</td>
+                                        <td class="text-center">
+                                            <i class="ft-alert-octagon font-medium-2"></i>
+                                            <span>
+
+                                                    {{$quotations->status->name}}</span>
+
+                                        </td>
+                                        <td><button type="button" class="btn btn-info mr-1 mb-1"  onclick="window.location='{{ route('quotations.show', $quotations->client_id) }}'"><i class="la la-folder-open"></i>View Request</button></td>
+                                    </tr>
                                 @endforeach
                                 </tbody>
                                 <tfoot>
                                 <tr>
                                     <th>Date of Request</th>
                                     <th>Type of Shipment</th>
-                                    <th>Requested By</th>
+                                    <th>Mode of Shipment</th>
+                                    <th>Origin</th>
+                                    <th>Destination</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>

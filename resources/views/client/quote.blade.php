@@ -134,7 +134,7 @@
                                             </div>
                                             <div class="col-xs-12 col-sm-3 right-space">
                                                 {!! Form::label('etas', 'Arrival Date') !!}
-                                                <input type="text" value="{{{ $dest->deta or '' }}}" class="form-control quote-city" id="company" name="deta"/>
+                                                <input type="date" value="{{{ $dest->deta or '' }}}" class="form-control quote-city" id="company" name="deta"/>
                                             </div>
                                             <div class="col-xs-12 col-sm-offset-3 col-sm-6 right-space">
                                                 {!! Form::label('ports', 'Origin via Port') !!}

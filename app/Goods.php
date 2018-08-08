@@ -13,9 +13,14 @@ class Goods extends Model
         'term',
         'danger',
         'temp',
-        'message'
+        'description',
     ];
     public function quotation(){
         return $this->belongsTo('App\Quotation');
+    }
+
+    public function goods($yes){
+
+        return $yes;
     }
 }

@@ -3023,6 +3023,15 @@ i.active:hover {
 	width: 129px;
 	color: #fff;
 }
+.order-wrap a {
+	display: inline-block;
+	font-size: 14px;
+	padding: 16px 0 14px;
+	text-align: center;
+	text-transform: uppercase;
+	width: 129px;
+	color: #fff;
+}
 .check-out {
 	background: #50b9ce;
 }

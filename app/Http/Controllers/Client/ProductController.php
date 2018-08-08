@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Client;
 use App\Commodity;
 use App\Destination;
 use App\Goods;
@@ -112,7 +113,9 @@ class ProductController extends Controller
      */
     public function createStep2(Request $request)
     {
-
+        if(empty($request->session()->get('origin')) && empty($request->session()->get('origin'))){
+            return redirect('products/create-step1');
+        }
         $goods = $request->session()->get('goods');
         $commodity = Commodity::all()->pluck('type','type');
         $terms = Incoterm::all()->pluck('name','name');
@@ -135,7 +138,7 @@ class ProductController extends Controller
             'term' => 'required',
             'danger' => 'required',
             'temp' => 'required',
-            'message' => 'required',
+            'description' => 'required',
         ]);
 
         if(empty($request->session()->get('goods'))) {
@@ -165,50 +168,63 @@ class ProductController extends Controller
      */
     public function createStep3(Request $request)
     {
+        if(empty($request->session()->get('origin')) && empty($request->session()->get('origin')) && empty($request->session()->get('goods')) ){
+            return redirect('products/create-step1');
+        }
+        elseif (empty($request->session()->get('goods'))){
+            return redirect('products/create-step2');
+        }
 //        $request->session()->flush();
         $packages = Package::all()->pluck('type','type');
-        $quote = $request->session()->get('quote');
         return view('client.quote-step3',compact('quote', 'packages'));
     }
 
     public function postCreateStep3(Request $request)
     {
-        for ($i = 0; $i < count(array('dimused')); $i++){
-
-            $validatedData = $request->validate([
-                'dimused' => 'required',
-                'quantity' => 'required',
-                'package' => 'required',
-                'length' => 'required',
-                'width' => 'required',
-                'height' => 'required',
-                'weight' => 'required',
-
-            ]);
-
-        }
-        if (empty($request->session()->get('quote'))) {
-            $quote = new Quotation();
-            $quote->fill(array($validatedData));
-            $request->session()->put('quote', $quote);
-        } else {
-            $quote = $request->session()->get('quote');
-            $quote->fill($validatedData);
-            $request->session()->put('quote', $quote);
+        for($i=0;$i<count($request->dimused);$i++){
+            $data[]= array('dimused'=>$request->dimused[$i]['dimused'],
+                 'package'=>$request->package[$i]['package'],
+                 'quantity'=>$request->quantity[$i]['quantity'],
+                 'length'=>$request->length[$i]['length'],
+                 'width'=>$request->width[$i]['width'],
+                 'height'=>$request->height[$i]['height'],
+                 'weight'=>$request->weight[$i]['weight']);
         }
 
+//        for ($x = 0; $x < count($data); $x++) {
+////            $topic = array($item);
+//            if(empty($request->session()->get('quote'.$x))) {
+//                $quote = new Quotation();
+//                $quote->fill($data);
+//                $request->session()->put('quote'. $x, $quote);
+//            }
+//        }
+        $x = 0;
+        foreach($data as $item){
+                $x++;
+                $quote = new Quotation();
+                $quote->fill($item);
+                $request->session()->put('quote'.$x, $quote);
+        }
         return redirect('/products/create-step4');
 
     }
     public function createStep4(Request $request)
     {
+        if(empty($request->session()->get('origin')) && empty($request->session()->get('origin')) && empty($request->session()->get('goods')) && empty($request->session()->get('quote1'))){
+            return redirect('products/create-step1');
+        }
+        elseif (empty($request->session()->get('goods')) && empty($request->session()->get('quote1'))){
+            return redirect('products/create-step2');
+        }
+        elseif (empty($request->session()->get('quote1'))){
+            return redirect('products/create-step3');
+        }
         $quote = $request->session()->get('quote');
         $origin = $request->session()->get('origin');
         $dest = $request->session()->get('dest');
         $goods = $request->session()->get('goods');
-//        echo $quote;
-//        return redirect('/products/create-step3');
-        return view('client.quote-step4',compact('quote', 'origin', 'dest', 'goods','item','itemize'));
+        return view('client.quote-step4',compact('quote', 'origin', 'dest', 'goods'));
     }
 
     /**
@@ -218,9 +234,28 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $product = $request->session()->get('product');
-        $product->save();
-        return redirect('/products');
+        $client = Client::findOrFail(1);
+        if($request->session()->get('quote1')){
+            for($x = 1 ; $x<20; $x++){
+                if($request->session()->get('quote'.$x)){
+                    $quote = $request->session()->get('quote'.$x);
+                    $rfq = new Quotation();
+                    $rfq->requestQuote($client, $quote);
+                }
+
+            }
+        }
+//        $origin = $request->session()->get('origin');
+//        $origin->quotation_id = $quote->id;
+//        $origin->save();
+//        $goods = $request->session()->get('goods');
+//        $goods->quotation_id = $quote->id;
+//        $goods->save();
+//        $dest = $request->session()->get('dest');
+//        $dest->quotation_id = $quote->id;
+//        $dest->save();
+        $request->session()->flush();
+        return redirect('/Main');
     }
 
 }

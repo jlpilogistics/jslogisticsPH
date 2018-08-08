@@ -166,29 +166,34 @@
                                             <h6>weight</h6>
                                         </div>
                                     </li>
-                                    @foreach($quote->package as $items)
-                                    <li class="shop-categories hidden-xs">
-                                        <div class="price-value">
-                                            <strong>{{$items}}</strong>
-                                            <span>single license</span>
-                                        </div>
-                                        <div class="price-value" style="padding-left: 30px;">
-                                            $15.00
-                                        </div>
-                                        <div class="price-value" style="padding-left: 30px;">
-                                            $15.00
-                                        </div>
-                                        <div class="price-value" style="padding-left: 30px;">
-                                            $15.00
-                                        </div>
-                                        <div class="price-value" style="padding-left: 30px;">
-                                            $15.00
-                                        </div>
-                                        <div class="price-value" style="padding-left: 30px;">
-                                            $15.00
-                                        </div>
-                                    </li>
-                                        @endforeach
+                                    @if(Session::has('quote1'))
+                                        @for($x = 1 ; $x<20; $x++)
+                                            @if(Session::has('quote'.$x))
+                                                <li class="shop-categories hidden-xs">
+                                                    <div class="price-value">
+                                                        <strong></strong>
+                                                        <span>{{Session::get('quote'.$x)->package}}</span>
+                                                    </div>
+                                                    <div class="price-value" style="padding-left: 30px;">
+                                                        {{Session::get('quote'.$x)->quantity}}
+                                                    </div>
+                                                    <div class="price-value" style="padding-left: 30px;">
+                                                        {{Session::get('quote'.$x)->length}} {{Session::get('quote'.$x)->dimused}}
+                                                    </div>
+                                                    <div class="price-value" style="padding-left: 30px;">
+                                                        {{Session::get('quote'.$x)->width}} {{Session::get('quote'.$x)->dimused}}
+                                                    </div>
+                                                    <div class="price-value" style="padding-left: 30px;">
+                                                        {{Session::get('quote'.$x)->height}} {{Session::get('quote'.$x)->dimused}}
+                                                    </div>
+                                                    <div class="price-value" style="padding-left: 30px;">
+                                                        {{Session::get('quote'.$x)->weight}} kg
+                                                    </div>
+                                                </li>
+                                            @endif
+                                        @endfor
+                                    @endif
+
                                 </ul>
 
                             </div>

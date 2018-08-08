@@ -27,6 +27,9 @@ class Quotation extends Model
     public function clients(){
         return $this->belongsTo('App\Client');
     }
+    public function status(){
+        return $this->belongsTo('App\Status');
+    }
     public function shiptypes(){
         return $this->belongsToMany('App\ShipType');
     }
@@ -47,6 +50,21 @@ class Quotation extends Model
     }
     public function good(){
         return $this->hasMany('App\Goods');
+    }
+    public function requestQuote($client, $quote){
+            $this->client_id = $client->id;
+            $this->shiptypes = 'Import';
+            $this->mode = 'FCL20';
+            $this->package = $quote->package;
+            $this->quantity = $quote->quantity;
+            $this->length = $quote->length;
+            $this->width = $quote->width;
+            $this->height = $quote->height;
+            $this->weight = $quote->weight;
+            $this->aweight = '1000';
+            $this->avolume = '1000';
+            $this->dimused = $quote->dimused;
+            $this->save();
     }
 }
 

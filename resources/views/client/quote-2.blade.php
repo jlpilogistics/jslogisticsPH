@@ -88,15 +88,15 @@
                                     </div>
                                     <div class="row custom-padding">
                                         <div class="col-xs-12 col-sm-3 billing-form right-space" style="padding-left: 18px;">
-                                            <input type="radio" class="billing-address" id="ydanger" name="danger" value='1'>
+                                            <input type="radio" class="billing-address" id="ydanger" name="danger" value='Yes'>
                                             <label for="ydanger">Yes</label>
-                                            <input type="radio" class="billing-address" id="ndanger" name="danger" value="0">
+                                            <input type="radio" class="billing-address" id="ndanger" name="danger" value="No">
                                             <label for="ndanger">No</label>
                                         </div>
                                         <div class="col-xs-12 col-sm-offset-1 billing-form col-sm-3" style="padding-left: 18px;">
-                                            <input type="radio" class="billing-address" id="ytemp" name="temp" value="1">
+                                            <input type="radio" class="billing-address" id="ytemp" name="temp" value="Yes">
                                             <label for="ytemp">Yes</label>
-                                            <input type="radio" class="billing-address" id="ntemp" name="temp" value="0">
+                                            <input type="radio" class="billing-address" id="ntemp" name="temp" value="No">
                                             <label for="ntemp">No</label>
                                         </div>
                                     </div>
@@ -107,7 +107,7 @@
                                     </div>
                                     <div class="row custom-padding">
                                         <div class="col-xs-12">
-                                            <textarea name="message" ng-model="formData.message"  ng-class="{'error' : errorTextarea}" style="height:100px;">{{ $goods->message or '' }}</textarea>
+                                            <textarea name="description" ng-model="formData.message"  ng-class="{'error' : errorTextarea}" style="height:100px;">{{ $goods->message or '' }}</textarea>
                                         </div>
                                     </div>
                                     @if ($errors->any())
@@ -120,8 +120,8 @@
                                         </div>
                                     @endif
                                     <div class="order-wrap" style="padding-bottom: 50px; float: right;">
-                                        <button onclick="window.history.back(-1)" class="update-cart">Previous</button>
-                                        <button type="submit" class="update-cart">Request Quote</button>
+                                        <a type="button" href="/products/create-step1" class="update-cart">Previous</a>
+                                        <button type="submit" class="update-cart">Next</button>
                                     </div>
                                     <div class="error error-msg" ng-class="{'submissionMessage' : submission}" ng-bind="submissionMessage" ng-disabled = "requestForm.$invalid"></div>
                                 </form>

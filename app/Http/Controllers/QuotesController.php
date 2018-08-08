@@ -21,14 +21,9 @@ class QuotesController extends Controller
 //        return view('admin.quotation.index');
 // this is right       $sender = Sender::with('quotations')->get();
 //        $quote = Quotation::all();
-        $quote = Quotation::with('shiptypes')->get();
-        $client = Client::with('quotation')->findMany(['1']);
+//        $quote = Quotation::with('shiptypes')->get(); /asdasd
+//        $client = Client::with('quotation')->findMany(['1']); /asasdasd
 //        $client = Client::with('quotation')->get();
-
-
-
-
-
 //        return $sender->quotations;
 //        $sender->each(function($senders) // foreach($posts as $post) { }
 //        {
@@ -40,9 +35,9 @@ class QuotesController extends Controller
 //        }
 
 //       return $quote->commodity;
+        $quote = Quotation::with('destination','origin','status')->get();
 
-        return view('admin.quotation.index', compact('quote','client','type'));
-
+        return view('admin.quotation.index', compact('quote'));
     }
 
     /**
