@@ -18,7 +18,7 @@ class Client extends Model
         'zip'
     ];
 
-    public function quotation(){
-        return $this->hasMany('App\Quotation');
+    public function transaction(){
+        return $this->hasMany('App\Transaction');
     }
 }

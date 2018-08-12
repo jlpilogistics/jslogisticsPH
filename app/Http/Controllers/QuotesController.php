@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Client;
 use App\Quotation;
 use App\Shiptype;
+use App\Transaction;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -35,7 +36,7 @@ class QuotesController extends Controller
 //        }
 
 //       return $quote->commodity;
-        $quote = Quotation::with('destination','origin','status')->get();
+        $quote = Transaction::with('destination','origin','quotation','goods')->get();
 
         return view('admin.quotation.index', compact('quote'));
     }
@@ -69,9 +70,10 @@ class QuotesController extends Controller
      */
     public function show($id)
     {
-        $data = Client::with('quotation')->findOrFail($id);
+        $data = Transaction::with('origin','destination','goods','quotation')->findOrFail($id);
+        $client = Client::with('transaction')->findOrFail($data->client_id);
 //        $quote = Quotation::with('clients');
-        return view('admin.quotation.view', compact('data'));
+        return view('admin.quotation.view', compact('data','client'));
     }
 
     /**

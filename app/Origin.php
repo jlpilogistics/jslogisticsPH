@@ -2,13 +2,14 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Origin extends Model
 {
     protected $guarded=[];
     protected $fillable = [
-        'quotation_id',
+        'transaction_id',
         'zip',
         'country',
         'city',
@@ -16,7 +17,12 @@ class Origin extends Model
         'etd',
 
     ];
-    public function quotation(){
-        return $this->belongsTo('App\Quotation');
+    public function transaction(){
+        return $this->belongsTo('App\Transaction');
+    }
+
+    public function getEtdAttribute($value)
+    {
+        return Carbon::parse($value)->toFormattedDateString();
     }
 }

@@ -3509,7 +3509,7 @@ tbody.collapse.show {
 .list-group-item {
   position: relative;
   display: block;
-  padding: 1.25rem 1.25rem;
+  padding: 1.00rem 1.00rem;
   margin-bottom: -1px;
   background-color: #fff;
   border: 1px solid #E4E7ED; }

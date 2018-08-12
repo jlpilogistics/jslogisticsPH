@@ -7,20 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 class Goods extends Model
 {
     protected $fillable = [
-        'quotation_id',
+        'transaction_id',
         'goods',
         'name',
         'term',
         'danger',
         'temp',
         'description',
+        'shiptypes',
+        'mode',
+        'aweight',
+        'avolume',
     ];
-    public function quotation(){
-        return $this->belongsTo('App\Quotation');
+    public function transaction(){
+        return $this->belongsTo('App\Transaction');
     }
 
-    public function goods($yes){
 
-        return $yes;
-    }
 }

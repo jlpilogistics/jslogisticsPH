@@ -65,7 +65,7 @@
     </div>
     <section id="configuration">
         <div class="row">
-            <div class="col-sm-12 col-xs-12 col-lg-12">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Pending Requests</h4>
@@ -81,7 +81,7 @@
                     </div>
                     <div class="card-content collapse show">
                         <div class="card-body card-dashboard">
-                            <table class="table table-striped table-bordered table-xs">
+                            <table class="table table-striped table-bordered zero-configuration " >
                                 <thead>
                                 <tr>
                                     <th>Date of Request</th>
@@ -89,7 +89,6 @@
                                     <th>Mode of Shipment</th>
                                     <th>Origin</th>
                                     <th>Destination</th>
-                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -132,19 +131,19 @@
                                 {{--@endforeach--}}
                                 @foreach($quote as $quotations)
                                     <tr>
-                                        <td>{{$quotations->created_at}}</td>
-                                        <td>{{$quotations->shiptypes}}</td>
-                                        <td>{{$quotations->mode}}</td>
+                                        <td>{{$quotations->quotation->created_at}}</td>
+                                        <td>{{$quotations->goods->shiptypes}}</td>
+                                        <td>{{$quotations->goods->mode}}</td>
                                         <td>{{$quotations->origin->city}}, {{$quotations->origin->country}}</td>
                                         <td>{{$quotations->destination->dcity}}, {{$quotations->destination->dcountry}}</td>
-                                        <td class="text-center">
-                                            <i class="ft-alert-octagon font-medium-2"></i>
-                                            <span>
+                                        {{--<td class="text-center">--}}
+                                            {{--<i class="ft-alert-octagon font-medium-2"></i>--}}
+                                            {{--<span>--}}
 
-                                                    {{$quotations->status->name}}</span>
+                                                    {{--{{$quotations->status->name}}</span>--}}
 
-                                        </td>
-                                        <td><button type="button" class="btn btn-info mr-1 mb-1"  onclick="window.location='{{ route('quotations.show', $quotations->client_id) }}'"><i class="la la-folder-open"></i>View Request</button></td>
+                                        {{--</td>--}}
+                                        <td><button type="button" onclick="window.location='{{ route('quotations.show', $quotations->id ) }}'" class="btn btn-success mr-1 mb-1">View Request</button></td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -155,13 +154,14 @@
                                     <th>Mode of Shipment</th>
                                     <th>Origin</th>
                                     <th>Destination</th>
-                                    <th>Status</th>
+                                    {{--<th>Status</th>--}}
                                     <th>Action</th>
                                 </tr>
                                 </tfoot>
                             </table>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

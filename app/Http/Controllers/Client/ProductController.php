@@ -11,6 +11,7 @@ use App\Origin;
 use App\Package;
 use App\Quotation;
 use App\Shiptype;
+use App\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Product;
@@ -72,7 +73,7 @@ class ProductController extends Controller
             'deta' => 'required',
             'dport' => 'required',
         ]);
-        $validatedQuote = $request->validate([
+        $validatedType = $request->validate([
             'shiptypes'=>'required',
             'mode'=>'required',
         ]);
@@ -87,21 +88,21 @@ class ProductController extends Controller
             $dest->fill($validatedDest);
             $request->session()->put('dest', $dest);
         }
-        if(empty($request->session()->get('quote'))){
-            $quote = new Quotation();
-            $quote->fill($validatedQuote);
-            $request->session()->put('quote', $quote);
+        if(empty($request->session()->get('goods'))){
+            $goods = new Goods();
+            $goods->fill($validatedType);
+            $request->session()->put('goods', $goods);
         }
         else{
             $origin = $request->session()->get('origin');
             $dest = $request->session()->get('dest');
-            $quote = $request->session()->get('quote');
+            $goods = $request->session()->get('goods');
             $origin->fill($validatedOrigin);
             $dest->fill($validatedDest);
-            $quote->fill($validatedQuote);
+            $goods->fill($validatedType);
             $request->session()->put('origin', $origin);
             $request->session()->put('dest', $dest);
-            $request->session()->put('quote', $quote);
+            $request->session()->put('goods', $goods);
         }
         return redirect('/products/create-step2');
     }
@@ -119,8 +120,6 @@ class ProductController extends Controller
         $goods = $request->session()->get('goods');
         $commodity = Commodity::all()->pluck('type','type');
         $terms = Incoterm::all()->pluck('name','name');
-        $quote = $request->session()->get('quote');
-        echo $quote;
         return view('client.quote-2',compact('commodity','terms', 'goods'));
     }
 
@@ -191,6 +190,11 @@ class ProductController extends Controller
                  'weight'=>$request->weight[$i]['weight']);
         }
 
+        $validatedData = $request->validate([
+            'aweight' => 'required',
+            'avolume' => 'required',
+        ]);
+
 //        for ($x = 0; $x < count($data); $x++) {
 ////            $topic = array($item);
 //            if(empty($request->session()->get('quote'.$x))) {
@@ -206,6 +210,12 @@ class ProductController extends Controller
                 $quote->fill($item);
                 $request->session()->put('quote'.$x, $quote);
         }
+
+
+            $goods = $request->session()->get('goods');
+            $goods->fill($validatedData);
+            $request->session()->put('goods', $goods);
+
         return redirect('/products/create-step4');
 
     }
@@ -235,25 +245,27 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $client = Client::findOrFail(1);
+        $transact = new Transaction();
+        $transact->transact = $transact->generateTransaction();
+        $transact->save();
         if($request->session()->get('quote1')){
             for($x = 1 ; $x<20; $x++){
                 if($request->session()->get('quote'.$x)){
                     $quote = $request->session()->get('quote'.$x);
                     $rfq = new Quotation();
-                    $rfq->requestQuote($client, $quote);
+                    $rfq->requestQuote($client, $quote, $transact);
                 }
-
             }
         }
-//        $origin = $request->session()->get('origin');
-//        $origin->quotation_id = $quote->id;
-//        $origin->save();
-//        $goods = $request->session()->get('goods');
-//        $goods->quotation_id = $quote->id;
-//        $goods->save();
-//        $dest = $request->session()->get('dest');
-//        $dest->quotation_id = $quote->id;
-//        $dest->save();
+        $origin = $request->session()->get('origin');
+        $origin->transaction_id = $transact->id;
+        $origin->save();
+        $goods = $request->session()->get('goods');
+        $goods->transaction_id = $transact->id;
+        $goods->save();
+        $dest = $request->session()->get('dest');
+        $dest->transaction_id = $transact->id;
+        $dest->save();
         $request->session()->flush();
         return redirect('/Main');
     }

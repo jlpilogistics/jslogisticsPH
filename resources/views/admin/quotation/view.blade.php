@@ -68,34 +68,33 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="card">
-
                     <div class="card-content collapse show">
                         <div class="card-body">
                             <form class="form">
                                 <div class="form-body">
-                                    <h4 class="form-section"><i class="ft-user"></i> Shippers's Details</h4>
+                                    <h4 class="form-section"><i class="ft-user"></i> Quote Details</h4>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <ul class="list-group list-group-flush">
                                                 <li class="list-group-item">
-                                                    <p class="float-right">{{$data->firstName}} {{$data->lastName}}</p>
-                                                    Full Name
+                                                    <p class="float-right">{{$data->transact}}</p>
+                                                    Request ID
                                                 </li>
                                                 <li class="list-group-item">
-                                                    <p class="float-right">{{$data->company}}</p>
-                                                    Company
+                                                    <p class="float-right">{{$data->origin->city}}, {{$data->origin->country}}</p>
+                                                    Origin
                                                 </li>
                                                 <li class="list-group-item">
-                                                    <p class="float-right">{{$data->address}} {{$data->city}}</p>
-                                                    Address
+                                                    <p class="float-right">{{$data->destination->dcity}}, {{$data->destination->dcountry}}</p>
+                                                    Destination
                                                 </li>
                                                 <li class="list-group-item">
-                                                    <p class="float-right">{{$data->email}}</p>
-                                                    Email
+                                                    <p class="float-right">{{$data->origin->etd}}</p>
+                                                    Departure Date
                                                 </li>
                                                 <li class="list-group-item">
-                                                    <p class="float-right">{{$data->phone}}</p>
-                                                    Phone
+                                                    <p class="float-right">{{$data->destination->deta}}</p>
+                                                    Arrival Date
                                                 </li>
                                             </ul>
                                         </div>
@@ -108,183 +107,124 @@
             </div>
             <div class="col-md-6">
                 <div class="card">
-                    <div class="card-header ">
-                        <div class="card profile-card-with-cover">
-                            <div class="card-content">
-                                <!--<img class="card-img-top img-fluid" src="../../../app-assets/images/carousel/18.jpg" alt="Card cover image">-->
-                                <div class="card-img-top img-fluid bg-cover height-200" style="background: url({{URL::asset('app-assets/images/backgrounds/fb.jpg')}}) 0 30%;"></div>
-                                <div class="card-profile-image">
-                                    <img src="{{URL::asset('app-assets/images/portrait/small/avatar-s-4.png')}}" class="rounded-circle img-border box-shadow-1"
-                                         alt="Card image">
-                                </div>
-                                <div class="profile-card-with-cover-content text-center">
-                                    <div class="profile-details mt-2">
-                                        <h4 class="card-title">{{$data->lastName}} {{$data->firstName}}</h4>
-                                        <ul class="list-inline clearfix mt-2">
-                                            <li class="mr-3">
-                                                <h2 class="block">3.5K</h2> Likes</li>
-                                            <li class="mr-3">
-                                                <h2 class="block">2845</h2> Followers</li>
-                                            <li>
-                                                <h2 class="block">645</h2> Following</li>
-                                        </ul>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <form class="form">
+                                <div class="form-body">
+                                    <h4 class="form-section"><i class="ft-user"></i> Commodity Details</h4>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item">
+                                                    <p class="float-right">{{$data->goods->goods}}</p>
+                                                    Commodity
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <p class="float-right">{{$data->goods->name}}</p>
+                                                    Product
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <p class="float-right">{{$data->goods->term}}</p>
+                                                    Incoterm
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <p class="float-right">{{$data->goods->mode}}</p>
+                                                    Mode of Shipment
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <p class="float-right">{{$data->goods->description}}</p>
+                                                    Additional Notes
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
-
                                 </div>
-                                <div>&nbsp</div>
-                            </div>
+                            </form>
                         </div>
                     </div>
-
                 </div>
             </div>
+            {{--<div class="col-md-6">--}}
+                {{--<div class="card">--}}
+                    {{--<div class="card-header ">--}}
+                        {{--<div class="card profile-card-with-cover">--}}
+                            {{--<div class="card-content">--}}
+                                {{--<!--<img class="card-img-top img-fluid" src="../../../app-assets/images/carousel/18.jpg" alt="Card cover image">-->--}}
+                                {{--<div class="card-img-top img-fluid bg-cover height-200" style="background: url({{URL::asset('app-assets/images/backgrounds/fb.jpg')}}) 0 30%;"></div>--}}
+                                {{--<div class="card-profile-image">--}}
+                                    {{--<img src="{{URL::asset('app-assets/images/portrait/small/avatar-s-4.png')}}" class="rounded-circle img-border box-shadow-1"--}}
+                                         {{--alt="Card image">--}}
+                                {{--</div>--}}
+                                {{--<div class="profile-card-with-cover-content text-center">--}}
+                                    {{--<div class="profile-details mt-2">--}}
+                                        {{--<h4 class="card-title">{{$data->lastName}} {{$data->firstName}}</h4>--}}
+                                        {{--<ul class="list-inline clearfix mt-2">--}}
+                                            {{--<li class="mr-3">--}}
+                                                {{--<h2 class="block">3.5K</h2> Likes</li>--}}
+                                            {{--<li class="mr-3">--}}
+                                                {{--<h2 class="block">2845</h2> Followers</li>--}}
+                                            {{--<li>--}}
+                                                {{--<h2 class="block">645</h2> Following</li>--}}
+                                        {{--</ul>--}}
+                                    {{--</div>--}}
+
+                                {{--</div>--}}
+                                {{--<div>&nbsp</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+
+                {{--</div>--}}
+            {{--</div>--}}
         </div>
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title" id="repeat-form">Repeating Forms</h4>
-                        <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
-                        <div class="heading-elements">
-                            <ul class="list-inline mb-0">
-                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                <li><a data-action="close"><i class="ft-x"></i></a></li>
-                            </ul>
-                        </div>
+                        <h4 class="card-title">Package Dimensions</h4>
                     </div>
                     <div class="card-content collapse show">
-                        <div class="card-body">
-                            <div class="repeater-default">
-                                <div data-repeater-list="car">
-
-                                    <div data-repeater-item="" style="">
-                                        <form class="form row">
-                                            <div class="form-group mb-1 col-sm-12 col-md-2">
-                                                <label for="email-addr">Email address</label>
-                                                <br>
-                                                <input type="email" class="form-control" id="email-addr" placeholder="Enter email">
-                                            </div>
-                                            <div class="form-group mb-1 col-sm-12 col-md-2">
-                                                <label for="pass">Password</label>
-                                                <br>
-                                                <input type="password" class="form-control" id="pass" placeholder="Password">
-                                            </div>
-                                            <div class="form-group mb-1 col-sm-12 col-md-2">
-                                                <label for="bio" class="cursor-pointer">Bio</label>
-                                                <br>
-                                                <textarea class="form-control" id="bio" rows="2"></textarea>
-                                            </div>
-                                            <div class="skin skin-flat form-group mb-1 col-sm-12 col-md-2">
-                                                <label for="tel-input">Gender</label>
-                                                <br>
-                                                <input class="form-control" type="tel" value="1-(555)-555-5555" id="tel-input">
-                                            </div>
-                                            <div class="form-group mb-1 col-sm-12 col-md-2">
-                                                <label for="profession">Profession</label>
-                                                <br>
-                                                <select class="form-control" id="profession">
-                                                    <option>Select Option</option>
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
-                                                    <option>Option 3</option>
-                                                    <option>Option 4</option>
-                                                    <option>Option 5</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-sm-12 col-md-2 text-center mt-2">
-                                                <button type="button" class="btn btn-danger" data-repeater-delete=""> <i class="ft-x"></i> Delete</button>
-                                            </div>
-                                        </form>
-                                        <hr>
-                                    </div><div data-repeater-item="" style="">
-                                        <form class="form row">
-                                            <div class="form-group mb-1 col-sm-12 col-md-2">
-                                                <label for="email-addr">Email address</label>
-                                                <br>
-                                                <input type="email" class="form-control" id="email-addr" placeholder="Enter email">
-                                            </div>
-                                            <div class="form-group mb-1 col-sm-12 col-md-2">
-                                                <label for="pass">Password</label>
-                                                <br>
-                                                <input type="password" class="form-control" id="pass" placeholder="Password">
-                                            </div>
-                                            <div class="form-group mb-1 col-sm-12 col-md-2">
-                                                <label for="bio" class="cursor-pointer">Bio</label>
-                                                <br>
-                                                <textarea class="form-control" id="bio" rows="2"></textarea>
-                                            </div>
-                                            <div class="skin skin-flat form-group mb-1 col-sm-12 col-md-2">
-                                                <label for="tel-input">Gender</label>
-                                                <br>
-                                                <input class="form-control" type="tel" value="1-(555)-555-5555" id="tel-input">
-                                            </div>
-                                            <div class="form-group mb-1 col-sm-12 col-md-2">
-                                                <label for="profession">Profession</label>
-                                                <br>
-                                                <select class="form-control" id="profession">
-                                                    <option>Select Option</option>
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
-                                                    <option>Option 3</option>
-                                                    <option>Option 4</option>
-                                                    <option>Option 5</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-sm-12 col-md-2 text-center mt-2">
-                                                <button type="button" class="btn btn-danger" data-repeater-delete=""> <i class="ft-x"></i> Delete</button>
-                                            </div>
-                                        </form>
-                                        <hr>
-                                    </div><div data-repeater-item="" style="">
-                                        <form class="form row">
-                                            <div class="form-group mb-1 col-sm-12 col-md-2">
-                                                <label for="email-addr">Email address</label>
-                                                <br>
-                                                <input type="email" class="form-control" id="email-addr" placeholder="Enter email">
-                                            </div>
-                                            <div class="form-group mb-1 col-sm-12 col-md-2">
-                                                <label for="pass">Password</label>
-                                                <br>
-                                                <input type="password" class="form-control" id="pass" placeholder="Password">
-                                            </div>
-                                            <div class="form-group mb-1 col-sm-12 col-md-2">
-                                                <label for="bio" class="cursor-pointer">Bio</label>
-                                                <br>
-                                                <textarea class="form-control" id="bio" rows="2"></textarea>
-                                            </div>
-                                            <div class="skin skin-flat form-group mb-1 col-sm-12 col-md-2">
-                                                <label for="tel-input">Gender</label>
-                                                <br>
-                                                <input class="form-control" type="tel" value="1-(555)-555-5555" id="tel-input">
-                                            </div>
-                                            <div class="form-group mb-1 col-sm-12 col-md-2">
-                                                <label for="profession">Profession</label>
-                                                <br>
-                                                <select class="form-control" id="profession">
-                                                    <option>Select Option</option>
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
-                                                    <option>Option 3</option>
-                                                    <option>Option 4</option>
-                                                    <option>Option 5</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-sm-12 col-md-2 text-center mt-2">
-                                                <button type="button" class="btn btn-danger" data-repeater-delete=""> <i class="ft-x"></i> Delete</button>
-                                            </div>
-                                        </form>
-                                        <hr>
-                                    </div></div>
-                                <div class="form-group overflow-hidden">
-                                    <div class="col-12">
-                                        <button data-repeater-create="" class="btn btn-primary">
-                                            <i class="ft-plus"></i> Add
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Amount of {{$data->quotation->package}}</th>
+                                    <th scope="col">Package Type</th>
+                                    <th scope="col">Length</th>
+                                    <th scope="col">Width</th>
+                                    <th scope="col">Height</th>
+                                    <th scope="col">Weight in kg</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row">{{$data->quotation->quantity}}</th>
+                                    <td>{{$data->quotation->package}}</td>
+                                    <td>{{$data->quotation->length}} {{$data->quotation->dimused}}</td>
+                                    <td>{{$data->quotation->width}} {{$data->quotation->dimused}}</td>
+                                    <td>{{$data->quotation->height}} {{$data->quotation->dimused}}</td>
+                                    <td>{{$data->quotation->weight}} kg</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                                <div class="media-body w-100">
+                                    <h6 class="list-group-item-heading">Total Weight:
+                                        <span class="font-medium-4 pt-1" style="padding-left: 25px;">{{$data->goods->aweight}} kg</span>
+                                    </h6>
+                                    <h6 class="list-group-item-heading" >Total Volume:
+                                        <span class="font-medium-4 pt-1" style="padding-left: 25px;">{{$data->goods->avolume}} cbm</span>
+                                    </h6>
+                                </div>
+                                <div class="form form-body form-actions">
+                                    <div class="form-actions float-right">
+                                        <button type="button" class="btn btn-outline-warning mr-1">
+                                            <i class="ft-x"></i> Decline Request
+                                        </button>
+                                        <button type="submit" class="btn btn-outline-primary">
+                                            <i class="ft-check"></i> Create a Quote
                                         </button>
                                     </div>
                                 </div>
-                            </div>
                         </div>
                     </div>
                 </div>
