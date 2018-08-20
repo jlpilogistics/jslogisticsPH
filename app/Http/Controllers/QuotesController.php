@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Charge;
 use App\Client;
+use GuzzleHttp;
 use App\Quotation;
 use App\Shiptype;
 use App\Transaction;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -48,7 +51,20 @@ class QuotesController extends Controller
      */
     public function create()
     {
-        //
+        $base = new GuzzleHttp\Client([
+            'base_uri' => 'http://data.fixer.io/',
+        ]);
+        $response = $base->request('GET', 'api/latest?access_key=' . env('FIXER_API_KEY') . '&symbols=PHP,phpUSD,JPY,GBP,AUD,CHF,CAD,MXN,CNY,NZD&format=1');
+        $response_data = json_decode($response->getBody()->getContents());
+
+
+
+        foreach ($response_data as $currency) {
+            $rates[] = $currency;
+        }
+
+        $charges = Charge::all()->pluck('name','id');
+        return view('admin.quotation.create-quote', compact('charges','currency'));
     }
 
     /**
@@ -59,7 +75,9 @@ class QuotesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $pdf = PDF::loadView('admin.quotation.pdf');
+        return $pdf->download('invoice.pdf');
+
     }
 
     /**
@@ -75,6 +93,7 @@ class QuotesController extends Controller
 //        $quote = Quotation::with('clients');
         return view('admin.quotation.view', compact('data','client'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -110,5 +129,8 @@ class QuotesController extends Controller
         //
     }
 
-
+    public function findcharge($id){
+        $amount = Charge::where('id', $id)->pluck('amount');
+        return response()->json(['success'=>true, 'info'=>$amount]);
+    }
 }

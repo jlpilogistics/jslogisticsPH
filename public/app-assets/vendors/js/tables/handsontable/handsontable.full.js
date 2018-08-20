@@ -28188,7 +28188,7 @@ if (typeof exports !== "undefined") {
     };
 
     numbro.loadCulturesInNode = function() {
-        // TODO: Rename the folder in 2.0.0
+        // TODO: Rename the fonts in 2.0.0
         var cultures = _dereq_('./languages');
 
         for(var langLocaleCode in cultures) {
@@ -28432,7 +28432,7 @@ if (typeof exports !== "undefined") {
     ************************************/
 
     if (inNodejsRuntime()) {
-        //Todo: Rename the folder in 2.0.0
+        //Todo: Rename the fonts in 2.0.0
         numbro.loadCulturesInNode();
     }
 

@@ -47,6 +47,7 @@
                         <div class="caption lfr medium_grey"  data-x="left" data-y="center" data-speed="300" data-start="2000">
 
                         </div>
+
                     </div>
                 </li>
                 <li data-transition="random" data-slotamount="1">
@@ -75,8 +76,11 @@
                         <div class="caption lfr medium_grey"  data-x="left" data-y="center" data-speed="300" data-start="2000">
 
                         </div>
+
                     </div>
                 </li>
+
+
 
             </ul>
         </div>

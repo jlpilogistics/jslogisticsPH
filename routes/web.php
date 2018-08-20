@@ -13,8 +13,9 @@
 
 Route::get('/', function () { return redirect('/admin/index'); });
 //Route::auth();
+Route::get('clients', function () { return view('client.auth.login-register'); });
 $this->get('login', 'Auth\LoginController@showLoginForm')->name('auth.login');
-$this->post('login', 'Auth\LoginController@login')->name('auth.login');
+$this->post('login', ['as' => 'login', 'uses' => 'Auth\LoginController@login']);
 $this->post('logout', 'Auth\LoginController@logout')->name('auth.logout');
 // Change Password Routes...
 //$this->get('change_password', 'Auth\ChangePasswordController@showChangePasswordForm')->name('auth.change_password');
@@ -59,5 +60,6 @@ Route::get('/products/create-step3', 'Client\ProductController@createStep3');
 Route::post('/products/create-step3', 'Client\ProductController@postCreateStep3');
 Route::get('/products/create-step4', 'Client\ProductController@createStep4');
 Route::post('/products/store', 'Client\ProductController@store');
+Route::get('/charges/{id}', 'QuotesController@findcharge');
 
 

@@ -189,11 +189,28 @@
                                                 <input type="number" class="form-control bfh-number" min="0" name="avolume">
                                             </div>
                                         </div>
-                                        <div class="form-group hidden">
-                                            <label for="tShpName" class="control-label col-xs-3">Chargeable weight:</label>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 " style="padding-bottom: 50px; ">
+                                    <label for="" class="text-info">Insurance Cost </label>
+                                    <br>
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            <label for="" class="control-label col-xs-3"><span class="fa fa-exclamation-circle reqast"></span>Commercial Value <span class="aw_unit">:</span> </label>
                                             <div class="col-xs-6 col-sm-4">
-                                                <label class="form-control label dim_cw_label">
-                                                </label></div>
+                                                <input type="number" class="form-control bfh-number" min="0" name="insurance">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="" class="control-label col-xs-3">Currency Used <span class="vw_unit">:</span></label>
+                                            <div class="col-xs-6 col-sm-4">
+                                                <select name="currency" class="form-control">
+                                                    <option selected="true" disabled value="">Currency</option>
+                                                    @foreach($currency as $key=>$val)
+                                                        <option value="{{$key}}">{{$key}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -1,6 +1,9 @@
 <?php
 namespace App\Services;
+use App\User;
 use Shippo;
+use Shippo_Address;
+
 class Shipping
 {
     public function __construct()
@@ -13,17 +16,18 @@ class Shipping
      * Validate an address through Shippo service
      *
      * @param User $user
-     * @return Shippo_Adress
+     * @return \Shippo_Adress
      */
-    public function validateAddress(User $user)
+    public function validateAddress()
     {
         // Grab the shipping address from the User model
-        $toAddress = $user->shippingAddress();
+        $toAddress = $this->shippingAddress();
         // Pass a validate flag to Shippo
         $toAddress['validate'] = true;
         // Verify the address data
         return Shippo_Address::create($toAddress);
     }
+
     /**
      * Return the shipping data for a user
      *
@@ -32,17 +36,25 @@ class Shipping
     public function shippingAddress()
     {
         return [
-            'name' => $this->name,
-            'company' => $this->company,
-            'street1' => $this->street1,
-            'city' => $this->city,
-            'state' => $this->state,
-            'zip' => $this->zip,
-            'country' => $this->country,
-            'phone' => $this->phone,
-            'email' => $this->email,
+            'name' => 'Ryan',
+            'company' => 'University of Makati',
+            'street1' => 'JP Rizal Ext., West Rembo',
+            'city' => 'Makati City',
+            'state' => 'Metro Manila',
+            'zip' => '1216',
+            'country' => 'Philippines',
+            'phone' => '09487924888',
+            'email' => 'ryanjayretutar@gmail.com',
         ];
+
+        // Try and validate the address
+
+
     }
+
+
+
+
     /**
      * Create a Shippo shipping rates
      *

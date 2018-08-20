@@ -40,7 +40,7 @@ Prism.hooks.add('wrap', function(env) {
 		if(env.type === 'entry-name') {
 			if(/(^|[^\\])\/\s*$/.test(env.content)) {
 				env.content = env.content.slice(0,-1);
-				// This is a folder
+				// This is a fonts
 				env.classes.push('dir');
 			} else {
 

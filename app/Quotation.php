@@ -9,7 +9,6 @@ class Quotation extends Model
 {
     protected $guarded=[];
     protected $fillable = [
-        'client_id',
         'package',
         'length',
         'width',
@@ -17,7 +16,6 @@ class Quotation extends Model
         'weight',
         'quantity',
         'dimused',
-        'status_id',
         'transaction_id'
     ];
 
@@ -33,9 +31,8 @@ class Quotation extends Model
     public function transaction(){
         return $this->belongsTo('App\Transaction');
     }
-    public function requestQuote($client, $quote, $transact){
+    public function requestQuote($quote, $transact){
             $this->transaction_id = $transact->id;
-            $this->client_id = $client->id;
             $this->package = $quote->package;
             $this->quantity = $quote->quantity;
             $this->length = $quote->length;

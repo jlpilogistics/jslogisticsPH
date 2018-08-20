@@ -15,6 +15,7 @@ use App\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Product;
+use GuzzleHttp;
 use Session;
 
 class ProductController extends Controller
@@ -173,9 +174,20 @@ class ProductController extends Controller
         elseif (empty($request->session()->get('goods'))){
             return redirect('products/create-step2');
         }
+        $base = new GuzzleHttp\Client([
+            'base_uri' => 'http://data.fixer.io/',
+        ]);
+        $response = $base->request('GET', 'api/latest?access_key=' . env('FIXER_API_KEY') . '&symbols=PHP,phpUSD,JPY,GBP,AUD,CHF,CAD,MXN,CNY,NZD&format=1');
+        $response_data = json_decode($response->getBody()->getContents());
+
+
+
+        foreach ($response_data as $currency) {
+            $rates[] = $currency;
+        }
 //        $request->session()->flush();
         $packages = Package::all()->pluck('type','type');
-        return view('client.quote-step3',compact('quote', 'packages'));
+        return view('client.quote-step3',compact('quote', 'packages','currency'));
     }
 
     public function postCreateStep3(Request $request)
@@ -193,6 +205,8 @@ class ProductController extends Controller
         $validatedData = $request->validate([
             'aweight' => 'required',
             'avolume' => 'required',
+            'currency' => 'required',
+            'insurance' => 'required',
         ]);
 
 //        for ($x = 0; $x < count($data); $x++) {
@@ -247,27 +261,33 @@ class ProductController extends Controller
         $client = Client::findOrFail(1);
         $transact = new Transaction();
         $transact->transact = $transact->generateTransaction();
+        $transact->status_id = 1;
+        $transact->client_id = $client->id;
         $transact->save();
         if($request->session()->get('quote1')){
             for($x = 1 ; $x<20; $x++){
                 if($request->session()->get('quote'.$x)){
                     $quote = $request->session()->get('quote'.$x);
                     $rfq = new Quotation();
-                    $rfq->requestQuote($client, $quote, $transact);
+                    $rfq->requestQuote($quote, $transact);
                 }
             }
         }
         $origin = $request->session()->get('origin');
         $origin->transaction_id = $transact->id;
-        $origin->save();
         $goods = $request->session()->get('goods');
         $goods->transaction_id = $transact->id;
-        $goods->save();
         $dest = $request->session()->get('dest');
         $dest->transaction_id = $transact->id;
-        $dest->save();
-        $request->session()->flush();
-        return redirect('/Main');
+
+        if(!(($origin->save()) && ($dest->save()) && ($goods->save()))){
+
+            return view('errors.503');
+        }else{
+            $request->session()->flush();
+            return redirect('/Main');
+        }
+
     }
 
 }

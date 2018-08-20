@@ -70,6 +70,9 @@
                                         </li>
                                     </ul>
                                 </li>
+                                <li>
+                                    <a href="{{ url('/clients')}}">Login</a>
+                                </li>
 
 
                             </ul>

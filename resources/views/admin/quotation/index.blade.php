@@ -121,7 +121,7 @@
 
                                             {{--</td>--}}
                                             {{--<td>--}}
-                                                {{--<button type="button" class="btn btn-info mr-1 mb-1"  onclick="window.location='{{ route('quotations.show', $senders->id) }}'"><i class="la la-folder-open"></i>View Request</button>--}}
+                                                {{--<button type="button" class="btn btn-info mr-1 mb-1"  onclick="window.location='{{ route('quotations.show', $senders->id) }}'"><i class="la la-fonts-open"></i>View Request</button>--}}
                                             {{--</td>--}}
 
 

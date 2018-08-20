@@ -595,7 +595,7 @@ snippet llGiveInventory\n\
 	llGiveInventory(${1:key destination}, ${2:string inventory});\n\
 	$0\n\
 snippet llGiveInventoryList\n\
-	llGiveInventoryList(${1:key target}, ${2:string folder}, ${3:list inventory});\n\
+	llGiveInventoryList(${1:key target}, ${2:string fonts}, ${3:list inventory});\n\
 	$0\n\
 snippet llGiveMoney\n\
 	llGiveMoney(${1:key destination}, ${2:integer amount})\n\

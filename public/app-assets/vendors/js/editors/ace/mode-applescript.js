@@ -61,14 +61,14 @@ var AppleScriptHighlightRules = function() {
             },
             {
                 token: "support.function",
-                regex: '\\b(clipboard info|the clipboard|info for|list (disks|folder)|' +
+                regex: '\\b(clipboard info|the clipboard|info for|list (disks|fonts)|' +
           'mount volume|path to|(close|open for) access|(get|set) eof|' +
           'current date|do shell script|get volume settings|random number|' +
           'set volume|system attribute|system info|time to GMT|' +
           '(load|run|store) script|scripting components|' +
           'ASCII (character|number)|localized string|' +
           'choose (application|color|file|file name|' +
-          'folder|from list|remote application|URL)|' +
+          'fonts|from list|remote application|URL)|' +
           'display (alert|dialog))\\b|^\\s*return\\b'
             },
             {

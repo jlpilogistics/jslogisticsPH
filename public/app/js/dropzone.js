@@ -1631,7 +1631,7 @@ var Dropzone = function (_Emitter) {
 
       this.emit("addedfiles", files);
 
-      // Even if it's a folder, files.length will contain the folders.
+      // Even if it's a fonts, files.length will contain the folders.
       if (files.length) {
         var items = e.dataTransfer.items;
 
@@ -1681,7 +1681,7 @@ var Dropzone = function (_Emitter) {
       }
     }
 
-    // When a folder is dropped (or files are pasted), items must be handled
+    // When a fonts is dropped (or files are pasted), items must be handled
     // instead of files.
 
   }, {

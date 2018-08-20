@@ -15,6 +15,8 @@ class Goods extends Model
         'temp',
         'description',
         'shiptypes',
+        'insurance',
+        'currency',
         'mode',
         'aweight',
         'avolume',

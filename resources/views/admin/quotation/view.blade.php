@@ -27,6 +27,7 @@
     <link rel="stylesheet" type="text/css" href="{{URL::asset('app-assets/css/core/menu/menu-types/vertical-menu-modern.css')}}">
     <link rel="stylesheet" type="text/css" href="{{URL::asset('app-assets/css/core/colors/palette-gradient.css')}}">
     <link rel="stylesheet" type="text/css" href="{{URL::asset('app-assets/css/pages/users.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{URL::asset('app-assets/vendors/css/forms/selects/select2.min.css')}}">
     <!-- END Page Level CSS-->
     <!-- BEGIN Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{URL::asset('assets/css/style.css')}}">
@@ -207,7 +208,7 @@
                                 </tr>
                                 </tbody>
                             </table>
-                                <div class="media-body w-100">
+                                <div class="media-body w-100 " style="padding-left: 50px; padding-top: 50px;">
                                     <h6 class="list-group-item-heading">Total Weight:
                                         <span class="font-medium-4 pt-1" style="padding-left: 25px;">{{$data->goods->aweight}} kg</span>
                                     </h6>
@@ -216,13 +217,13 @@
                                     </h6>
                                 </div>
                                 <div class="form form-body form-actions">
-                                    <div class="form-actions float-right">
+                                    <div class="form-actions float-right" style="padding-bottom: 50px; padding-right: 50px;">
                                         <button type="button" class="btn btn-outline-warning mr-1">
                                             <i class="ft-x"></i> Decline Request
                                         </button>
-                                        <button type="submit" class="btn btn-outline-primary">
-                                            <i class="ft-check"></i> Create a Quote
+                                        <button type="button" class="btn btn-outline-primary" onclick="window.location='{{ route('quotations.create' ) }}'"><i class="ft-check"></i> Create a Quote
                                         </button>
+
                                     </div>
                                 </div>
                         </div>
@@ -239,6 +240,9 @@
     <!-- BEGIN PAGE VENDOR JS-->
     <script src="{{URL::asset('app-assets/vendors/js/tables/datatable/datatables.min.js')}}" type="text/javascript"></script>
     <!-- END PAGE VENDOR JS-->
+    <script src="{{URL::asset('app-assets/vendors/js/forms/select/select2.full.min.js')}}" type="text/javascript"></script>
+    <script src="{{URL::asset('app-assets/vendors/js/forms/repeater/jquery.repeater.min.js')}}"
+            type="text/javascript"></script>
     <!-- BEGIN MODERN JS-->
     <script src="{{URL::asset('app-assets/js/core/app-menu.js')}}" type="text/javascript"></script>
     <script src="{{URL::asset('app-assets/js/core/app.js')}}" type="text/javascript"></script>
@@ -247,4 +251,9 @@
     <!-- BEGIN PAGE LEVEL JS-->
     <script src="{{URL::asset('app-assets/js/scripts/tables/datatables/datatable-basic.js')}}"
             type="text/javascript"></script>
+
+    <script src="{{URL::asset('app-assets/js/scripts/forms/select/form-select2.js')}}" type="text/javascript"></script>
+    <script src="{{URL::asset('app-assets/js/scripts/modal/components-modal.js')}}" type="text/javascript"></script>
+    <script src="{{URL::asset('app-assets/js/scripts/forms/form-repeater.js')}}"  type="text/javascript"></script>
+
 @stop
