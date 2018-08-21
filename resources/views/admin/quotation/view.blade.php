@@ -221,7 +221,7 @@
                                         <button type="button" class="btn btn-outline-warning mr-1">
                                             <i class="ft-x"></i> Decline Request
                                         </button>
-                                        <button type="button" class="btn btn-outline-primary" onclick="window.location='{{ route('quotations.create' ) }}'"><i class="ft-check"></i> Create a Quote
+                                        <button type="button" class="btn btn-outline-primary" onclick="window.location='{{ route('quotations.create-quote', $data->id) }}'"><i class="ft-check"></i> Create a Quote
                                         </button>
 
                                     </div>

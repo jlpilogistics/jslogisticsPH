@@ -70,9 +70,24 @@
                                         </li>
                                     </ul>
                                 </li>
+                                @if (Auth::guest())
                                 <li>
-                                    <a href="{{ url('/clients')}}">Login</a>
+                                    <a href="{{ url('users/login')}}">Login</a>
                                 </li>
+                                @else
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+
+                                        Hello, {{{ Auth::user()->name}}}<span class="caret"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="{{ url('/users/logout') }}">Dashboard</a></li>
+                                        <li><a href="{{ url('/users/logout') }}">Account Profile</a></li>
+                                        <li><a href="{{ url('/users/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                    </ul>
+
+                                </li>
+                                @endif
 
 
                             </ul>

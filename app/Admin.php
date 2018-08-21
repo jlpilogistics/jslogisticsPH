@@ -5,9 +5,11 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class Admin extends Authenticatable
 {
     use Notifiable;
+
+    protected $guard = 'admin';
 
     /**
      * The attributes that are mass assignable.
@@ -15,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'client_id', 'email', 'password',
+        'job_title', 'email', 'password',
     ];
 
     /**
@@ -27,13 +29,4 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-
-
-    public function role(){
-        return $this->belongsTo('App\Role');
-    }
-
-    public function client(){
-        return $this->belongsTo('App\Client');
-    }
 }

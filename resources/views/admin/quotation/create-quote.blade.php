@@ -21,6 +21,7 @@
     <link rel="stylesheet" type="text/css" href="{{URL::asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
     <!-- END VENDOR CSS-->
     <!-- BEGIN MODERN CSS-->
+
     <link rel="stylesheet" type="text/css" href="{{URL::asset('app-assets/css/app.css')}}">
     <!-- END MODERN CSS-->
     <!-- BEGIN Page Level CSS-->
@@ -57,16 +58,16 @@
             <div class="card">
                 <div class="card-head">
                     <div class="card-header">
-                        <h4 class="card-title">Quote #12314 details</h4>
+                        <h4 class="card-title">Quote #{{$data->transact}} details</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                     </div>
                     <div class="px-1">
                         <ul class="list-inline list-inline-pipe text-left border-bottom-grey border-bottom-lighten-3">
-                            <li>Request a Quote on:
-                                <span class="text-muted">December 14, 1996 @ 4:04 pm</span>
+                            <li>Requested a Quote on:
+                                <span class="text-muted">{{$data->created_at}}</span>
                             </li>
                             <li>Status:
-                                <span class="text-muted">Pending</span>
+                                <span class="text-muted">{{$data->status->name}}</span>
                             </li>
 
                             <li><a href="#" class="text-muted" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Export as PDF"><i class="la la-file-pdf-o"></i></a></li>
@@ -84,8 +85,7 @@
                                         <div class="form-group row">
                                             <label class="col-md-4 label-control" for="userinput1">Name</label>
                                             <div class="col-md-8">
-                                                <input type="text" id="userinput1" class="form-control border-primary" placeholder="First Name"
-                                                       name="firstname">
+                                                <p class="float-right">{{$client->firstName}} {{$client->lastName}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -93,8 +93,7 @@
                                         <div class="form-group row">
                                             <label class="col-md-4 label-control" for="userinput2">Date Quoted</label>
                                             <div class="col-md-8">
-                                                <input type="date" id="userinput2" class="form-control border-primary" placeholder="Last Name"
-                                                       name="lastname">
+                                                {{{$mytime = Carbon\Carbon::now()->toFormattedDateString()}}}
                                             </div>
                                         </div>
                                     </div>
@@ -102,8 +101,7 @@
                                         <div class="form-group row">
                                             <label class="col-md-4 label-control" for="userinput2">Quote ID</label>
                                             <div class="col-md-8">
-                                                <input type="text" id="userinput2" class="form-control border-primary" placeholder="Last Name"
-                                                       name="lastname">
+                                                <p class="float-right">{{$data->transact}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -111,10 +109,9 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group row">
-                                            <label class="col-md-4 label-control" for="userinput1">Email Address</label>
-                                            <div class="col-md-8">
-                                                <input type="text" id="userinput1" class="form-control border-primary" placeholder="First Name"
-                                                       name="firstname">
+                                            <label class="col-md-5 label-control" for="userinput1">Email Address</label>
+                                            <div class="col-md-7">
+                                                <p class="float-right">{{$client->email}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -127,97 +124,62 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group row">
-                                            <label class="col-md-4 label-control" for="userinput4">Nick Name</label>
-                                            <div class="col-md-8">
-                                                <input type="text" id="userinput4" class="form-control border-primary" placeholder="Nick Name"
-                                                       name="nickname">
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <h4 class="form-section"><i class="ft-mail"></i> Charges/Rates</h4>
-                                    <table class="table mb-0">
+                                <div class="col-lg-12 col-sm-12">
+                                    <table class="table table-bordered">
                                         <thead class="bg-teal bg-lighten-4">
                                             <tr>
-                                                    <th >Currency</th>
-                                                    <th>Charges</th>
-                                                    <th>Amount</th>
-                                                    <th>Unit</th>
-                                                    <th style="padding-right: 80px;">Total</th>
-                                                    <th>
-
+                                                    <th width="20%">Currency</th>
+                                                    <th width="30%">Charges</th>
+                                                    <th width="20%">Enter Amount in Peso</th>
+                                                    <th width="20%">Total</th>
+                                                    <th width="10%" style="text-align: center;">
+                                                        <a href="#/" class="addRow"><i class="glyphicon glyphicon-plus"></i>+</a>
                                                     </th>
                                                 </tr>
                                         </thead>
-                                    </table>
-                                <div class="repeater-default" style="padding-top: 25px;">
-                                    <div data-repeater-list="car">
-                                        <div data-repeater-item>
-                                            <div class="row">
-
-                                                <div class="form-group mb-1 col-xs-12 col-md-2">
-                                                    <select name="currency" class="form-control">
+                                        <tbody class="tbodyRow">
+                                            <tr>
+                                                <td><select name="currency[]" class="form-control currency">
                                                         <option selected="true" disabled value="">Currency</option>
                                                         @foreach($currency as $key=>$val)
                                                             <option value="{{$val}}">{{$key}}</option>
                                                         @endforeach
-                                                    </select>
-                                                </div>
-                                                <div id="fuck " class="mb-1 col-sm-12 col-md-3">
-                                                    <div class="form-group">
-                                                        {!! Form::select('charge', $charges, null,['class'=>'form-control charge', 'id'=>'charge']) !!}
-                                                    </div>
-                                                </div>
-                                                <div class="form-group mb-1 col-sm-12 col-md-2">
-                                                    <textarea class="form-control" id="bio" rows="1"></textarea>
-                                                </div>
-                                                <div class="skin skin-flat form-group mb-1 col-sm-12 col-md-2">
-                                                    {!! Form::select('charge', $charges, null,['class'=>'form-control charge', 'id'=>'charge']) !!}
-                                                </div>
-                                                <div class="form-group mb-1 col-sm-12 col-md-2">
-                                                    <input type="text" class="form-control amount" id="amount">
-                                                </div>
-                                                <div class="form-group mb-1 col-sm-12 col-md-1">
-                                                    <button type="button" class="btn btn-danger" data-repeater-delete> <i class="ft-x"></i></button>
-                                                </div>
-                                            </div>
+                                                    </select></td>
+                                                <td>{!! Form::select('charge[]', $charge, null,['class'=>'form-control charge', 'id'=>'charge']) !!}</td>
+                                                <td><input type="text" class="form-control amount numbersOnly" name="amount[]"></td>
+                                                <td><span style="font-size: 14px" class="current"></span><p class="lead totalRow float-right" ></p></td>
+                                                <input type="hidden" value="{{$pesos}}" class="pesoRate">
+                                                <td><a href="#/" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>x</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-7 col-sm-12 text-center text-md-left">
+                                    </div>
+                                    <div class="col-md-5 col-sm-12">
+                                        <p class="lead">Total amount</p>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <tbody>
+                                                <tr>
+                                                    <td>Sub Total</td>
+                                                    <td class="text-right"><b class="subtotal"></b> </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>TAX (12%)</td>
+                                                    <td class="text-right tax">0</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-bold-800">Total</td>
+                                                    <td class="text-bold-800 text-right total">0</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-7 col-sm-12 text-center text-md-left">
-                                        </div>
-                                        <div class="col-md-5 col-sm-12">
-                                            <p class="lead">Total amount</p>
-                                            <div class="table-responsive">
-                                                <table class="table">
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>Sub Total</td>
-                                                        <td class="text-right">$ 14,900.00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>TAX (12%)</td>
-                                                        <td class="text-right">$ 1,788.00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-bold-800">Total</td>
-                                                        <td class="text-bold-800 text-right"> $ 16,688.00</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group overflow-hidden">
-                                        <div class="col-12">
-                                            <button type="button" data-repeater-create class="btn btn-primary">
-                                                <i class="ft-plus"></i> Add
-                                            </button>
-                                        </div>
-                                    </div>
-
                                 </div>
                             </div>
                             <div class="form-actions right">
@@ -258,7 +220,77 @@
 
     <script src="{{URL::asset('app-assets/js/scripts/forms/select/form-select2.js')}}" type="text/javascript"></script>
     <script src="{{URL::asset('app-assets/js/scripts/forms/form-repeater.js')}}"  type="text/javascript"></script>
-    <script>
+    <script type="text/javascript">
+        $('tbody').delegate('.amount,.totalRow,.currency','keyup',function () {
+            var row = $(this).parent().parent();
+            var curName = $('.currency option:selected').text(); // The value of the selected option
+            $('.current').html(curName);
+            var cur = $('.currency').val(); // The value of the selected option
+            var peso = $('.pesoRate').val();
+            var rate  = cur / peso;
+            var amount = row.find('.amount').val();
+            var tot = amount * rate;
+            var tota = tot.toFixed(2);
+            row.find('.totalRow').text(tota);
+            total();
+
+        });
+        $('tr').delegate('.currency','change',function () {
+
+            var curName = $('.currency option:selected').text(); // The value of the selected option
+            $('.current').html(curName);
+
+
+        });
+
+        $('.addRow').on('click', function () {
+            addRow();
+
+        });
+
+        function total(){
+            var total = 0;
+            $('.totalRow').each(function (i,e) {
+                var totalRow = $(this).text()-0;
+                total += totalRow;
+            });
+            $('.subtotal').html(total);
+            var tax = total * 0.12;
+            var taxes = tax.toFixed(2);
+            $('.tax').html(taxes);
+            var all = total + tax;
+            var amt = all.toFixed(2);
+            $('.total').html(amt);
+        }
+
+        function addRow(){
+            var tr = '<tr>\n' +
+                '                                                <td></td>\n' +
+                '                                                <td><select name="charge[]" class="form-control charge">\n' +
+                '                                                        <option selected="true" disabled value="">Select Charges</option>\n' +
+                '                                                        @foreach($charge as $key=>$val)\n' +
+                '                                                            <option value="{{$val}}">{{$val}}</option>\n' +
+                '                                                        @endforeach\n' +
+                '                                                    </select></td>\n' +
+                '                                                <td><input type="text" class="form-control amount numbersOnly" name="amount[]"></td>\n' +
+                '                                                <td><span style="font-size: 14px" class="current"></span><p class="lead totalRow float-right" ></p></td>\n' +
+                '                                                <td><a href="#/" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>x</a></td>\n' +
+                '                                            </tr>';
+
+                $('.tbodyRow').append(tr);
+        }
+
+
+        $('body').delegate('.remove' ,'click', function () {
+
+            $(this).parent().parent().remove();
+        });
+        $('.numbersOnly').keyup(function () {
+            if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+                this.value = this.value.replace(/[^0-9\.]/g, '');
+            }
+        });
+
 
         // $(".row").on('change',"#charge",function() {
         //     $.ajax({

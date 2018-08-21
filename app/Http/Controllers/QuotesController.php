@@ -15,6 +15,11 @@ use App\Http\Requests;
 
 class QuotesController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -44,27 +49,43 @@ class QuotesController extends Controller
         return view('admin.quotation.index', compact('quote'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(){
+
+    }
+
+    public function createQuote($id)
     {
         $base = new GuzzleHttp\Client([
             'base_uri' => 'http://data.fixer.io/',
         ]);
-        $response = $base->request('GET', 'api/latest?access_key=' . env('FIXER_API_KEY') . '&symbols=PHP,phpUSD,JPY,GBP,AUD,CHF,CAD,MXN,CNY,NZD&format=1');
+        $response = $base->request('GET', 'api/latest?access_key=' . env('FIXER_API_KEY') . '&symbols=PHP,USD,JPY,GBP,AUD,CHF,CAD,MXN,CNY,NZD&format=1');
         $response_data = json_decode($response->getBody()->getContents());
-
-
-
+        $peso = $base->request('GET', 'api/latest?access_key=' . env('FIXER_API_KEY') . '&symbols=PHP&format=1');
+        $peso_data = json_decode($peso->getBody()->getContents());
         foreach ($response_data as $currency) {
             $rates[] = $currency;
         }
+        foreach ($peso_data->rates as $peso_rate){
+            $pesos = $peso_rate;
+        }
+        $data = Transaction::with('origin','destination','goods','quotation')->findOrFail($id);
+        $client = Client::with('transaction')->findOrFail($data->client_id);
+        if(($data->goods->mode) == 'FCL40'){
+            $ref_id = 1;
+        }
+        elseif(($data->goods->mode) == 'FCL20'){
+            $ref_id = 2;
+        }
+        elseif(($data->goods->mode) == 'LCL'){
+            $ref_id = 3;
+        }
+        if(($data->goods->mode) == 'Air'){
+            $ref_id = 4;
+        }
 
-        $charges = Charge::all()->pluck('name','id');
-        return view('admin.quotation.create-quote', compact('charges','currency'));
+        $charges = new Charge();
+        $charge = $charges->where('mode_id',$ref_id)->pluck('name','id');
+        return view('admin.quotation.create-quote', compact('charge','currency','data','client','pesos'));
     }
 
     /**

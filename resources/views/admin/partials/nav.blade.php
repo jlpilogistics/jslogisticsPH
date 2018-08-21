@@ -166,7 +166,7 @@
                             <a class="dropdown-item" href="#"><i class="ft-mail"></i> My Inbox</a>
                             <a class="dropdown-item" href="#"><i class="ft-check-square"></i> Task</a>
                             <a class="dropdown-item" href="#"><i class="ft-message-square"></i> Chats</a>
-                            {!! Form::open(['route' => 'auth.logout', 'style' => 'display:none;', 'id' => 'logout']) !!}
+                            {!! Form::open(['route' => 'admin.logout', 'style' => 'display:none;', 'id' => 'logout']) !!}
                             <button type="submit"></button>
                             {!! Form::close() !!}
                             <div class="dropdown-divider"></div><a class="dropdown-item" href="#logout" onclick="$('#logout').submit();">

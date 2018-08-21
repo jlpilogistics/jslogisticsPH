@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
@@ -9,6 +10,10 @@ class Transaction extends Model
     public function generateTransaction() {
         $number = mt_rand(10000000, 99999999); // better than rand()
         return $number;
+    }
+    public function getCreatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->toDayDateTimeString();
     }
 
     public function destination(){
