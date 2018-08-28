@@ -84,7 +84,7 @@ class QuotesController extends Controller
         }
 
         $charges = new Charge();
-        $charge = $charges->where('mode_id',$ref_id)->pluck('name','id');
+        $charge = $charges->where('mode_id',$ref_id)->pluck('name','name');
         return view('admin.quotation.create-quote', compact('charge','currency','data','client','pesos'));
     }
 
@@ -96,8 +96,30 @@ class QuotesController extends Controller
      */
     public function store(Request $request)
     {
-        $pdf = PDF::loadView('admin.quotation.pdf');
-        return $pdf->download('invoice.pdf');
+//        $pdf = PDF::loadView('admin.quotation.pdf');
+//        return $pdf->download('invoice.pdf');
+        $ch = new Charge();
+        $data = $request->all();
+        for($i=0;$i<count($data['charge']);$i++){
+            $curr = $request->currency;
+            $peso = $request->pesoRate;
+            $convert = $request->amount[$i];
+            $result = $ch->convertRate($curr,$peso, $convert);
+            $charges[] = array('id'=>($i+1),
+                'charge'=>$request->charge[$i],
+                'amount'=>$result,
+                );
+
+        }
+        for($i=0;$i<count($data['conditions']);$i++){
+            $terms[] = array('list'=>$request->conditions[$i]);
+        }
+//        echo json_encode($charges);
+        return view('admin.quotation.pdf', compact('data','charges','terms'));
+//        echo json_encode($request->all());
+//        $request->session()->put('some_key', $request->all());
+//        echo json_encode($request->session()->get('some_key'));
+
 
     }
 

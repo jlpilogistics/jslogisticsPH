@@ -29,6 +29,10 @@
     Route::resource('/quotations', 'QuotesController');
     Route::resource('drivers', 'DriversController');
     Route::resource('vehicles', 'VehiclesController');
+    Route::get('monitor', 'monitorController@index');
+    Route::get('client-lists', 'BillingController@index');
+    Route::get('invoice', 'BillingController@create');
+    Route::resource('users-admin', 'Auth\UsersController');
 
 
 

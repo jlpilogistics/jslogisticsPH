@@ -87,4 +87,7 @@
   'lineawesome' => array(
     'normal' => $fontDir . '\bfcc264048cde59a009455ccefe3f895',
   ),
+  'feather' => array(
+    'normal' => $fontDir . '\bb04fbdf18305cdf86d4e9ea25c5c85c',
+  ),
 ) ?>

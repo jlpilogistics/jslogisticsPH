@@ -57,18 +57,8 @@
                                     <a href="{{url('/location')}}">Status</a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0);">Request Quote</a>
-                                    <ul class="sub-menu">
-                                        <li>
-                                            <a href="{{url('quote/create')}}">Import</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{url('/export')}}">Export</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{url('/domestic')}}">Domestic</a>
-                                        </li>
-                                    </ul>
+                                    <a href="{{url('/products/create-step1')}}">Request Quote</a>
+
                                 </li>
                                 @if (Auth::guest())
                                 <li>

@@ -1,7 +1,7 @@
 <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class="nav-item"><a href="index.html"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">Dashboard</span><span class="badge badge badge-info badge-pill float-right mr-2">3</span></a>
+            <li class="nav-item"><a href="/admin/index"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">Dashboard</span><span class="badge badge badge-info badge-pill float-right mr-2">3</span></a>
             </li>
             <li class=" nav-item"><a href="#"><i class="la la-television"></i><span class="menu-title" data-i18n="nav.templates.main">Templates</span></a>
             </li>
@@ -36,31 +36,38 @@
             </li>
             <li class=" nav-item"><a href="#"><i class="la la-android"></i><span class="menu-title" data-i18n="nav.menu_levels.main">Documents</span></a>
             </li>
+            <li class=" nav-item"><a href="/monitor"><i class="la la-support"></i><span class="menu-title" data-i18n="nav.support_raise_support.main">Monitor Cargo</span></a>
+            </li>
             <li class=" navigation-header">
                 <span data-i18n="nav.category.pages">Manage Fleet</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip"
                                                                     data-placement="right" data-original-title="Pages"></i>
             </li>
-            <li class=" nav-item"><a href="/vehicle"><i class="la la-truck"></i><span class="menu-title" data-i18n="">Vehicles</span></a>
+            <li class=" nav-item"><a href="/vehicles/create"><i class="la la-truck"></i><span class="menu-title" data-i18n="">Vehicles</span></a>
             </li>
-            <li class=" nav-item"><a href="/vehicleViews"><i class="la la-table"></i><span class="menu-title" data-i18n="">Vehicle Table</span></a>
+            <li class=" nav-item"><a href="/vehicles"><i class="la la-table"></i><span class="menu-title" data-i18n="">Vehicle Table</span></a>
             </li>
-            <li class=" nav-item"><a href="/driver"><i class="la la-user"></i><span class="menu-title" data-i18n="nav.project.main">Drivers</span></a>
+            <li class=" nav-item"><a href="/drivers/create"><i class="la la-user"></i><span class="menu-title" data-i18n="nav.project.main">Drivers</span></a>
             </li>
-            <li class=" nav-item"><a href="/driverViews"><i class="la la-list"></i><span class="menu-title" data-i18n="nav.project.main">Drivers Table</span></a>
+            <li class=" nav-item"><a href="/drivers"><i class="la la-list"></i><span class="menu-title" data-i18n="nav.project.main">Drivers Table</span></a>
             </li>
             <li class=" nav-item"><a href="/fuel"><i class="la la-automobile"></i><span class="menu-title" data-i18n="nav.project.main">Fuel Records</span></a>
             </li>
-            <li class=" nav-item"><a href="/maintenance"><i class="fas fa-wrench"></i><span class="menu-title" data-i18n="nav.project.main">Maintenance Record</span></a>
+            <li class=" nav-item"><a href="/Maintenance"><i class="la la-wrench"></i><span class="menu-title" data-i18n="nav.project.main">Maintenance Record</span></a>
             </li>
             <li class=" navigation-header">
-                <span data-i18n="nav.category.support">Support</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip"
-                                                                        data-placement="right" data-original-title="Support"></i>
-            </li>
-            <li class=" nav-item"><a href="http://support.pixinvent.com/"><i class="la la-support"></i><span class="menu-title" data-i18n="nav.support_raise_support.main">Raise Support</span></a>
+                <span data-i18n="nav.category.support">Manage Billing</span><i class="la la-ellipsis-h ft-minus" data-placement="right" data-original-title="Support"></i>
             </li>
             <li class=" nav-item">
-                <a href="https://pixinvent.com/modern-admin-clean-bootstrap-4-dashboard-html-template/documentation"><i class="la la-text-height"></i>
-                    <span class="menu-title" data-i18n="nav.support_documentation.main">Documentation</span>
+                <a href="/client-lists" > <i class="la la-list"></i>
+                    <span class="menu-title" data-i18n="nav.support_documentation.main" >List of Clients</span>
+                </a>
+            </li>
+            <li class=" navigation-header">
+                <span data-i18n="nav.category.support">Manage Users</span><i class="la la-ellipsis-h ft-minus" data-placement="right" data-original-title="Support"></i>
+            </li>
+            <li class=" nav-item">
+                <a href="/users-admin" ><i class="la la-user-plus"></i>
+                    <span class="menu-title" data-i18n="nav.support_documentation.main" >Add Users</span>
                 </a>
             </li>
         </ul>

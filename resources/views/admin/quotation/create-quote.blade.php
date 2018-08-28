@@ -78,6 +78,12 @@
                     <div class="card-body">
                         <form class="form form-horizontal" method="post" action="{{action('QuotesController@store')}}">
                             {{csrf_field()}}
+                            <input type="hidden" name="name" value="{{$client->firstName}} {{$client->lastName}}">
+                            <input type="hidden" name="address" value="{{$client->address}}">
+                            <input type="hidden" name="quotenumber" value="{{$data->transact}}">
+                            <input type="hidden" name="city" value="{{$client->city}}">
+                            <input type="hidden" name="country" value="{{$client->country}}">
+                            <input type="hidden" name="term" value="{{$data->goods->term}}">
                             <div class="form-body">
                                 <h4 class="form-section"><i class="la la-eye"></i> Quote to:</h4>
                                 <div class="row">
@@ -94,6 +100,7 @@
                                             <label class="col-md-4 label-control" for="userinput2">Date Quoted</label>
                                             <div class="col-md-8">
                                                 {{{$mytime = Carbon\Carbon::now()->toFormattedDateString()}}}
+                                                <input type="hidden" name="datequoted" value="{{$mytime}}">
                                             </div>
                                         </div>
                                     </div>
@@ -120,7 +127,7 @@
                                             <label class="col-md-4 label-control" for="userinput3">Valid Until</label>
                                             <div class="col-md-8">
                                                 <input type="date" id="userinput3" class="form-control border-primary" placeholder="Username"
-                                                       name="username">
+                                                       name="validity">
                                             </div>
                                         </div>
                                     </div>
@@ -141,7 +148,7 @@
                                         </thead>
                                         <tbody class="tbodyRow">
                                             <tr>
-                                                <td><select name="currency[]" class="form-control currency">
+                                                <td><select name="currency" class="form-control currency">
                                                         <option selected="true" disabled value="">Currency</option>
                                                         @foreach($currency as $key=>$val)
                                                             <option value="{{$val}}">{{$key}}</option>
@@ -150,14 +157,27 @@
                                                 <td>{!! Form::select('charge[]', $charge, null,['class'=>'form-control charge', 'id'=>'charge']) !!}</td>
                                                 <td><input type="text" class="form-control amount numbersOnly" name="amount[]"></td>
                                                 <td><span style="font-size: 14px" class="current"></span><p class="lead totalRow float-right" ></p></td>
-                                                <input type="hidden" value="{{$pesos}}" class="pesoRate">
+                                                <input type="hidden" value="{{$pesos}}" class="pesoRate" name="pesoRate">
                                                 <td><a href="#/" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>x</a></td>
                                             </tr>
+                                            <input type="hidden" name="symbol" value="" id="myText">
                                         </tbody>
                                     </table>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-7 col-sm-12 text-center text-md-left">
+                                        <table class="table table-bordered">
+                                            <thead class="bg-teal bg-lighten-4">
+                                            <tr>
+                                                <th>Terms and Conditions <a href="#/" class="addTerms" style="float: right"><i class="glyphicon glyphicon-plus"></i>+</a></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="terms">
+                                            <tr>
+                                                <td><textarea type="text" class="form-control" style="resize: none" name="conditions[]"></textarea></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                     <div class="col-md-5 col-sm-12">
                                         <p class="lead">Total amount</p>
@@ -176,6 +196,9 @@
                                                     <td class="text-bold-800">Total</td>
                                                     <td class="text-bold-800 text-right total">0</td>
                                                 </tr>
+                                                <input type="hidden" name="subtotals" value="" id="mySub">
+                                                <input type="hidden" name="taxes" value="" id="myTax">
+                                                <input type="hidden" name="mytotals" value="" id="myTotal">
                                                 </tbody>
                                             </table>
                                         </div>
@@ -237,9 +260,15 @@
         });
         $('tr').delegate('.currency','change',function () {
 
-            var curName = $('.currency option:selected').text(); // The value of the selected option
+            var curName = $('.currency option:selected').text();
+            document.getElementById("myText").value = curName;// The value of the selected option
             $('.current').html(curName);
 
+
+        });
+
+        $('.addTerms').on('click', function () {
+            addTerm();
 
         });
 
@@ -261,6 +290,9 @@
             var all = total + tax;
             var amt = all.toFixed(2);
             $('.total').html(amt);
+            document.getElementById("mySub").value = total;
+            document.getElementById("myTax").value = taxes;
+            document.getElementById("myTotal").value = amt;
         }
 
         function addRow(){
@@ -278,6 +310,13 @@
                 '                                            </tr>';
 
                 $('.tbodyRow').append(tr);
+        }
+
+        function addTerm(){
+            var termtr = ' <tr>\n' +
+                '                                                <td><textarea type="text" class="form-control" style="resize: none" name="conditions[]"></textarea></td>\n' +
+                '                                            </tr>';
+            $('.terms').append(termtr);
         }
 
 
