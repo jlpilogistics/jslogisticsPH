@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Client;
+use App\Mail\VerifyMail;
+
 use App\User;
 use App\Http\Controllers\Controller;
+use App\VerifyUser;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Mail;
 
 class RegisterController extends Controller
 {
@@ -28,7 +35,8 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/Main';
+    private $emailTo = '';
 
     /**
      * Create a new controller instance.
@@ -40,6 +48,8 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -49,9 +59,16 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'form-email' => 'required|string|email|max:255|unique:users,email',
+            'form-password' => 'required|string|min:6|confirmed',
+            'form-first-name' => 'required|string|max:255',
+            'form-last-name' =>  'required|string|max:255',
+            'form-number' => 'required|string|max:255',
+            'form-company' => 'required|string|max:255',
+            'form-address' => 'required|string|max:255',
+            'form-zip' => 'required|string|max:255',
+            'form-country' => 'required|string|max:255',
+            'form-city' => 'required|string|max:255',
         ]);
     }
 
@@ -63,19 +80,57 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+        $client = Client::create([
+            'firstName' => $data['form-first-name'],
+            'lastName' => $data['form-last-name'],
+            'company' => $data['form-company'],
+            'email' => $data['form-email'],
+            'phone' => $data['form-number'],
+            'address' => $data['form-address'],
+            'city' => $data['form-city'],
+            'country' => $data['form-country'],
+            'zip' => $data['form-zip'],
         ]);
+
+
+
+        $user = User::create([
+            'name' => $data['form-first-name'],
+            'email' => $data['form-email'],
+            'password' => Hash::make($data['form-password']),
+            'client_id' => $client->id,
+        ]);
+
+        $verifyUser = VerifyUser::create([
+            'user_id' => $user->id,
+            'token' => str_random(40)
+        ]);
+
+        $name = $user->name;
+        $verify = $user->verifyUser->token;
+        $this->emailTo = $user->email;
+
+        Mail::send('emails.confirmation', ['name' => $name, 'verify' => $verify], function ($message)
+        {
+
+            $message->from('jlpilogistics@gmail.com', 'Jexsan Logistics Philippines Inc.')
+                    ->subject('Quotation Requested');
+
+            $message->to($this->emailTo);
+
+        });
+
+
+        return $user;
     }
 
     public function register(Request $request)
     {
-        $this->validator($request->all())->validate();
+        $this->validator($request->all());
 
         event(new Registered($user = $this->create($request->all())));
 
+        $this->guard()->login($user);
 
         return $this->registered($request, $user)
             ?: redirect($this->redirectPath());
@@ -83,6 +138,31 @@ class RegisterController extends Controller
 
     protected function registered(Request $request, $user)
     {
-        return "You have to validate the account first";
+        $this->guard()->logout();
+        return redirect('/users/login')->with('status', 'We sent you an activation code. Check your email and click on the link to verify.');
     }
+
+    public function verifyUser($token)
+    {
+        $verifyUser = VerifyUser::where('token', $token)->first();
+
+
+        if(isset($verifyUser) ){
+            $user = $verifyUser->user;
+            if(!$user->verified) {
+                $verifyUser->user->verified = 1;
+                $verifyUser->user->save();
+
+                $status = "Your e-mail is verified. You can now login.";
+            }else{
+                $status = "Your e-mail is already verified. You can now login.";
+            }
+        }else{
+            return redirect('/login')->with('warning', "Sorry your email cannot be identified.");
+        }
+
+        return redirect('/users/login')->with('status', $status);
+    }
+
+
 }

@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Charge;
 use App\Client;
+use App\Notifications\QuoteSent;
+use App\User;
 use GuzzleHttp;
+use Mail;
+use Notification;
 use App\Quotation;
 use App\Shiptype;
 use App\Transaction;
@@ -15,6 +19,11 @@ use App\Http\Requests;
 
 class QuotesController extends Controller
 {
+
+    private $pdf = '';
+    private $data = '';
+    private $charges = '';
+    private $terms = '';
 
     public function __construct()
     {
@@ -114,8 +123,37 @@ class QuotesController extends Controller
         for($i=0;$i<count($data['conditions']);$i++){
             $terms[] = array('list'=>$request->conditions[$i]);
         }
+        $this->data = $data;
+        $this->charges = $charges;
+        $this->terms = $terms;
+
+        $pdf =  PDF::loadView('admin.billing.invoice', with(['data' => $this->data, 'charges' => $this->charges, 'terms' => $this->terms]));
+        ini_set('max_execution_time', 300);
+        return $pdf->stream();
+
+
+//        Notification::route('mail', 'ryanjayretutar@gmail.com')->notify(new QuoteSent($this->data, $this->charges, $this->terms));
+
 //        echo json_encode($charges);
-        return view('admin.quotation.pdf', compact('data','charges','terms'));
+
+//        Mail::send('admin.billing.invoice',['name' => $terms], function ($message)
+//        {
+//            ini_set('max_execution_time', 300);
+//            $pdf =  PDF::loadView('admin.billing.invoice');
+//
+//            $message->from('jlpilogistics@gmail.com', 'Jexsan Logistics Philippines Inc.')
+//                ->subject('Quotation Requested');
+//
+//            $message->to('ryanjayretutar@gmail.com');
+//            $message->attachData($pdf->output(),"name.pdf");
+//
+//
+//
+//        });
+//        return view('admin.quotation.pdf', compact('data','charges','terms'));
+
+
+
 //        echo json_encode($request->all());
 //        $request->session()->put('some_key', $request->all());
 //        echo json_encode($request->session()->get('some_key'));
@@ -135,6 +173,13 @@ class QuotesController extends Controller
         $client = Client::with('transaction')->findOrFail($data->client_id);
 //        $quote = Quotation::with('clients');
         return view('admin.quotation.view', compact('data','client'));
+    }
+
+
+    public function sendQuote(){
+
+
+
     }
 
 

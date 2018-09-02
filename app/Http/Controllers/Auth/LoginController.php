@@ -34,18 +34,18 @@ class LoginController extends Controller
         return view('client.auth.login-register');
     }
 
-    public function login(Request $request){
-        $this->validate($request, [
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        if(Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)){
-            return redirect()->intended(route('user.index'));
-        }
-
-        return redirect()->back()->withInput($request->only('email', 'remember'));
-    }
+//    public function login(Request $request){
+//        $this->validate($request, [
+//            'email' => 'required|email',
+//            'password' => 'required',
+//        ]);
+//
+//        if(Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)){
+//            return redirect()->intended(route('user.index'));
+//        }
+//
+//        return redirect()->back()->withInput($request->only('email', 'remember'));
+//    }
 
     /**
      * Create a new controller instance.
@@ -60,6 +60,16 @@ class LoginController extends Controller
     public function userLogout(Request $request){
         Auth::guard('web')->logout();
         return redirect('/Main');
+    }
+
+    public function authenticated(Request $request, $user)
+    {
+
+        if (!$user->verified) {
+            auth()->logout();
+            return back()->with('warning', 'You need to confirm your account. We have sent you an activation code, please check your email.');
+        }
+        return redirect()->intended($this->redirectPath());
     }
 
 

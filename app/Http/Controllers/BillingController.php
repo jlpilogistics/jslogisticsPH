@@ -35,6 +35,11 @@ class BillingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function clientprofile()
+    {
+        return view('admin.billing.clientprofile');
+    }
     public function store(Request $request)
     {
         //

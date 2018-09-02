@@ -90,4 +90,7 @@
   'feather' => array(
     'normal' => $fontDir . '\bb04fbdf18305cdf86d4e9ea25c5c85c',
   ),
+  'roboto' => array(
+    'normal' => $fontDir . '\73a648e04197eba26eb65837ab386447',
+  ),
 ) ?>

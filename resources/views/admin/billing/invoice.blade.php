@@ -1,224 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Your receipt</title>
 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .invoice-box {
+      max-width: 800px;
+      margin: auto;
+      padding: 30px;
+      border: 1px solid #eee;
+      box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+      font-size: 16px;
+      line-height: 24px;
+      font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+      color: #555;
+    }
 
-        <!DOCTYPE html>
-        @extends('admin.billing.assets')
-<html class="loading" lang="en" data-textdirection="ltr">
-<head >
-  @yield('assets')
-  <script language="javascript">
-      function printContent(el){
-          var restorepage = $('body').html();
-          var printcontent = $('#' + el).clone();
-          $('body').empty().html(printcontent);
-          window.print();
-          $('body').html(restorepage);
+    .invoice-box table {
+      width: 100%;
+      text-align: left;
+      border-spacing: 0;
+      border-collapse: collapse;
+    }
+
+    .invoice-box table td {
+      padding: 5px;
+      vertical-align: top;
+    }
+
+    .invoice-box table tr td:nth-child(2) {
+      text-align: right;
+    }
+
+    .invoice-box table tr.top table td {
+      padding-bottom: 20px;
+    }
+
+    .invoice-box table tr.top table td.title {
+      font-size: 45px;
+      line-height: 45px;
+      color: #333;
+    }
+
+    .invoice-box table tr.information table td {
+      padding-bottom: 40px;
+    }
+
+    .invoice-box table tr.heading td {
+      background: #eee;
+      border-bottom: 1px solid #ddd;
+      font-weight: bold;
+    }
+
+    .invoice-box table tr.details td {
+      padding-bottom: 20px;
+    }
+
+    .invoice-box table tr.item td{
+      border-bottom: 1px solid #eee;
+    }
+
+    .invoice-box table tr.item.last td {
+      border-bottom: none;
+    }
+
+    .invoice-box table tr.total td:nth-child(2) {
+      border-top: 2px solid #eee;
+      /*font-weight: bold;*/
+    }
+
+    .text-align-right {
+      text-align: right;
+    }
+
+    @media  only screen and (max-width: 600px) {
+      .invoice-box table tr.top table td {
+        width: 100%;
+        display: block;
+        text-align: center;
       }
 
-  </script>
-    <style>
+      .invoice-box table tr.information table td {
+        width: 100%;
+        display: block;
+        text-align: center;
+      }
+    }
 
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            padding: 4px;
-            text-align: left;}
+    /** RTL **/
+    .rtl {
+      direction: rtl;
+      font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+    }
 
-    </style>
+    .rtl table {
+      text-align: right;
+    }
+
+    .rtl table tr td:nth-child(2) {
+      text-align: left;
+    }
+  </style>
 </head>
+
 <body>
-  @section('content')
-
-    <div class="app-content content ">
-      <div class="content-wrapper ">
-        <div class="content-header row">
-          <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
-            <h3 class="content-header-title mb-0 d-inline-block">Invoice Template</h3>
-              <input name="b_print" type="button" class="btn btn-primary"   onClick="printContent('printablediv')"  value=" Print ">
-
-          </div>
-
-        </div>
-          <div class="content-body  ">
-            <section class="card">
-              <div id="invoice-template" class="card-body">
-                <!-- Invoice Company Details -->
-                <div id="printablediv" >
-
-                      <img src="../../../app-assets/images/logo/Jexsan.png" alt="company logo" class=""
-                      />
-
-                        <table class="ml-2 px-0 list-unstyled">
-                          <tr>
-                            <th >Jexsan Logistics Philippines Inc. </th>
-                            <th > Quote ID </th>
-                          </tr>
-                          <tr>
-                            <td>4025 Oak Avenue,</td>
-                            <td># INV-001001 </td>
-                          </tr>
-                          <tr>
-                            <td>Makati City</td>
-                            <th >Balance Due
-                            </th>
-                          </tr>
-                          <tr>
-                            <td>Metro Manila</td>
-                            <td>$ 12,000.00
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Philippines</td>
-                          </tr>
-
-                    </table>
-                <div id="invoice-customer-details" class="row pt-2">
-                  <div class="col-sm-12 text-center text-md-left">
-                      <p class="text-muted"><b>Bill To</b></p>
-                    <table class="px-0 list-unstyled">
-                      <tr>
-                        <td class="text-bold-800">Mr. Bret Lezama  </td>
-                      </tr>
-                      <tr><td> 4879 Westfall Avenue, </td>
-                        <td> Invoice Date :</td>
-                        <td > 06/05/2017 </td>
-                      </tr>
-                      <tr><td> Albuquerque, </td>
-                        <td >Terms : </td>
-                        <td class="text-muted">Due on Receipt</td>
-                      </tr>
-                      <tr><td>New Mexico-87102.  </td>
-                        <td> Due Date :</td>
-                        <td class="text-muted">10/05/2017</td>
-                      </tr>
-                    </table>
-                  </div>
-                </div>
-
-                      <table class="table">
-                        <thead>
-                        <tr >
-                          <th class="text-lg-left" >#</th>
-                          <th class="text-lg-left" >Item & Description</th>
-                          <th class="text-right">Rate</th>
-                          <th class="text-right">Hours</th>
-                          <th class="text-right">Amount</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                          <td >1</td>
-                          <td>
-                            <p class="text-muted">Simply dummy text of the printing and typesetting industry.</p>
-                          </td>
-                          <td class="text-right">$ 20.00/hr</td>
-                          <td class="text-right">120</td>
-                          <td class="text-right">$ 2400.00</td>
-                        </tr>
-                        <tr>
-                          <td>2</td>
-                          <td>
-                            <p>iOS Application Development</p>
-                          </td>
-                          <td class="text-right">$ 25.00/hr</td>
-                          <td class="text-right">260</td>
-                          <td class="text-right">$ 6500.00</td>
-                        </tr>
-                        <tr>
-                          <td>3</td>
-                          <td>
-
-                            <p class="text-muted">Vestibulum euismod est eu elit convallis.</p>
-                          </td>
-                          <td class="text-right">$ 20.00/hr</td>
-                          <td class="text-right">300</td>
-                          <td class="text-right">$ 6000.00</td>
-                        </tr>
-                        </tbody>
-                      </table>
-                          <table class="table table-borderless ml-2 px-0 " >
-                            <tr>
-                              <th >
-                                Payment Methods:
-                              </th>
-                              <th class="text-right">
-                                Total dues
-                              </th>
-                            </tr>
-                            <tr>
-                              <td >Bank name: ABC Bank, USA</td>
-
-                              <td class="text-right">Sub Total::$ 14,900.00</td>
-                            </tr>
-                            <tr>
-                              <td >Acc name: Amanda Orton</td>
-
-                              <td class="text-right">TAX (12%)::$ 1,788.00</td>
-                            </tr>
-                            <tr>
-                              <td>IBAN:FGS165461646546AA</td>
-
-                              <td class="text-right">Total::$ 16,688.00</td>
-                            </tr>
-                            <tr>
-                              <td>SWIFT code:BTNPP34</td>
-
-                              <td class="text-right">Payment Made::(-) $ 4,688.00</td>
-                            </tr>
-                          <tr>
-                            <td ></td>
-
-                            <td class=" text-right">Balance Due::$ 12,000.00</td>
-                          </tr>
-                            <tr>
-                              <td colspan="3"></td>
-
-                              <td class=" text-right">Authorized person </td>
-                            </tr>
-                            <tr>
-                              <td colspan="3"></td>
-
-                              <td class=" text-right"> <img src="../../../app-assets/images/pages/signature-scan.png" style="width: 70px;height: 70px"
-                                /></td>
-                            </tr>
-                            <tr>
-                              <td colspan="3"></td>
-
-                              <td class=" text-right">Amanda Orton </td>
-                            </tr>
-                            <tr>
-                              <td colspan="3"></td>
-
-                              <td class=" text-right">Managing Director</td>
-                            </tr>
-                          </tbody>
-                        </table>
-
-                    </div>
-              </div>
-                <!-- Invoice Footer -->
-                <div id="invoice-footer">
-                  <div class="row">
-                    <div class="col-md-7 col-sm-12">
-                      <h6>Terms & Condition</h6>
-                      <p>You know, being a test pilot isn't always the healthiest business
-                        in the world. We predict too much for the next year and yet far
-                        too little for the next 10.</p>
-                    </div>
-                    <div class="col-md-5 col-sm-12 text-center">
-                      <button type="button" class="btn btn-info btn-lg my-1"><i class="la la-paper-plane-o"></i> Send Invoice</button>
-                    </div>
-                  </div>
-                </div>
-                <!--/ Invoice Footer -->
-
-            </section>
-          </div>
-        </div>
+<div class="invoice-box">
+  <table>
+    <tr class="top">
+      <td colspan="3">
+        <table>
+          <tr>
+            <td class="title">
 
 
+              Company name
+            </td>
+
+            <td>
+              Date: 2018-03-28<br>
+              Invoice ref.: 2018-03-28-GKSJWD
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr class="information">
+      <td colspan="3">
+        <table>
+          <tr>
+            <td>
+
+              My Company<br>
+              123 Street<br>
+              Example City
+            </td>
+            <td>
+              Client name<br>
+              456 Street<br>
+              Client City
+
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr class="heading">
+      <td>Item</td>
+      <td>Tax</td>
+      <td class="text-align-right">Price</td>
+    </tr>
+
+    <tr class="item">
+      <td>Et maiores consequatur nihil omnis.</td>
+      <td>21%</td>
+      <td class="text-align-right">€ 639,77</td>
+    </tr>
+    <tr class="item">
+      <td>Omnis omnis id sed mollitia sit.</td>
+      <td>21%</td>
+      <td class="text-align-right">€ 74,94</td>
+    </tr>
+    <tr class="item last">
+      <td>Libero minus repellendus nulla modi quisquam aut qui sint.</td>
+      <td>21%</td>
+      <td class="text-align-right">€ 761,92</td>
+    </tr>
+
+    <tr class="total">
+      <td></td>
+      <td colspan="2">
+        <b>Total: € 1.476,63</b><br />
+        Included tax: € 256,27
+      </td>
+    </tr>
+
+  </table>
+</div>
 </body>
-
 </html>
-

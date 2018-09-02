@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Product;
 use GuzzleHttp;
+use Illuminate\Support\Facades\Auth;
 use Session;
 
 class ProductController extends Controller
@@ -261,7 +262,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $client = Client::findOrFail(1);
+        $user = Auth::user();
+        $client = Client::findOrFail($user->client_id);
         $transact = new Transaction();
         $transact->transact = $transact->generateTransaction();
         $transact->status_id = 1;

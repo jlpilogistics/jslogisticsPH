@@ -45,7 +45,12 @@
                 <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
                     <h3 class="content-header-title mb-0 d-inline-block">Invoice Template</h3>
                     <input name="b_print" type="button" class="btn btn-primary" onClick="printContent('printablediv')"  value=" Print ">
-
+                </div>
+                <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
+                    <form class="form form-horizontal" method="post" action="{{route('quotations.send-quote')}}">
+                        {{csrf_field()}}
+                        <input type="submit" class="btn btn-primary" value=" Send to Client ">
+                    </form>
                 </div>
 
             </div>

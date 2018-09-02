@@ -11,6 +11,8 @@ class Transaction extends Model
         $number = mt_rand(10000000, 99999999); // better than rand()
         return $number;
     }
+
+
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->toDayDateTimeString();
@@ -23,7 +25,7 @@ class Transaction extends Model
         return $this->hasOne('App\Origin');
     }
     public function quotation(){
-        return $this->hasOne('App\Quotation');
+        return $this->hasMany('App\Quotation');
     }
     public function goods(){
         return $this->hasOne('App\Goods');

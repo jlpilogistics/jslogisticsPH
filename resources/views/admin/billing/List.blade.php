@@ -8,7 +8,7 @@
 @section('content')
 
 <!--/ start here-->
-      <div class="content-detached content-right">
+      <div class="content-detached">
         <div class="content-body">
           <section class="row">
             <div class="col-12">

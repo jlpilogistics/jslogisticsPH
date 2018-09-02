@@ -29,7 +29,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('admin.users.addUser',compact('userad'));      }
+        return view('auth.register',compact('userad'));      }
 
     /**
      * Store a newly created resource in storage.

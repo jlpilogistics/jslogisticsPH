@@ -78,6 +78,7 @@
                     <div class="card-body">
                         <form class="form form-horizontal" method="post" action="{{action('QuotesController@store')}}">
                             {{csrf_field()}}
+                            <input type="hidden" name="user_id" value="{{$client->id}}">
                             <input type="hidden" name="name" value="{{$client->firstName}} {{$client->lastName}}">
                             <input type="hidden" name="address" value="{{$client->address}}">
                             <input type="hidden" name="quotenumber" value="{{$data->transact}}">

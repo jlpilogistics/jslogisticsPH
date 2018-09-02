@@ -49,7 +49,7 @@
     <div class="section">
         <div class="quote-form-box">
             <div class="container">
-                <form action="/products/store" method="POST">
+                <form action="{{route('store')}}" method="POST">
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-xs-12 col-sm-12">

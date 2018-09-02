@@ -131,7 +131,7 @@
                                 {{--@endforeach--}}
                                 @foreach($quote as $quotations)
                                     <tr>
-                                        <td>{{$quotations->quotation->created_at}}</td>
+                                        <td>{{$quotations->goods->created_at}}</td>
                                         <td>{{$quotations->goods->shiptypes}}</td>
                                         <td>{{$quotations->goods->mode}}</td>
                                         <td>{{$quotations->origin->city}}, {{$quotations->origin->country}}</td>

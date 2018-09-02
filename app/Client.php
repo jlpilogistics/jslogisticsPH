@@ -21,4 +21,7 @@ class Client extends Model
     public function transaction(){
         return $this->hasMany('App\Transaction');
     }
+    public function users(){
+        return $this->hasMany('App\User');
+    }
 }

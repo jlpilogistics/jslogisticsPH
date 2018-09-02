@@ -64,8 +64,19 @@
                                         </div>
                                     </div>
                                     <div class="form-bottom">
+                                        @if (session('status'))
+                                            <div class="alert alert-success">
+                                                {{ session('status') }}
+                                            </div>
+                                        @endif
+                                        @if (session('warning'))
+                                            <div class="alert alert-warning">
+                                                {{ session('warning') }}
+                                            </div>
+                                        @endif
                                         <form role="form" action="{{route('user.login.submit')}}" method="post" class="login-form">
                                             {{ csrf_field() }}
+
                                             <div class="form-group">
                                                 <label class="sr-only" for="form-username">Email Address</label>
                                                 <input type="text" name="email" placeholder="Email Address ..." class="form-username form-control" id="form-username">
@@ -97,7 +108,8 @@
                                         </div>
                                     </div>
                                     <div class="form-bottom">
-                                        <form role="form" action="" method="post" class="registration-form">
+                                        <form role="form" action="{{route('user.register.submit')}}" method="post" class="registration-form">
+                                            {{ csrf_field() }}
                                             <div class="form-group row">
                                                 <div class=" col-xs-12 col-sm-6 right-space">
                                                     <label class="sr-only" for="form-first-name">First name</label>
@@ -145,11 +157,11 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="sr-only" for="form-password">Password</label>
-                                                <input type="text" name="form-password" placeholder="Password ..." class="form-email form-control" id="form-password">
+                                                <input type="password" name="form-password" placeholder="Password ..." class="form-email form-control" id="form-password">
                                             </div>
                                             <div class="form-group">
                                                 <label class="sr-only" for="form-confirm">Confirm Password</label>
-                                                <input type="text" name="form-confirm" placeholder="Confirm Password .." class="form-email form-control" id="form-confirm">
+                                                <input type="password" name="form-confirm" placeholder="Confirm Password .." class="form-email form-control" id="form-confirm">
                                             </div>
 
                                             <button type="submit" class="btn">Sign me up!</button>
@@ -183,26 +195,26 @@
         <!--Section box ends Here -->
 
     </section>
-    @stop
-    <!--Section area ends Here -->
-    <!--Footer area starts Here -->
+@stop
+<!--Section area ends Here -->
+<!--Footer area starts Here -->
 
-    <!--Footer area ends Here -->
+<!--Footer area ends Here -->
 
 
 <!--Wrapper Section ends Here -->
 @section('scripts')
-<script type="text/javascript" src="{{URL::asset('app/js/jquery-1.11.3.min.js')}}"></script>
-<script type="text/javascript" src="{{URL::asset('app/js/less.js')}}"></script>
-<script type="text/javascript" src="{{URL::asset('app/js/owl.carousel.js')}}"></script>
-<script type="text/javascript" src="{{URL::asset('app/js/jquery.selectbox-0.2.min.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('app/js/jquery-1.11.3.min.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('app/js/less.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('app/js/owl.carousel.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('app/js/jquery.selectbox-0.2.min.js')}}"></script>
 
-<script src="{{URL::asset('app/js/script.js" type="text/javascript')}}"></script>
-<script type="text/javascript" src="{{URL::asset('app/js/site.js')}}"></script>
-<script src="{{URL::asset('app/js/bootstrap.min.js')}}"></script>
-<script src="{{URL::asset('app/js/scripts.js')}}"></script>
+    <script src="{{URL::asset('app/js/script.js" type="text/javascript')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('app/js/site.js')}}"></script>
+    <script src="{{URL::asset('app/js/bootstrap.min.js')}}"></script>
+    <script src="{{URL::asset('app/js/scripts.js')}}"></script>
 
-<!--[if lt IE 10]>
+    <!--[if lt IE 10]>
 
-<![endif]-->
+    <![endif]-->
 @stop

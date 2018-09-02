@@ -188,24 +188,29 @@
                         <div class="table-responsive">
                             <table class="table">
                                 <thead class="thead-dark">
+
                                 <tr>
-                                    <th scope="col">Amount of {{$data->quotation->package}}</th>
+                                    <th scope="col">Package Quantity</th>
                                     <th scope="col">Package Type</th>
                                     <th scope="col">Length</th>
                                     <th scope="col">Width</th>
                                     <th scope="col">Height</th>
                                     <th scope="col">Weight in kg</th>
+                                    <th scope="col"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @foreach($data->quotation as $datum)
                                 <tr>
-                                    <th scope="row">{{$data->quotation->quantity}}</th>
-                                    <td>{{$data->quotation->package}}</td>
-                                    <td>{{$data->quotation->length}} {{$data->quotation->dimused}}</td>
-                                    <td>{{$data->quotation->width}} {{$data->quotation->dimused}}</td>
-                                    <td>{{$data->quotation->height}} {{$data->quotation->dimused}}</td>
-                                    <td>{{$data->quotation->weight}} kg</td>
+                                    <th scope="row">{{$datum->quantity}}</th>
+                                    <td>{{$datum->package}}</td>
+                                    <td>{{$datum->length}} {{$datum->dimused}}</td>
+                                    <td>{{$datum->width}} {{$datum->dimused}}</td>
+                                    <td>{{$datum->height}} {{$datum->dimused}}</td>
+                                    <td>{{$datum->weight}} kg</td>
+                                    <td><button></button></td>
                                 </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                                 <div class="media-body w-100 " style="padding-left: 50px; padding-top: 50px;">
