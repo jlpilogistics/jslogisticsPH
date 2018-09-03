@@ -12,7 +12,7 @@
       padding: 30px;
       border: 1px solid #eee;
       box-shadow: 0 0 10px rgba(0, 0, 0, .15);
-      font-size: 16px;
+      font-size: 12px;
       line-height: 24px;
       font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
       color: #555;
@@ -31,7 +31,7 @@
     }
 
     .invoice-box table tr td:nth-child(2) {
-      text-align: right;
+      text-align: left;
     }
 
     .invoice-box table tr.top table td {
@@ -102,6 +102,10 @@
     .rtl table tr td:nth-child(2) {
       text-align: left;
     }
+
+    .text-align-left {
+      text-align: left;
+    }
   </style>
 </head>
 
@@ -112,36 +116,46 @@
       <td colspan="3">
         <table>
           <tr>
-            <td class="title">
+            <td class="title" align="center">
 
 
-              Company name
+              <img src="{{URL::asset('app-assets/images/logo/Jexsan.png')}}" class="center-block center" alt="company logo"/>
             </td>
 
-            <td>
-              Date: 2018-03-28<br>
-              Invoice ref.: 2018-03-28-GKSJWD
-            </td>
+
           </tr>
         </table>
       </td>
     </tr>
 
     <tr class="information">
-      <td colspan="3">
+      <td colspan="4">
         <table>
           <tr>
             <td>
 
-              My Company<br>
-              123 Street<br>
-              Example City
+              Jexsan Logistics Philippines Inc.<br>
+              Benavidez St., Raja Sulayman Bldg., Bel Air<br>
+              Makati City, Metro Manila, Philippines
             </td>
             <td>
-              Client name<br>
-              456 Street<br>
-              Client City
+              {{$data['name']}}<br>
+              {{$data['address']}}<br>
+              {{$data['city']}}, {{$data['country']}}<br>
 
+
+            </td>
+          </tr>
+          <tr>
+
+            <td>
+              Total Amount: {{$data['symbol']}} {{$data['mytotals']}} <br>
+              Incoterm: {{$data['term']}}<br>
+              Valid Until: {{$data['validity']}} <br>
+            </td>
+            <td>
+              Date: {{$data['datequoted']}}<br>
+              Invoice ref.: {{$invoice->reference}}
             </td>
           </tr>
         </table>
@@ -149,32 +163,50 @@
     </tr>
 
     <tr class="heading">
-      <td>Item</td>
-      <td>Tax</td>
-      <td class="text-align-right">Price</td>
+      <td >#</td>
+      <td class="text-align-left">Charges</td>
+      <td>Currency</td>
+      <td class="text-align-right">Amount</td>
     </tr>
-
+    @foreach($charges as $item)
     <tr class="item">
-      <td>Et maiores consequatur nihil omnis.</td>
-      <td>21%</td>
-      <td class="text-align-right">€ 639,77</td>
+      <td >{{$item['id']}}</td>
+      <td>{{$item['charge']}}</td>
+      @if($item['id'] == 1)
+      <td>{{$data['symbol']}}</td>
+      @else
+        <td></td>
+      @endif
+      <td class="text-align-right">{{$item['amount']}}</td>
     </tr>
-    <tr class="item">
-      <td>Omnis omnis id sed mollitia sit.</td>
-      <td>21%</td>
-      <td class="text-align-right">€ 74,94</td>
-    </tr>
-    <tr class="item last">
-      <td>Libero minus repellendus nulla modi quisquam aut qui sint.</td>
-      <td>21%</td>
-      <td class="text-align-right">€ 761,92</td>
-    </tr>
-
+    @endforeach
     <tr class="total">
       <td></td>
-      <td colspan="2">
-        <b>Total: € 1.476,63</b><br />
+        <td></td>
+      <td colspan="4" class="text-align-right">
+        <b>Total: {{$data['symbol']}} {{$item['amount']}}</b><br />
         Included tax: € 256,27
+      </td>
+    </tr>
+    <tr class="information">
+      <td colspan="4">
+        <table>
+          <tr>
+            <th>Terms and Conditions</th>
+          </tr>
+
+          <tr>
+
+              <td>
+                @foreach($terms as $item)
+                {{$item['list']}}<br>
+                @endforeach
+              </td>
+
+          </tr>
+
+
+        </table>
       </td>
     </tr>
 

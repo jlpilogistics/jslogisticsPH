@@ -15,6 +15,7 @@ use App\Transaction;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 
+
 use App\Http\Requests;
 
 class QuotesController extends Controller
@@ -25,10 +26,13 @@ class QuotesController extends Controller
     private $charges = '';
     private $terms = '';
 
+
+
     public function __construct()
     {
         $this->middleware('auth:admin');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -78,6 +82,7 @@ class QuotesController extends Controller
             $pesos = $peso_rate;
         }
         $data = Transaction::with('origin','destination','goods','quotation')->findOrFail($id);
+
         $client = Client::with('transaction')->findOrFail($data->client_id);
         if(($data->goods->mode) == 'FCL40'){
             $ref_id = 1;
@@ -92,8 +97,12 @@ class QuotesController extends Controller
             $ref_id = 4;
         }
 
+
+
         $charges = new Charge();
         $charge = $charges->where('mode_id',$ref_id)->pluck('name','name');
+
+
         return view('admin.quotation.create-quote', compact('charge','currency','data','client','pesos'));
     }
 
@@ -109,30 +118,42 @@ class QuotesController extends Controller
 //        return $pdf->download('invoice.pdf');
         $ch = new Charge();
         $data = $request->all();
+        for($i=0;$i<count($data['conditions']);$i++){
+            $terms[] = array('list'=>$request->conditions[$i]);
+        }
+
+        $transact = new Transaction();
+        $transaction = $transact->findOrFail($request->id)->first();
+        $invoice = $transaction->invoices()->create([]);
         for($i=0;$i<count($data['charge']);$i++){
             $curr = $request->currency;
             $peso = $request->pesoRate;
             $convert = $request->amount[$i];
             $result = $ch->convertRate($curr,$peso, $convert);
+            $invoice = $invoice->addAmountExclTax($result, $request->charge[$i], 0, $data['taxes']);
             $charges[] = array('id'=>($i+1),
                 'charge'=>$request->charge[$i],
                 'amount'=>$result,
-                );
+            );
 
-        }
-        for($i=0;$i<count($data['conditions']);$i++){
-            $terms[] = array('list'=>$request->conditions[$i]);
         }
         $this->data = $data;
         $this->charges = $charges;
         $this->terms = $terms;
 
-        $pdf =  PDF::loadView('admin.billing.invoice', with(['data' => $this->data, 'charges' => $this->charges, 'terms' => $this->terms]));
-        ini_set('max_execution_time', 300);
-        return $pdf->stream();
 
 
-//        Notification::route('mail', 'ryanjayretutar@gmail.com')->notify(new QuoteSent($this->data, $this->charges, $this->terms));
+
+
+
+
+
+//        $pdf =  PDF::loadView('admin.billing.invoice', with(['data' => $this->data, 'charges' => $this->charges, 'terms' => $this->terms]));
+//        ini_set('max_execution_time', 300);
+//        return $pdf->stream();
+
+
+        Notification::route('mail', 'ryanjayretutar@gmail.com')->notify(new QuoteSent($this->data, $this->charges, $this->terms, $invoice));
 
 //        echo json_encode($charges);
 

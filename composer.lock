@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0669e8e361f8a2d9fdc2f2399c327ea5",
+    "content-hash": "bf7947a10b8bb94cddb521910f4aa88b",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -1855,6 +1855,75 @@
                 "stylesheet"
             ],
             "time": "2016-07-19T19:14:21+00:00"
+        },
+        {
+            "name": "sander-van-hooft/laravel-invoicable",
+            "version": "1.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sandervanhooft/laravel-invoicable.git",
+                "reference": "53c6ea975b48e4cad1b0ca41c6c723837e5a0004"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sandervanhooft/laravel-invoicable/zipball/53c6ea975b48e4cad1b0ca41c6c723837e5a0004",
+                "reference": "53c6ea975b48e4cad1b0ca41c6c723837e5a0004",
+                "shasum": ""
+            },
+            "require": {
+                "dompdf/dompdf": "^0.8.0",
+                "ext-intl": "*",
+                "illuminate/support": "~5.1|~5.2|~5.3|~5.4|~5.5|~5.6",
+                "nesbot/carbon": "^1.22",
+                "php": "~5.6|~7.0"
+            },
+            "require-dev": {
+                "graham-campbell/testbench": "^3.3",
+                "mockery/mockery": "^0.9.9",
+                "orchestra/database": "^3.4",
+                "phpunit/phpunit": "~4.0||~5.0||~6.0||~7.0",
+                "squizlabs/php_codesniffer": "^2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "SanderVanHooft\\Invoicable\\InvoicableServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SanderVanHooft\\Invoicable\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sander van Hooft",
+                    "email": "info@sandervanhooft.com",
+                    "homepage": "http://www.sandervanhooft.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Easy invoice generation using Laravel Eloquent",
+            "homepage": "https://github.com/SanderVanHooft/laravel-invoicable",
+            "keywords": [
+                "SanderVanHooft",
+                "eloquent",
+                "invoicable",
+                "invoice",
+                "laravel",
+                "laravel-invoicable",
+                "payments"
+            ],
+            "time": "2018-03-27T19:30:25+00:00"
         },
         {
             "name": "shippo/shippo-php",

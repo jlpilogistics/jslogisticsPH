@@ -63,7 +63,7 @@
                             <div class="col-sm-12 text-center text-md-left">
                             <table class="ml-2 px-0 list-unstyled">
                                 <tr>
-                                    <th >Jexsan Logistics Philippines Inc. </th>
+                                        <th >Jexsan Logistics Philippines Inc. </th>
 
                                 </tr>
                                 <tr>

@@ -93,6 +93,7 @@ Route::post('/quotations/send-quote', 'QuotesController@sendQuote')->name('quota
 
 
 
+
 //Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

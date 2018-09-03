@@ -15,17 +15,19 @@ class QuoteSent extends Notification
     private $data = '';
     private $charges = '';
     private $terms = '';
+    private $invoice = '';
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($data, $charges, $terms)
+    public function __construct($data, $charges, $terms , $invoice)
     {
         $this->data = $data;
         $this->charges = $charges;
         $this->terms = $terms;
+        $this->invoice = $invoice;
 
     }
 
@@ -48,14 +50,17 @@ class QuoteSent extends Notification
      */
     public function toMail($notifiable)
     {
-
-        $pdf =  PDF::loadView('admin.billing.invoice', with(['data' => $this->data, 'charges' => $this->charges, 'terms' => $this->terms]));
+        $invoices = json_encode($this->data);
+        $invoice = json_decode($invoices);
+        $pdf =  PDF::loadView('admin.billing.invoice', with(['data' => $this->data, 'charges' => $this->charges, 'terms' => $this->terms,'invoice'=>$this->invoice]));
         ini_set('max_execution_time', 300);
         return (new MailMessage)
-            ->subject('App.dev - Invoice #')
-            ->line('Your invoice has been release.')
-            ->action('Check Invoice', route('user.login.submit') . '?id='. json_encode($this->data))
-            ->line('Make sure you pay the invoice, Check You Email Attachment!')
+            ->subject('Jexsan Logistics - Quote #' . $invoice->quotenumber)
+            ->line('Thank for considering our company to cater your needs. We have attached in this email the quote document for the rates we offer. We hope you find it favorable and competitive.')
+            ->action('Accept Rates', route('user.login.submit') . '?id='. json_encode($this->data))
+            ->action('Decline Rates', route('user.login.submit') . '?id='. json_encode($this->data))
+            ->line('Rates are valid until further notice')
+//            ->attachData($this->invoice, 'quote.pdf');
             ->attachData($pdf->output(), 'quote.pdf');
     }
 

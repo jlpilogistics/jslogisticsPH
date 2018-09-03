@@ -149,6 +149,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        SanderVanHooft\Invoicable\InvoicableServiceProvider::class,
 
 
         /*
