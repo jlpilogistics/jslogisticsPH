@@ -86,6 +86,7 @@
                             <input type="hidden" name="city" value="{{$client->city}}">
                             <input type="hidden" name="country" value="{{$client->country}}">
                             <input type="hidden" name="term" value="{{$data->goods->term}}">
+                            <input type="hidden" name="mail" value="{{$client->email}}">
                             <div class="form-body">
                                 <h4 class="form-section"><i class="la la-eye"></i> Quote to:</h4>
                                 <div class="row">
@@ -149,6 +150,30 @@
                                                 </tr>
                                         </thead>
                                         <tbody class="tbodyRow">
+                                        @if(Session::has('session1'))
+                                            @for($x = 1 ; $x<20; $x++)
+                                                @if(Session::has('session'.$x))
+                                            <tr>
+                                                @if($x < 2)
+                                                <td><select name="currency" class="form-control currency">
+                                                        <option selected="true" value="{{ Session::get('session')['currency']}}">{{ Session::get('session')['symbol']}}</option>
+                                                        @foreach($currency as $key=>$val)
+                                                            <option value="{{$val}}">{{$key}}</option>
+                                                        @endforeach
+                                                    </select></td>
+                                                    @else
+                                                    <td></td>
+                                                @endif
+                                                <td>{!! Form::select('charge[]', $charge, Session::get('session'. $x)->charge,['class'=>'form-control charge', 'id'=>'charge']) !!}</td>
+
+                                                <td><input type="text" class="form-control amount numbersOnly" name="amount[]" value="{{ Session::get('session')['amount'][$x-1]}}"></td>
+                                                <td><span style="font-size: 14px" class="current">{{Session::get('session')['symbol']}}</span><p class="lead totalRow float-right" >{{Session::get('session'. $x)->amount}}</p></td>
+                                                <input type="hidden" value="{{$pesos}}" class="pesoRate" name="pesoRate">
+                                                <td><a href="#/" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>x</a></td>
+                                            </tr>
+                                            @endif
+                                                @endfor
+                                            @else
                                             <tr>
                                                 <td><select name="currency" class="form-control currency">
                                                         <option selected="true" disabled value="">Currency</option>
@@ -162,6 +187,7 @@
                                                 <input type="hidden" value="{{$pesos}}" class="pesoRate" name="pesoRate">
                                                 <td><a href="#/" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>x</a></td>
                                             </tr>
+                                            @endif
                                             <input type="hidden" name="symbol" value="" id="myText">
                                         </tbody>
                                     </table>
@@ -188,15 +214,15 @@
                                                 <tbody>
                                                 <tr>
                                                     <td>Sub Total</td>
-                                                    <td class="text-right"><b class="subtotal"></b> </td>
+                                                    <td class="text-right"><b class="subtotal">{{Session::get('session')['subtotals']}}</b> </td>
                                                 </tr>
                                                 <tr>
                                                     <td>TAX (12%)</td>
-                                                    <td class="text-right tax">0</td>
+                                                    <td class="text-right tax">{{Session::get('session')['taxes']}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-bold-800">Total</td>
-                                                    <td class="text-bold-800 text-right total">0</td>
+                                                    <td class="text-bold-800 text-right total">{{Session::get('session')['mytotals']}}</td>
                                                 </tr>
                                                 <input type="hidden" name="subtotals" value="" id="mySub">
                                                 <input type="hidden" name="taxes" value="" id="myTax">
@@ -250,12 +276,15 @@
             var row = $(this).parent().parent();
             var curName = $('.currency option:selected').text(); // The value of the selected option
             $('.current').html(curName);
+            // alert(row.find('.currency').val());
+            $(".amount").addClass("numbersOnly");
             var cur = $('.currency').val(); // The value of the selected option
             var peso = $('.pesoRate').val();
             var rate  = cur / peso;
             var amount = row.find('.amount').val();
             var tot = amount * rate;
             var tota = tot.toFixed(2);
+            row.find('.totalRow').text("");
             row.find('.totalRow').text(tota);
             total();
 
@@ -333,25 +362,28 @@
         });
 
 
-        // $(".row").on('change',"#charge",function() {
-        //     $.ajax({
-        //         url: '/charges/' + $(this).val(),
-        //         type: 'get',
-        //         data: {},
-        //         success: function(data) {
-        //
-        //             if (data.success == true) {
-        //                 $("[car]").closest(".form-group").find('#amount').val(data.info);
-        //
-        //             } else {
-        //                 alert('Cannot find info');
-        //             }
-        //
-        //
-        //         },
-        //         error: function(jqXHR, textStatus, errorThrown) {}
-        //     });
-        // });
+        $('tbody').delegate('.charge','change',function () {
+
+            var row = $(this).parent().parent();
+            $.ajax({
+                url: '/charges/' + $(this).val(),
+                type: 'get',
+                data: {},
+                success: function(data) {
+
+                    if (data.success == true) {
+
+                        row.find('.amount').val(data.info);
+
+                    } else {
+                        alert('Cannot find info');
+                    }
+
+
+                },
+                error: function(jqXHR, textStatus, errorThrown) {}
+            });
+        });
 
     </script>
 

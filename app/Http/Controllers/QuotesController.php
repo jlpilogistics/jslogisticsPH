@@ -83,7 +83,6 @@ class QuotesController extends Controller
             $pesos = $peso_rate;
         }
         $data = Transaction::with('origin','destination','goods','quotation')->findOrFail($id);
-
         $client = Client::with('transaction')->findOrFail($data->client_id);
         if(($data->goods->mode) == 'FCL40'){
             $ref_id = 1;
@@ -98,12 +97,8 @@ class QuotesController extends Controller
             $ref_id = 4;
         }
 
-
-
         $charges = new Charge();
         $charge = $charges->where('mode_id',$ref_id)->pluck('name','name');
-
-
         return view('admin.quotation.create-quote', compact('charge','currency','data','client','pesos'));
     }
 
@@ -123,16 +118,11 @@ class QuotesController extends Controller
         for($i=0;$i<count($data['conditions']);$i++){
             $terms[] = array('list'=>$request->conditions[$i]);
         }
-
-        $transact = new Transaction();
-        $transaction = $transact->findOrFail($request->id)->first();
-        $invoice = $transaction->invoices()->create([]);
         for($i=0;$i<count($data['charge']);$i++){
             $curr = $request->currency;
             $peso = $request->pesoRate;
             $convert = $request->amount[$i];
             $result = $ch->convertRate($curr,$peso, $convert);
-            $invoice = $invoice->addAmountExclTax($result, $request->charge[$i], 0, $data['taxes']);
             $charges[] = array('id'=>($i+1),
                 'charge'=>$request->charge[$i],
                 'amount'=>$result,
@@ -164,28 +154,11 @@ class QuotesController extends Controller
             $request->session()->put('session', $request->all());
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return view('admin.quotation.pdf', compact('data','charges','terms'));
 //        $pdf =  PDF::loadView('admin.billing.invoice', with(['data' => $this->data, 'charges' => $this->charges, 'terms' => $this->terms]));
 //        ini_set('max_execution_time', 300);
 //        return $pdf->stream();
 
-
-//        Notification::route('mail', 'ryanjayretutar@gmail.com')->notify(new QuoteSent($this->data, $this->charges, $this->terms, $invoice));
-
-//        echo json_encode($charges);
 
 //        Mail::send('admin.billing.invoice',['name' => $terms], function ($message)
 //        {
@@ -201,14 +174,6 @@ class QuotesController extends Controller
 //
 //
 //        });
-        return view('admin.quotation.pdf', compact('data','charges','terms'));
-
-
-
-//        echo json_encode($request->all());
-//        $request->session()->put('some_key', $request->all());
-//        echo json_encode($request->session()->get('some_key'));
-
 
     }
 
@@ -230,17 +195,32 @@ class QuotesController extends Controller
     public function sendQuote(Request $request){
         $alldata = $request->session()->get('session');
         $transact = new Transaction();
-        $transaction = $transact->findOrFail($request->id)->first();
+        $transaction = $transact->findOrFail($alldata['id'])->first();
         $invoice = $transaction->invoices()->create([]);
 
         if($request->session()->get('session1')){
             for($x = 1 ; $x<20; $x++){
                 if($request->session()->get('session'.$x)){
                     $session = $request->session()->get('session'.$x);
-                    $invoice = $invoice->addAmountExclTax($session->amount, $alldata['Charge'][$x], 0, $alldata['taxes']);
+                    $invoice = $invoice->addAmountExclTax($session->amount, $session->charge, 0, $alldata['taxes']);
+                    $rates[] = array('id'=>($x),
+                        'charge'=>$session->charge,
+                        'amount'=>$session->amount,
+                    );
                 }
             }
         }
+        if($request->session()->get('terms1')){
+            for($x = 1 ; $x<20; $x++){
+                if($request->session()->get('terms'.$x)){
+                    $condition = $request->session()->get('terms'.$x);
+                    $terms[] = array('list'=>$condition->list);
+                }
+            }
+        }
+
+
+        Notification::route('mail', $alldata['mail'])->notify(new QuoteSent($alldata, $rates, $terms, $invoice));
 
     }
 
@@ -280,7 +260,7 @@ class QuotesController extends Controller
     }
 
     public function findcharge($id){
-        $amount = Charge::where('id', $id)->pluck('amount');
+        $amount = Charge::where('name', $id)->pluck('amount');
         return response()->json(['success'=>true, 'info'=>$amount]);
     }
 }

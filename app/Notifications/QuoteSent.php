@@ -59,7 +59,7 @@ class QuoteSent extends Notification
             ->subject('Jexsan Logistics - Quote #' . $invoice->quotenumber)
 //            ->markdown('emails.sent-quote', with(['data' => $this->data, 'charges' => $this->charges, 'terms' => $this->terms,'invoice'=>$this->invoice]))
             ->line('Thank for considering our company to cater your needs. We have attached in this email the quote document for the rates we offer. We hope you find it favorable and competitive.')
-            ->action('Accept Rates', route('user.dashboard.confirm') . '?id='. json_encode($this->data))
+            ->action('Accept Rates', route('user.login') . '?id='. json_encode($this->data))
             ->line('Rates are valid until further notice')
 //            ->attachData($this->invoice, 'quote.pdf');
             ->attachData($pdf->output(), 'quote.pdf');

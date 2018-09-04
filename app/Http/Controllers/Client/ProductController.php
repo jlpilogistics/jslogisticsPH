@@ -181,7 +181,7 @@ class ProductController extends Controller
         $base = new GuzzleHttp\Client([
             'base_uri' => 'http://data.fixer.io/',
         ]);
-        $response = $base->request('GET', 'api/latest?access_key=' . env('FIXER_API_KEY') . '&symbols=PHP,phpUSD,JPY,GBP,AUD,CHF,CAD,MXN,CNY,NZD&format=1');
+        $response = $base->request('GET', 'api/latest?access_key=' . env('FIXER_API_KEY') . '&symbols=PHP,USD,JPY,GBP,AUD,CHF,CAD,MXN,CNY,NZD&format=1');
         $response_data = json_decode($response->getBody()->getContents());
 
 
