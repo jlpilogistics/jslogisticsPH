@@ -8,6 +8,7 @@ use App\Mail\VerifyMail;
 use App\User;
 use App\Http\Controllers\Controller;
 use App\VerifyUser;
+use Faker\Provider\Uuid;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -91,6 +92,11 @@ class RegisterController extends Controller
             'country' => $data['form-country'],
             'zip' => $data['form-zip'],
         ]);
+        $com = $client->company;
+        $initials = $client->getNameInitials($com);
+        $client->client_ref = $initials . str_pad(uniqid(), 6, "0", STR_PAD_LEFT);
+//        $client->client_ref = Uuid::uuid();
+        $client->save();
 
 
 

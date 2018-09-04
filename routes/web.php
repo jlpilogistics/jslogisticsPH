@@ -89,7 +89,7 @@ Route::get('/products/create-step4', 'Client\ProductController@createStep4');
 Route::post('/products/store', 'Client\ProductController@store')->name('store');
 Route::get('/charges/{id}', 'QuotesController@findcharge');
 Route::get('/quotations/create-quote/{id}', 'QuotesController@createQuote')->name('quotations.create-quote');
-Route::post('/quotations/send-quote', 'QuotesController@sendQuote')->name('quotations.send-quote');
+Route::post('/quotations/send-quote/', 'QuotesController@sendQuote')->name('quotations.send-quote');
 
 
 

@@ -24,4 +24,16 @@ class Client extends Model
     public function users(){
         return $this->hasMany('App\User');
     }
+
+    public function getNameInitials($name) {
+
+        preg_match_all('#(?<=\s|\b)\pL#u', $name, $res);
+        $initials = implode('', $res[0]);
+
+        if (strlen($initials) < 2) {
+            $initials = strtoupper(substr($name, 0, 2));
+        }
+
+        return strtoupper($initials);
+    }
 }

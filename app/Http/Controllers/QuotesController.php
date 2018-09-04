@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Charge;
 use App\Client;
 use App\Notifications\QuoteSent;
+use App\Session;
 use App\User;
 use GuzzleHttp;
 use Mail;
@@ -22,7 +23,7 @@ class QuotesController extends Controller
 {
 
     private $pdf = '';
-    private $data = '';
+    protected $data = '';
     private $charges = '';
     private $terms = '';
 
@@ -118,6 +119,7 @@ class QuotesController extends Controller
 //        return $pdf->download('invoice.pdf');
         $ch = new Charge();
         $data = $request->all();
+        $datum[] = $request->all();
         for($i=0;$i<count($data['conditions']);$i++){
             $terms[] = array('list'=>$request->conditions[$i]);
         }
@@ -141,6 +143,34 @@ class QuotesController extends Controller
         $this->charges = $charges;
         $this->terms = $terms;
 
+        $x = 0;
+        foreach($charges as $item){
+            $x++;
+            $session = new Session();
+            $session->fill($item);
+            $request->session()->put('session'.$x, $session);
+        }
+        $y = 0;
+        foreach($terms as $items){
+            $y++;
+            $session = new Session();
+            $session->fill($items);
+            $request->session()->put('terms'.$x, $session);
+        }
+        if(empty($request->session()->get('session'))) {
+            $request->session()->put('session', $request->all());
+        }else{
+            $request->session()->forget('session');
+            $request->session()->put('session', $request->all());
+        }
+
+
+
+
+
+
+
+
 
 
 
@@ -153,7 +183,7 @@ class QuotesController extends Controller
 //        return $pdf->stream();
 
 
-        Notification::route('mail', 'ryanjayretutar@gmail.com')->notify(new QuoteSent($this->data, $this->charges, $this->terms, $invoice));
+//        Notification::route('mail', 'ryanjayretutar@gmail.com')->notify(new QuoteSent($this->data, $this->charges, $this->terms, $invoice));
 
 //        echo json_encode($charges);
 
@@ -171,7 +201,7 @@ class QuotesController extends Controller
 //
 //
 //        });
-//        return view('admin.quotation.pdf', compact('data','charges','terms'));
+        return view('admin.quotation.pdf', compact('data','charges','terms'));
 
 
 
@@ -197,9 +227,20 @@ class QuotesController extends Controller
     }
 
 
-    public function sendQuote(){
+    public function sendQuote(Request $request){
+        $alldata = $request->session()->get('session');
+        $transact = new Transaction();
+        $transaction = $transact->findOrFail($request->id)->first();
+        $invoice = $transaction->invoices()->create([]);
 
-
+        if($request->session()->get('session1')){
+            for($x = 1 ; $x<20; $x++){
+                if($request->session()->get('session'.$x)){
+                    $session = $request->session()->get('session'.$x);
+                    $invoice = $invoice->addAmountExclTax($session->amount, $alldata['Charge'][$x], 0, $alldata['taxes']);
+                }
+            }
+        }
 
     }
 

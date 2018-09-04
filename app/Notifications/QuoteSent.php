@@ -55,13 +55,18 @@ class QuoteSent extends Notification
         $pdf =  PDF::loadView('admin.billing.invoice', with(['data' => $this->data, 'charges' => $this->charges, 'terms' => $this->terms,'invoice'=>$this->invoice]));
         ini_set('max_execution_time', 300);
         return (new MailMessage)
+            ->from('jlpilogistics@gmail.com', 'Jexsan Logistics')
             ->subject('Jexsan Logistics - Quote #' . $invoice->quotenumber)
+//            ->markdown('emails.sent-quote', with(['data' => $this->data, 'charges' => $this->charges, 'terms' => $this->terms,'invoice'=>$this->invoice]))
             ->line('Thank for considering our company to cater your needs. We have attached in this email the quote document for the rates we offer. We hope you find it favorable and competitive.')
-            ->action('Accept Rates', route('user.login.submit') . '?id='. json_encode($this->data))
-            ->action('Decline Rates', route('user.login.submit') . '?id='. json_encode($this->data))
+            ->action('Accept Rates', route('user.dashboard.confirm') . '?id='. json_encode($this->data))
             ->line('Rates are valid until further notice')
 //            ->attachData($this->invoice, 'quote.pdf');
             ->attachData($pdf->output(), 'quote.pdf');
+
+
+
+
     }
 
     /**
