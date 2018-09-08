@@ -96,11 +96,12 @@ class QuotesController extends Controller
         if(($data->goods->mode) == 'Air'){
             $ref_id = 4;
         }
-
         $charges = new Charge();
         $charge = $charges->where('mode_id',$ref_id)->pluck('name','name');
-        return view('admin.quotation.create-quote', compact('charge','currency','data','client','pesos'));
+        return view('admin.quotation.create-quote', compact('charge','currency','data','client','pesos','ref_id'));
     }
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -198,6 +199,7 @@ class QuotesController extends Controller
         $transaction = $transact->findOrFail($alldata['id'])->first();
         $invoice = $transaction->invoices()->create([]);
 
+
         if($request->session()->get('session1')){
             for($x = 1 ; $x<20; $x++){
                 if($request->session()->get('session'.$x)){
@@ -259,8 +261,8 @@ class QuotesController extends Controller
         //
     }
 
-    public function findcharge($id){
-        $amount = Charge::where('name', $id)->pluck('amount');
+    public function findcharge($id, $mode){
+        $amount = Charge::where('name','=', $id)->where('mode_id','=',$mode)->pluck('amount');
         return response()->json(['success'=>true, 'info'=>$amount]);
     }
 }

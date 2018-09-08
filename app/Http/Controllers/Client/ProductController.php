@@ -39,6 +39,8 @@ class ProductController extends Controller
         return view('client.quote',compact('products',$products));
     }
 
+
+
     /**
      * Show the step 1 Form for creating a new product.
      *

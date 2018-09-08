@@ -184,8 +184,9 @@
       <td></td>
         <td></td>
       <td colspan="4" class="text-align-right">
-        <b>Total: {{$data['symbol']}} {{$item['amount']}}</b><br />
-        Included tax: € 256,27
+        Subtotal: {{$data['symbol']}} {{$item['subtotals']}}<br/>
+        Included tax: {{$data['symbol']}} {{$item['taxes']}}<br/>
+        <b>Total: {{$data['symbol']}} {{$item['mytotals']}}</b><br/>
       </td>
     </tr>
     <tr class="information">
@@ -194,18 +195,13 @@
           <tr>
             <th>Terms and Conditions</th>
           </tr>
-
           <tr>
-
               <td>
                 @foreach($terms as $item)
                 {{$item['list']}}<br>
                 @endforeach
               </td>
-
           </tr>
-
-
         </table>
       </td>
     </tr>

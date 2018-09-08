@@ -62,6 +62,7 @@
 //});
 
 Route::get('Main', 'Client\HomeController@index')->name('user.index');
+Route::get('quote/confirm/{transaction}/{invoice}/{client}', 'Client\HomeController@confirm');
 Route::get('about', 'Client\HomeController@showAbout');
 Route::get('location', 'Client\HomeController@showLocation');
 Route::get('domestic', 'Client\HomeController@showDomestic');
@@ -87,9 +88,11 @@ Route::get('/products/create-step3', 'Client\ProductController@createStep3');
 Route::post('/products/create-step3', 'Client\ProductController@postCreateStep3');
 Route::get('/products/create-step4', 'Client\ProductController@createStep4');
 Route::post('/products/store', 'Client\ProductController@store')->name('store');
-Route::get('/charges/{id}', 'QuotesController@findcharge');
+Route::get('/charges/{id}/{mode}', 'QuotesController@findcharge');
 Route::get('/quotations/create-quote/{id}', 'QuotesController@createQuote')->name('quotations.create-quote');
 Route::post('/quotations/send-quote/', 'QuotesController@sendQuote')->name('quotations.send-quote');
+Route::get('multifileupload', 'HomeController@multifileupload')->name('multifileupload');
+Route::post('multifileupload', 'HomeController@store')->name('multifileupload');
 
 
 

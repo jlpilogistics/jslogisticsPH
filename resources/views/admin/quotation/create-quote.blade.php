@@ -87,6 +87,8 @@
                             <input type="hidden" name="country" value="{{$client->country}}">
                             <input type="hidden" name="term" value="{{$data->goods->term}}">
                             <input type="hidden" name="mail" value="{{$client->email}}">
+                            <input type="hidden" class="mode" value="{{$ref_id}}">
+                            <input type="hidden" name="client_ref" value="{{$client->client_ref}}">
                             <div class="form-body">
                                 <h4 class="form-section"><i class="la la-eye"></i> Quote to:</h4>
                                 <div class="row">
@@ -277,7 +279,7 @@
             var curName = $('.currency option:selected').text(); // The value of the selected option
             $('.current').html(curName);
             // alert(row.find('.currency').val());
-            $(".amount").addClass("numbersOnly");
+            row.find('.amount').addClass('numbersOnly');
             var cur = $('.currency').val(); // The value of the selected option
             var peso = $('.pesoRate').val();
             var rate  = cur / peso;
@@ -289,11 +291,46 @@
             total();
 
         });
-        $('tr').delegate('.currency','change',function () {
+        // $('tr').delegate('.currency','change',function () {
+        //
+        //     var curName = $('.currency option:selected').text();
+        //     document.getElementById("myText").value = curName;// The value of the selected option
+        //     $('.current').html(curName);
+        //
+        //
+        // });
+        $('tbody').delegate('.currency','change',function () {
 
             var curName = $('.currency option:selected').text();
             document.getElementById("myText").value = curName;// The value of the selected option
             $('.current').html(curName);
+
+            $('.tbodyRow tr').each(function () {
+                //processing this row
+                //how to process each cell(table td) where there is checkbox
+
+                $(this).find('.amount').each(function () {
+                    var row = $(this).parent().parent();
+                    var curName = $('.currency option:selected').text(); // The value of the selected option
+                    $('.current').html(curName);
+                    // alert(row.find('.currency').val());
+                    row.find('.amount').addClass('numbersOnly');
+                    var cur = $('.currency').val(); // The value of the selected option
+                    var peso = $('.pesoRate').val();
+                    var rate  = cur / peso;
+                    var amount = row.find('.amount').val();
+                    var tot = amount * rate;
+                    var tota = tot.toFixed(2);
+                    row.find('.totalRow').text("");
+                    row.find('.totalRow').text(tota);
+                    total();
+                });
+                // $(this).find('td').each(function () {
+                //     alert('x');
+                //     // it is checked, your code here...
+                // });
+
+            });
 
 
         });
@@ -314,14 +351,16 @@
                 var totalRow = $(this).text()-0;
                 total += totalRow;
             });
-            $('.subtotal').html(total);
+            var totalSub = total;
+            var tSub = totalSub.toFixed(2);
+            $('.subtotal').html(tSub);
             var tax = total * 0.12;
             var taxes = tax.toFixed(2);
             $('.tax').html(taxes);
             var all = total + tax;
             var amt = all.toFixed(2);
             $('.total').html(amt);
-            document.getElementById("mySub").value = total;
+            document.getElementById("mySub").value = tSub;
             document.getElementById("myTax").value = taxes;
             document.getElementById("myTotal").value = amt;
         }
@@ -341,6 +380,11 @@
                 '                                            </tr>';
 
                 $('.tbodyRow').append(tr);
+
+
+                    $('.amount').addClass('numbersOnly');
+
+
         }
 
         function addTerm(){
@@ -366,7 +410,7 @@
 
             var row = $(this).parent().parent();
             $.ajax({
-                url: '/charges/' + $(this).val(),
+                url: '/charges/' + $(this).val() + '/' + $('.mode').val(),
                 type: 'get',
                 data: {},
                 success: function(data) {
@@ -374,6 +418,19 @@
                     if (data.success == true) {
 
                         row.find('.amount').val(data.info);
+                        var curName = $('.currency option:selected').text(); // The value of the selected option
+                        $('.current').html(curName);
+                        // alert(row.find('.currency').val());
+                        row.find(".amount").addClass("numbersOnly");
+                        var cur = $('.currency').val(); // The value of the selected option
+                        var peso = $('.pesoRate').val();
+                        var rate  = cur / peso;
+                        var amount = row.find('.amount').val();
+                        var tot = amount * rate;
+                        var tota = tot.toFixed(2);
+                        row.find('.totalRow').text("");
+                        row.find('.totalRow').text(tota);
+                        total();
 
                     } else {
                         alert('Cannot find info');
