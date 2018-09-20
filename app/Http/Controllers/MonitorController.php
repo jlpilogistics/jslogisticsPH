@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Driver;
 use Illuminate\Http\Request;
 
 class MonitorController extends Controller
@@ -11,9 +12,15 @@ class MonitorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
     public function index()
     {
-        return view('admin.monitor.monitor');
+        $tasks = Driver::all();
+        return view('admin.monitor.monitor',compact('tasks'));
     }
 
     /**

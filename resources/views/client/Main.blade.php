@@ -45,9 +45,7 @@
                             <h2>Inland Haulage</h2>
                         </div>
                         <div class="caption lfr medium_grey"  data-x="left" data-y="center" data-speed="300" data-start="2000">
-
                         </div>
-
                     </div>
                 </li>
                 <li data-transition="random" data-slotamount="1">

@@ -58,9 +58,11 @@ class QuotesController extends Controller
 //        }
 
 //       return $quote->commodity;
-        $quote = Transaction::with('destination','origin','quotation','goods')->get();
+        $quote = Transaction::with('destination','origin','quotation','goods', 'consignee')->where('status_id', 1)->get();
+        $quo = Transaction::with('destination','origin','quotation','goods', 'consignee')->where('status_id', 3)->get();
 
-        return view('admin.quotation.index', compact('quote'));
+
+        return view('admin.quotation.index', compact('quote','quo'));
     }
 
     public function create(){
@@ -146,7 +148,7 @@ class QuotesController extends Controller
             $y++;
             $session = new Session();
             $session->fill($items);
-            $request->session()->put('terms'.$x, $session);
+            $request->session()->put('terms'.$y, $session);
         }
         if(empty($request->session()->get('session'))) {
             $request->session()->put('session', $request->all());
@@ -196,9 +198,9 @@ class QuotesController extends Controller
     public function sendQuote(Request $request){
         $alldata = $request->session()->get('session');
         $transact = new Transaction();
-        $transaction = $transact->findOrFail($alldata['id'])->first();
+        $transaction = $transact->findOrFail(7);
+        $transact->status_id = 2;
         $invoice = $transaction->invoices()->create([]);
-
 
         if($request->session()->get('session1')){
             for($x = 1 ; $x<20; $x++){

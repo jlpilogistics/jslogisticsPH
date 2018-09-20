@@ -29,20 +29,20 @@
         <ul class="nav nav-sidebar list-group">
             <li class="list-group-item">
 
-                <a href="/client-account">
+                <a href="{{route('account',$clients->id)}}">
                     <i class="ft-user-check"></i>
                     <p> My Profile</p>
                 </a>
             </li>
             <li class="list-group-item" >
-                <a href="/client-status">
+                <a href="{{route('status', $data->client->id)}}">
                     <i class="ft-monitor"></i>
-                    <p>Shipment Status</p>
+                    <p>Request Status</p>
                 </a>
             </li>
 
             <li class="list-group-item">
-                <a href="/client-request">
+                <a href="/client-request/">
                     <i class="ft-edit-3"></i>
                     <p>Request Quotation</p>
                 </a>

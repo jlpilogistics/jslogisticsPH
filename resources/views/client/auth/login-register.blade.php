@@ -43,68 +43,32 @@
     <!--Section area starts Here -->
     <section id="section" class="spacetop">
         <!--Section box starts Here -->
-        <div class="section">
+        <div class="section" style="background-image: url('{{url('/app/images/bg1.jpg')}}');background-repeat: no-repeat;background-size: cover">
             <div class="top-content">
-
                 <div class="inner-bg">
                     <div class="container">
-
-
                         <div class="row">
-                            <div class="col-sm-5">
-
-                                <div class="form-box">
-                                    <div class="form-top">
-                                        <div class="form-top-left">
-                                            <h3>Login to our site</h3>
-                                            <p>Enter username and password to log on:</p>
-                                        </div>
-                                        <div class="form-top-right">
-                                            <i class="fa fa-key"></i>
-                                        </div>
+                            <div class="col-sm-4" >
+                                <div class="banner-text"  >
+                                    <div class="form-box"  >
+                                        {{--<h2  style="position: relative;bottom: 5px; height: 200px; width: 50%;">Sign Up now--}}
+                                        {{--and--}}
+                                        {{--be a part of our journey</h2>--}}
                                     </div>
-                                    <div class="form-bottom">
-                                        @if (session('status'))
-                                            <div class="alert alert-success">
-                                                {{ session('status') }}
-                                            </div>
-                                        @endif
-                                        @if (session('warning'))
-                                            <div class="alert alert-warning">
-                                                {{ session('warning') }}
-                                            </div>
-                                        @endif
-                                        <form role="form" action="{{route('user.login.submit')}}" method="post" class="login-form">
-                                            {{ csrf_field() }}
 
-                                            <div class="form-group">
-                                                <label class="sr-only" for="form-username">Email Address</label>
-                                                <input type="text" name="email" placeholder="Email Address ..." class="form-username form-control" id="form-username">
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="sr-only" for="form-password">Password</label>
-                                                <input type="password" name="password" placeholder="Password..." class="form-password form-control" id="form-password">
-                                            </div>
-                                            <button type="submit" class="btn">Sign in!</button>
-                                        </form>
-                                    </div>
                                 </div>
+                            </div>
+                            <div class="col-md-1">
 
                             </div>
 
-
-
-
                             <div class="col-sm-7">
-
                                 <div class="form-box">
                                     <div class="form-top">
                                         <div class="form-top-left">
-                                            <h3>Sign up now</h3>
+
+                                            <h3><i class="fa fa-pencil">&nbsp;</i>Sign up now</h3>
                                             <p>Fill in the form below to get instant access:</p>
-                                        </div>
-                                        <div class="form-top-right">
-                                            <i class="fa fa-pencil"></i>
                                         </div>
                                     </div>
                                     <div class="form-bottom">
@@ -113,17 +77,17 @@
                                             <div class="form-group row">
                                                 <div class=" col-xs-12 col-sm-6 right-space">
                                                     <label class="sr-only" for="form-first-name">First name</label>
-                                                    <input type="text" name="form-first-name" placeholder="First name..." class="form-first-name form-control" id="form-first-name">
+                                                    <input type="text" name="form-first-name" placeholder="First name" class="form-first-name form-control" id="form-first-name">
                                                 </div>
                                                 <div class=" col-xs-12 col-sm-6 right-space">
                                                     <label class="sr-only" for="form-last-name">Last name</label>
-                                                    <input type="text" name="form-last-name" placeholder="Last name..." class="form-last-name form-control" id="form-last-name">
+                                                    <input type="text" name="form-last-name" placeholder="Last name" class="form-last-name form-control" id="form-last-name">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class=" col-xs-12 col-sm-6 right-space">
                                                     <label class="sr-only" for="form-email">Email</label>
-                                                    <input type="text" name="form-email" placeholder="Email..." class="form-email form-control" id="form-email">
+                                                    <input type="text" name="form-email" placeholder="Email." class="form-email form-control" id="form-email">
                                                 </div>
                                                 <div class=" col-xs-12 col-sm-6 right-space">
                                                     <label class="sr-only" for="form-number">Phone Number</label>
@@ -146,12 +110,12 @@
                                                 </div>
                                                 <div class=" col-xs-12 col-sm-4 right-space">
                                                     <label class="sr-only" for="form-city">City</label>
-                                                    <input type="text" name="form-city" placeholder="City ..."
+                                                    <input type="text" name="form-city" placeholder="City"
                                                            class="form-about-yourself form-control" id="form-city">
                                                 </div>
                                                 <div class=" col-xs-12 col-sm-4 right-space">
                                                     <label class="sr-only" for="form-country">Country</label>
-                                                    <input type="text" name="form-country" placeholder="Country ..."
+                                                    <input type="text" name="form-country" placeholder="Country"
                                                            class="form-about-yourself form-control" id="form-country">
                                                 </div>
                                             </div>
@@ -175,21 +139,6 @@
                     </div>
                 </div>
 
-            </div>
-            <div class="query ">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-10">
-                            <h5>DO YOU STILL HAVE A QUESTION REGARING OUR SERVICES?</h5>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc consequat elementum tempor. Duis porta lectus ut dui consequat.
-                            </p>
-                        </div>
-                        <div class="col-xs-12 col-sm-2">
-                            <a href="contact-us.html" class="contact-us button">contact us</a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         <!--Section box ends Here -->

@@ -49,6 +49,11 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function showSignup()
+    {
+        return view('client.auth.login-register');
+    }
+
 
 
     /**

@@ -8,8 +8,7 @@
 <!-- fixed-top-->
 
 <!-- ////////////////////////////////////////////////////////////////////////////-->
-@include('client.partials.sidenav')
-
+@yield('sidenav')
 <div class="app-content content">
     <div class="content-wrapper">
         <div class="content-header row">

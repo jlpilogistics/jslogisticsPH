@@ -68,7 +68,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Pending Requests</h4>
+                        <h4 class="card-title">Requesting for Quote</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -155,6 +155,63 @@
                                     <th>Origin</th>
                                     <th>Destination</th>
                                     {{--<th>Status</th>--}}
+                                    <th>Action</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Confirmed Shipment</h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                <li><a data-action="close"><i class="ft-x"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body card-dashboard">
+                            <table class="table table-striped table-bordered zero-configuration " >
+                                <thead>
+                                <tr>
+                                    <th>Confirmation Date</th>
+                                    <th>Shipper</th>
+                                    <th>Consignee</th>
+                                    <th>Ship To</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($quo as $quotations)
+                                    <tr>
+                                        <?php
+                                        $client = App\Client::findOrFail($quotations->client_id);
+                                        ?>
+                                        <td>{{$quotations->updated_at}}</td>
+                                        <td>{{$client->firstName}} {{$client->lastName}}</td>
+                                        <td>{{$quotations->consignee->firstName}} {{$quotations->consignee->lastName}}</td>
+                                        <td>{{$quotations->consignee->address}}, {{$quotations->consignee->city}}, {{$quotations->consignee->country}} {{$quotations->consignee->zip}}</td>
+                                        <td><button type="button" onclick="window.location='{{ route('quotations.show', $quotations->id ) }}'" class="btn btn-success mr-1 mb-1">View Request</button></td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>Confirmation Date</th>
+                                    <th>Shipper</th>
+                                    <th>Consignee</th>
+                                    <th>Ship To</th>
                                     <th>Action</th>
                                 </tr>
                                 </tfoot>

@@ -57,26 +57,26 @@
                                     <a href="{{url('/location')}}">Status</a>
                                 </li>
                                 <li>
-                                    <a href="{{url('/products/create-step1')}}">Request Quote</a>
+                                    <a href="{{url('/users/signup')}}">Sign up</a>
 
                                 </li>
                                 @if (Auth::guest())
-                                <li>
-                                    <a href="{{ url('users/login')}}">Login</a>
-                                </li>
+                                    <li>
+                                        <a href="{{ url('users/login')}}">Login</a>
+                                    </li>
                                 @else
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 
-                                        Hello, {{{ Auth::user()->name}}}<span class="caret"></span>
-                                    </a>
-                                    <ul class="sub-menu">
-                                        <li><a href="{{ url('/users/logout') }}">Dashboard</a></li>
-                                        <li><a href="{{ url('/users/logout') }}">Account Profile</a></li>
-                                        <li><a href="{{ url('/users/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
-                                    </ul>
+                                            Hello, {{{ Auth::user()->name}}}<span class="caret"></span>
+                                        </a>
+                                        <ul class="sub-menu">
+                                            <li><a href="{{ url('/client-status/' . Auth::user()->id) }}">Dashboard</a></li>
+                                            <li><a href="{{ url('/client-account/'. Auth::user()->id) }}">Account Profile</a></li>
+                                            <li><a href="{{ url('/users/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                        </ul>
 
-                                </li>
+                                    </li>
                                 @endif
 
 

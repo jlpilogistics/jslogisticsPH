@@ -26,4 +26,9 @@ class TransactPolicy
     {
         return ($user->client_id === $client->id);
     }
+
+    public function show(User $user, Client $client)
+    {
+        return ($user->client_id === $client->id);
+    }
 }

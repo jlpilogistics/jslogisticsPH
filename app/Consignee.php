@@ -6,7 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Consignee extends Model
 {
-    public function quotation(){
-        return $this->hasMany('App\Quotation');
+    protected $fillable = [
+        'lastName',
+        'firstName',
+        'company',
+        'email',
+        'phone',
+        'address',
+        'city',
+        'country',
+        'zip',
+        'postal'
+    ];
+    public function transaction(){
+        return $this->hasMany('App\Transaction');
     }
 }

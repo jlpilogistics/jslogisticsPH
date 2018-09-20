@@ -49,15 +49,40 @@ $imp_id= substr(str_shuffle(str_repeat($pool, 4)), 0, 4);
 	<input type="text" name="vehicle_model"  class="form-control col-md-8"><br></div>
 
 	<div class="col-6">
-	<label for="">Fuel Type:</label><br>
-	<input type="radio" name="fuel_type" value="Diesel"  class="form-control col-md-5">Diesel
-	<input type="radio" name="fuel_type" value="Biofuel"  class="form-control col-md-5">Biofuel
-	<input type="radio" name="fuel_type" value="Unleaded"  class="form-control col-md-5">Unleaded<br><br></div>
+					  <div class="form-group">
+						  <label for="form-orgrole">Fuel Type:</label>
+						  <div class="input-group">
+							  <div class="d-inline-block custom-control custom-radio mr-1">
+								  <input  type="radio" name="fuel_type" value="Diesel"  class="custom-control-input" id="typ1">
+								  <label class="custom-control-label" for="typ1">Diesel</label>
+							  </div>
+							  <div class="d-inline-block custom-control custom-radio mr-1">
+								  <input  type="radio" name="fuel_type" value="Biofuel" class="custom-control-input" id="typ2">
+								  <label class="custom-control-label" for="typ2">Biofuel</label>
+							  </div>
+							  <div class="d-inline-block custom-control custom-radio">
+								  <input  type="radio" name="fuel_type" value="Unleaded" class="custom-control-input" id="typ3">
+								  <label class="custom-control-label" for="typ3">Unleaded</label>
+							  </div>
+						  </div>
+					  </div>
+				  </div>
 
-	<div class="col-6">
-	<label for="">Availability:</label><br>
-	<input type="radio" name="avail" value="Available"  class="form-control col-md-6">Available
-	<input type="radio" name="avail" value="Not Available"  class="form-control col-md-6">Not Available<br></div>
+				  <div class="col-6">
+					  <div class="form-group">
+						  <label for="form-orgrole">Availability:</label><br>
+						  <div class="input-group">
+							  <div class="d-inline-block custom-control custom-radio mr-1">
+								  <input type="radio" name="avail" value="Available"  class="custom-control-input" id="av1">
+								  <label class="custom-control-label" for="av1">Available</label>
+							  </div>
+							  <div class="d-inline-block custom-control custom-radio">
+								  <input  type="radio" name="avail" value="Not Available" class="custom-control-input" id="av2">
+								  <label class="custom-control-label" for="av2">Not Available</label>
+							  </div>
+						  </div>
+					  </div>
+				  </div>
 
 
 	<div class="col-6">

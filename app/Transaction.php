@@ -11,6 +11,8 @@ class Transaction extends Model
 
     use IsInvoicableTrait;
 
+    protected $with = ['invoices'];
+
     public function generateTransaction() {
         $number = mt_rand(10000000, 99999999); // better than rand()
         return $number;
@@ -39,8 +41,14 @@ class Transaction extends Model
     public function clients(){
             return $this->belongsTo('App\Client');
     }
+    public function consignee(){
+        return $this->belongsTo('App\Consignee');
+    }
     public function status(){
         return $this->belongsTo('App\Status');
+    }
+    public function documents(){
+        return $this->hasMany('App\Document');
     }
 
 

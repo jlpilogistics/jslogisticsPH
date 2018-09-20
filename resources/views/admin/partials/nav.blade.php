@@ -10,10 +10,6 @@
 
                     </a>
                 </li>
-                <li class="nav-item d-none d-md-block float-right"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="toggle-icon ft-toggle-right font-medium-3 white" data-ticon="ft-toggle-right"></i></a></li>
-                <li class="nav-item d-md-none">
-                    <a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="la la-ellipsis-v"></i></a>
-                </li>
             </ul>
         </div>
         <div class="navbar-container content">
@@ -160,7 +156,7 @@
                   <span class="user-name text-bold-700"></span>
                 </span>
                             <span class="avatar avatar-online">
-                  <img src="{{URL::asset('app-assets/images/portrait/small/avatar-s-19.png')}}" alt="avatar"><i></i></span>
+                  <img src="/admin_images/{{Auth::user()->image}}" alt="avatar"><i></i></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a>
                             <a class="dropdown-item" href="#"><i class="ft-mail"></i> My Inbox</a>

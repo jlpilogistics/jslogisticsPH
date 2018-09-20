@@ -29,9 +29,10 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/Main';
 
+
     public function showLoginForm()
     {
-        return view('client.auth.login-register');
+        return view('client.auth.loginclient');
     }
 
 //    public function login(Request $request){

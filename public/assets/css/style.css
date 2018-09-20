@@ -12,5 +12,8 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 
 .specify {
     width: 100px;
+}
 
+body {
+    zoom: 80%;
 }

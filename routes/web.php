@@ -50,7 +50,10 @@
     Route::get('profile', 'BillingController@clientprofile');
     Route::get('invoice', 'BillingController@create');
     Route::resource('users-admin', 'Auth\UsersController');
-    Route::post('/user/register', 'Auth\RegisterController@register')->name('user.register.submit');
+    Route::get('admin-registration', 'RegTrial@index');//New
+    Route::post('admin-registration', 'RegTrial@register');//New
+    Route::get('/users/signup', 'Auth\RegisterController@showSignup')->name('user.register');
+    Route::post('/users/signup', 'Auth\RegisterController@register')->name('user.register.submit');
     Route::get('/user/verify/{token}', 'Auth\RegisterController@verifyUser');
 
 
@@ -62,18 +65,34 @@
 //});
 
 Route::get('Main', 'Client\HomeController@index')->name('user.index');
-Route::get('quote/confirm/{transaction}/{invoice}/{client}', 'Client\HomeController@confirm');
+Route::get('quote/confirm/{transaction}/{invoice}/{client}', 'Client\HomeController@confirm')->name('confirm.quote');
 Route::get('about', 'Client\HomeController@showAbout');
 Route::get('location', 'Client\HomeController@showLocation');
 Route::get('domestic', 'Client\HomeController@showDomestic');
 Route::get('import', 'Client\HomeController@showImport');
 Route::get('export', 'Client\HomeController@showExport');
+Route::get('imports', 'CategoryController@import');
+Route::get('exports', 'CategoryController@export');
+Route::get('domestics', 'CategoryController@domestic');
+Route::get('approved', 'CategoryController@approved');
+Route::get('monitor', 'monitorController@index');
+Route::get('client-lists', 'BillingController@index');
+Route::get('profile', 'BillingController@clientprofile');
+Route::get('invoice', 'BillingController@create');
+Route::get('search', 'BillingController@search');
+Route::resource('/fuel', 'FuelMaintenanceController@addFuel');
+Route::resource('/maintenance', 'FuelMaintenanceController@addMain');
+Route::get('/maintenance', 'FuelMaintenanceController@showMain');
+Route::get('/fuel', 'FuelMaintenanceController@showFuel');
+Route::get('/haulage-import', 'HaulageController@index');
+Route::get('/sched-import', 'HaulageController@show');
 Route::get('quote/createStep1', 'Client\QuotesController@createStep1');
 Route::post('quote/createStep1', 'Client\QuotesController@postCreateStep1');
 Route::post('quote/summary', 'Client\QuotesController@summary');
 Route::get('/users/login', 'Auth\LoginController@showLoginForm')->name('user.login');
 Route::post('/users/login', 'Auth\LoginController@login')->name('user.login.submit');
 Route::get('/users/logout','Auth\LoginController@userLogout')->name('user.logout');
+
 
 
 Route::get('/products', 'Client\ProductController@index');
@@ -91,8 +110,16 @@ Route::post('/products/store', 'Client\ProductController@store')->name('store');
 Route::get('/charges/{id}/{mode}', 'QuotesController@findcharge');
 Route::get('/quotations/create-quote/{id}', 'QuotesController@createQuote')->name('quotations.create-quote');
 Route::post('/quotations/send-quote/', 'QuotesController@sendQuote')->name('quotations.send-quote');
-Route::get('multifileupload', 'HomeController@multifileupload')->name('multifileupload');
-Route::post('multifileupload', 'HomeController@store')->name('multifileupload');
+Route::get('/multifileupload', 'HomeController@multifileupload')->name('multifileupload');
+Route::post('/multifileupload', 'HomeController@store')->name('multifileupload');
+Route::get('client-account/{client}', 'Client\HomeController@account')->name('account');//New
+Route::get('client-status/{client}', 'Client\HomeController@clientStatus')->name('status');//New
+Route::get('/client-request', 'Client\ProductController@createStep1');//New
+Route::post('/client-request', 'Client\ProductController@postCreateStep1');//New
+Route::get('client-bill', 'Client\HomeController@receivedBill');//New
+Route::get('/quote-summary', 'Client\ProductController@createStep4');//New
+Route::post('/image-view','Client\HomeController@finish');
+Route::post('/image-upload/{id}','Client\HomeController@imageUpload');
 
 
 

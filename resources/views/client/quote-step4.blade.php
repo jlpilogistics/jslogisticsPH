@@ -200,8 +200,8 @@
                         </div>
                     </div>
                     <div class="order-wrap" style="padding-bottom: 50px; float: right;">
-                            <button onclick="window.history.back(-1)" class="update-cart">Previous</button>
-                            <button type="submit" class="update-cart">Request Quote</button>
+                        <button onclick="window.history.back(-1)" class="update-cart">Previous</button>
+                        <button type="submit" class="update-cart">Request Quote</button>
                     </div>
                 </form>
             </div>

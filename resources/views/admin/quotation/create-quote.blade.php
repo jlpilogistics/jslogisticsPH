@@ -321,8 +321,8 @@
                     var amount = row.find('.amount').val();
                     var tot = amount * rate;
                     var tota = tot.toFixed(2);
-                    row.find('.totalRow').text("");
-                    row.find('.totalRow').text(tota);
+                        row.find('.totalRow').text("");
+                        row.find('.totalRow').text(tota);
                     total();
                 });
                 // $(this).find('td').each(function () {

@@ -184,9 +184,9 @@
       <td></td>
         <td></td>
       <td colspan="4" class="text-align-right">
-        Subtotal: {{$data['symbol']}} {{$item['subtotals']}}<br/>
-        Included tax: {{$data['symbol']}} {{$item['taxes']}}<br/>
-        <b>Total: {{$data['symbol']}} {{$item['mytotals']}}</b><br/>
+        Subtotal: {{$data['symbol']}} {{$data['subtotals']}}<br/>
+        Included tax: {{$data['symbol']}} {{$data['taxes']}}<br/>
+        <b>Total: {{$data['symbol']}} {{$data['mytotals']}}</b><br/>
       </td>
     </tr>
     <tr class="information">

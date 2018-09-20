@@ -12,12 +12,38 @@ class BillingController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     *
+     *
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
     public function index()
     {
         $data = Transaction::with('origin','destination','goods','quotation')->get();
         $client = Client::with('transaction')->get();
        return view('admin.billing.List', compact('client','data'));
+    }
+
+    public function search(Request $request){
+
+        if ($request->ajax()){
+            $output="";
+            $customers=DB::table('clients')->where('firstName','LIKE', '%' .$request->search.'&')
+                ->orWhere('lastName','LIKE', '%'.$request->search.'&')->get();
+            foreach ($customers as $key =>$customer){
+                $output.='<tr>'.
+                    '<td>'.$customer->lastName.'</td>'.
+                    '<td>'.$customer->company.'</td>'.
+                    '<td>'.$customer->email.'</td>'.
+                    '<td>'.$customer->address.'</td>'.
+                    '<td>'.$customer->city.'</td>'.
+                    '</tr>';
+            }
+
+        }
     }
     /**
      * Show the form for creating a new resource.

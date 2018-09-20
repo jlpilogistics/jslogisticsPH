@@ -39,8 +39,6 @@ class ProductController extends Controller
         return view('client.quote',compact('products',$products));
     }
 
-
-
     /**
      * Show the step 1 Form for creating a new product.
      *
@@ -48,13 +46,26 @@ class ProductController extends Controller
      */
     public function createStep1(Request $request)
     {
-
         $type = Shiptype::all()->pluck('name','name');
-        $terms = Incoterm::all()->pluck('name','id');
         $origin = $request->session()->get('origin');
         $dest = $request->session()->get('dest');
         $quote = $request->session()->get('quote');
-        return view('client.quote',compact('origin', 'quote', 'dest', 'type', 'commodity','terms'));
+        $goods = $request->session()->get('goods');
+        $commodity = Commodity::all()->pluck('type','type');
+        $terms = Incoterm::all()->pluck('name','name');
+        $clients = Client::findOrFail(Auth::user()->client_id)->first();
+//        $base = new GuzzleHttp\Client([
+//            'base_uri' => 'http://data.fixer.io/',
+//        ]);
+//        $response = $base->request('GET', 'api/latest?access_key=' . env('FIXER_API_KEY') . '&symbols=PHP,phpUSD,JPY,GBP,AUD,CHF,CAD,MXN,CNY,NZD&format=1');
+//        $response_data = json_decode($response->getBody()->getContents());
+//        foreach ($response_data as $currency) {
+//            $rates[] = $currency;
+//        }
+//        $request->session()->flush();
+        $packages = Package::all()->pluck('type','type');
+
+        return view('client.quote',compact('origin', 'quote', 'dest','goods', 'type', 'commodity','terms','quote', 'packages','currency','clients'));
     }
 
     /**
@@ -80,9 +91,19 @@ class ProductController extends Controller
             'deta' => 'required',
             'dport' => 'required',
         ]);
-        $validatedType = $request->validate([
+        $validatedGoods = $request->validate([
             'shiptypes'=>'required',
             'mode'=>'required',
+            'goods' => 'required',
+            'name' => 'required',
+            'term' => 'required',
+            'danger' => 'required',
+            'temp' => 'required',
+            'description' => 'required',
+            'aweight' => 'required',
+            'avolume' => 'required',
+            'currency' => 'required',
+            'insurance' => 'required',
         ]);
 
         if(empty($request->session()->get('origin'))) {
@@ -95,161 +116,52 @@ class ProductController extends Controller
             $dest->fill($validatedDest);
             $request->session()->put('dest', $dest);
         }
-        if(empty($request->session()->get('goods'))){
+        if(empty($request->session()->get('goods'))) {
             $goods = new Goods();
-            $goods->fill($validatedType);
+            $goods->fill($validatedGoods);
             $request->session()->put('goods', $goods);
         }
+
         else{
             $origin = $request->session()->get('origin');
             $dest = $request->session()->get('dest');
             $goods = $request->session()->get('goods');
             $origin->fill($validatedOrigin);
             $dest->fill($validatedDest);
-            $goods->fill($validatedType);
+            $goods->fill($validatedGoods);
             $request->session()->put('origin', $origin);
             $request->session()->put('dest', $dest);
             $request->session()->put('goods', $goods);
         }
-        return redirect('/products/create-step2');
+
+        for($i=0;$i<count($request->dimused);$i++){
+            $data[]= array('dimused'=>$request->dimused[$i]['dimused'],
+                'package'=>$request->package[$i]['package'],
+                'quantity'=>$request->quantity[$i]['quantity'],
+                'length'=>$request->length[$i]['length'],
+                'width'=>$request->width[$i]['width'],
+                'height'=>$request->height[$i]['height'],
+                'weight'=>$request->weight[$i]['weight']);
+        }
+        $x = 0;
+        foreach($data as $item){
+            $x++;
+            $quote = new Quotation();
+            $quote->fill($item);
+            $request->session()->put('quote'.$x, $quote);
+        }
+        return redirect('/products/create-step4');
     }
+
 
     /**
      * Show the step 2 Form for creating a new product.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function createStep2(Request $request)
-    {
-        if(empty($request->session()->get('origin')) && empty($request->session()->get('origin'))){
-            return redirect('products/create-step1');
-        }
-        $goods = $request->session()->get('goods');
-        $commodity = Commodity::all()->pluck('type','type');
-        $terms = Incoterm::all()->pluck('name','name');
-        return view('client.quote-2',compact('commodity','terms', 'goods'));
-    }
-
-    /**
-     * Post Request to store step1 info in session
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function postCreateStep2(Request $request)
-    {
-        $validatedGoods = $request->validate([
-            'goods' => 'required',
-            'name' => 'required',
-            'term' => 'required',
-            'danger' => 'required',
-            'temp' => 'required',
-            'description' => 'required',
-        ]);
-
-        if(empty($request->session()->get('goods'))) {
-            $goods = new Goods();
-            $goods->fill($validatedGoods);
-            $request->session()->put('goods', $goods);
-        }
-        else{
-            $goods = $request->session()->get('goods');
-            $goods->fill($validatedGoods);
-            $request->session()->put('goods', $goods);
-        }
-        return redirect('/products/create-step3');
-
-    }
-
-    /**
-     * Show the Product Review page
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-    /**
-     * Show the Product Review page
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function createStep3(Request $request)
-    {
-        if(empty($request->session()->get('origin')) && empty($request->session()->get('origin')) && empty($request->session()->get('goods')) ){
-            return redirect('products/create-step1');
-        }
-        elseif (empty($request->session()->get('goods'))){
-            return redirect('products/create-step2');
-        }
-        $base = new GuzzleHttp\Client([
-            'base_uri' => 'http://data.fixer.io/',
-        ]);
-        $response = $base->request('GET', 'api/latest?access_key=' . env('FIXER_API_KEY') . '&symbols=PHP,USD,JPY,GBP,AUD,CHF,CAD,MXN,CNY,NZD&format=1');
-        $response_data = json_decode($response->getBody()->getContents());
-
-
-
-        foreach ($response_data as $currency) {
-            $rates[] = $currency;
-        }
-//        $request->session()->flush();
-        $packages = Package::all()->pluck('type','type');
-        return view('client.quote-step3',compact('quote', 'packages','currency'));
-    }
-
-    public function postCreateStep3(Request $request)
-    {
-        for($i=0;$i<count($request->dimused);$i++){
-            $data[]= array('dimused'=>$request->dimused[$i]['dimused'],
-                 'package'=>$request->package[$i]['package'],
-                 'quantity'=>$request->quantity[$i]['quantity'],
-                 'length'=>$request->length[$i]['length'],
-                 'width'=>$request->width[$i]['width'],
-                 'height'=>$request->height[$i]['height'],
-                 'weight'=>$request->weight[$i]['weight']);
-        }
-
-        $validatedData = $request->validate([
-            'aweight' => 'required',
-            'avolume' => 'required',
-            'currency' => 'required',
-            'insurance' => 'required',
-        ]);
-
-//        for ($x = 0; $x < count($data); $x++) {
-////            $topic = array($item);
-//            if(empty($request->session()->get('quote'.$x))) {
-//                $quote = new Quotation();
-//                $quote->fill($data);
-//                $request->session()->put('quote'. $x, $quote);
-//            }
-//        }
-        $x = 0;
-        foreach($data as $item){
-                $x++;
-                $quote = new Quotation();
-                $quote->fill($item);
-                $request->session()->put('quote'.$x, $quote);
-        }
-
-
-            $goods = $request->session()->get('goods');
-            $goods->fill($validatedData);
-            $request->session()->put('goods', $goods);
-
-        return redirect('/products/create-step4');
-
-    }
     public function createStep4(Request $request)
     {
-        if(empty($request->session()->get('origin')) && empty($request->session()->get('origin')) && empty($request->session()->get('goods')) && empty($request->session()->get('quote1'))){
-            return redirect('products/create-step1');
-        }
-        elseif (empty($request->session()->get('goods')) && empty($request->session()->get('quote1'))){
-            return redirect('products/create-step2');
-        }
-        elseif (empty($request->session()->get('quote1'))){
-            return redirect('products/create-step3');
-        }
         $quote = $request->session()->get('quote');
         $origin = $request->session()->get('origin');
         $dest = $request->session()->get('dest');
