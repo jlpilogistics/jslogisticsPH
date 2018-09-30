@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Brokerage;
 use App\Charge;
 use App\Client;
+use App\Commodity;
+use App\Export;
+use App\Import;
 use App\Notifications\QuoteSent;
 use App\Session;
 use App\User;
@@ -25,6 +29,7 @@ class QuotesController extends Controller
     private $pdf = '';
     protected $data = '';
     private $charges = '';
+    private $noncharges = '';
     private $terms = '';
 
 
@@ -59,7 +64,7 @@ class QuotesController extends Controller
 
 //       return $quote->commodity;
         $quote = Transaction::with('destination','origin','quotation','goods', 'consignee')->where('status_id', 1)->get();
-        $quo = Transaction::with('destination','origin','quotation','goods', 'consignee')->where('status_id', 3)->get();
+        $quo = Transaction::with('destination','origin','quotation','goods', 'consignee')->where('status_id', 2)->get();
 
 
         return view('admin.quotation.index', compact('quote','quo'));
@@ -71,6 +76,7 @@ class QuotesController extends Controller
 
     public function createQuote($id)
     {
+
         $base = new GuzzleHttp\Client([
             'base_uri' => 'http://data.fixer.io/',
         ]);
@@ -78,29 +84,73 @@ class QuotesController extends Controller
         $response_data = json_decode($response->getBody()->getContents());
         $peso = $base->request('GET', 'api/latest?access_key=' . env('FIXER_API_KEY') . '&symbols=PHP&format=1');
         $peso_data = json_decode($peso->getBody()->getContents());
+        $data = Transaction::with('origin','destination','goods','quotation')->findOrFail($id);
+        $value = $data->goods->insurance;
         foreach ($response_data as $currency) {
             $rates[] = $currency;
         }
         foreach ($peso_data->rates as $peso_rate){
             $pesos = $peso_rate;
         }
-        $data = Transaction::with('origin','destination','goods','quotation')->findOrFail($id);
+        $ins = $data->goods->danger;
+        if($ins == 'Yes'){
+            $insurance = 0.04;
+        }else{
+            $insurance = 0.02;
+        }
+
+
+        $totVal = $value * $insurance;
+        $broker = Brokerage::where('start_value', '<=' , $value)->where('end_value', '>=', $value)->first();
+        $tax = Commodity::where('type', $data->goods->goods)->first();
+        $dutax = $tax->tax;
+
+
+        if ($value > 200000){
+            $total = $value - 200000;
+            $fin = ($total*0.01)/8;
+            $broker->rate = 5300 + $fin;
+            $brate = $broker->rate;
+        }else{
+            $brate=$broker->rate;
+        }
+
+        $duties = $value * ($dutax/100);
         $client = Client::with('transaction')->findOrFail($data->client_id);
-        if(($data->goods->mode) == 'FCL40'){
-            $ref_id = 1;
+        $type = $data->goods->shiptypes;
+        $mode = $data->goods->mode;
+        $term = $data->goods->term;
+        if((($mode) == 'FCL40' || ($mode) == 'FCL20' || ($mode) == 'LCL') && ($type) == 'Export'){
+            $export = new Export();
+            $export->rateCharge($type, $mode, $brate);
+            $stdrd =  $export->where('standard', 1)->where($term,1)->where('oceanfreight', 1)->get();
+            $stdrd1 =  $export->where('standard', 1)->where($term,1)->where('oceanfreight', 1)->pluck('particulars', $mode);
+            $stdrd2 =  $export->where('standard', 1)->where($term,0)->where('oceanfreight', 1)->pluck('particulars', $mode);
+            $nonstdrd = $export->where('standard', 0)->where($term,0)->where('oceanfreight', 1)->pluck('particulars','particulars');
         }
-        elseif(($data->goods->mode) == 'FCL20'){
-            $ref_id = 2;
+        if((($mode) == 'FCL40' || ($mode) == 'FCL20' || ($mode) == 'LCL') && ($type) == 'Import'){
+            $import = new Import();
+            $import->importRates($type, $mode, $brate);
+            $stdrd = $import->where('standard', 1)->where($term,1)->where('oceanfreight', 1)->get();
+            $stdrd1 =  $import->where('standard', 1)->where($term,1)->where('oceanfreight', 1)->pluck('particulars',$mode);
+            $nonstdrd = $import->where('standard', 0)->where($term,1)->where('oceanfreight', 1)->pluck('particulars','particulars');
         }
-        elseif(($data->goods->mode) == 'LCL'){
-            $ref_id = 3;
+        if(($mode) == 'Air'  && ($type) == 'Export'){
+            $export = new Export();
+            $export->rateCharge($type, $mode, $brate);
+            $stdrd = $export->where('standard', 1)->where($term,1)->where('airfreight', 1)->get();
+            $stdrd1 =  $export->where('standard', 1)->where($term,1)->where('airfreight', 1)->pluck('particulars',$mode);
+            $nonstdrd = $export->where('standard', 0)->where($term,1)->where('airfreight', 1)->pluck('particulars','particulars');
         }
-        if(($data->goods->mode) == 'Air'){
-            $ref_id = 4;
+        if(($mode) == 'Air'  && ($type) == 'Import'){
+            $import = new Import();
+            $import->importRates($type, $mode, $brate);
+            $stdrd = $import->where('standard', 1)->where($term,1)->where('airfreight', 1)->get();
+            $stdrd1 =  $import->where('standard', 1)->where($term,1)->where('airfreight', 1)->pluck('particulars',$mode);
+            $nonstdrd = $import->where('standard', 0)->where($term,1)->where('airfreight', 1)->pluck('particulars','particulars');
         }
-        $charges = new Charge();
-        $charge = $charges->where('mode_id',$ref_id)->pluck('name','name');
-        return view('admin.quotation.create-quote', compact('charge','currency','data','client','pesos','ref_id'));
+
+        return view('admin.quotation.create-quote', compact('stdrd','stdrd1','stdrd2','nonstdrd','mode','currency','data','client','pesos','ref_id'));
     }
 
 
@@ -113,6 +163,7 @@ class QuotesController extends Controller
      */
     public function store(Request $request)
     {
+
 //        $pdf = PDF::loadView('admin.quotation.pdf');
 //        return $pdf->download('invoice.pdf');
         $ch = new Charge();
@@ -126,14 +177,28 @@ class QuotesController extends Controller
             $peso = $request->pesoRate;
             $convert = $request->amount[$i];
             $result = $ch->convertRate($curr,$peso, $convert);
+
             $charges[] = array('id'=>($i+1),
                 'charge'=>$request->charge[$i],
                 'amount'=>$result,
             );
 
         }
+        for($i=0;$i<count($data['noncharge']);$i++){
+            $curr = $request->currency;
+            $peso = $request->pesoRate;
+            $convert = $request->nonamount[$i];
+            $result = $ch->convertRate($curr,$peso, $convert);
+
+            $noncharges[] = array('id'=>($i+1),
+                'charge'=>$request->noncharge[$i],
+                'amount'=>$result,
+            );
+
+        }
         $this->data = $data;
         $this->charges = $charges;
+        $this->noncharges = $noncharges;
         $this->terms = $terms;
 
         $x = 0;
@@ -142,6 +207,13 @@ class QuotesController extends Controller
             $session = new Session();
             $session->fill($item);
             $request->session()->put('session'.$x, $session);
+        }
+        $x = 0;
+        foreach($noncharges as $itm){
+            $x++;
+            $nonsession = new Session();
+            $nonsession->fill($itm);
+            $request->session()->put('nonsession'.$x, $nonsession);
         }
         $y = 0;
         foreach($terms as $items){
@@ -156,8 +228,7 @@ class QuotesController extends Controller
             $request->session()->forget('session');
             $request->session()->put('session', $request->all());
         }
-
-        return view('admin.quotation.pdf', compact('data','charges','terms'));
+        return view('admin.quotation.pdf', compact('data','charges','noncharges','terms'));
 //        $pdf =  PDF::loadView('admin.billing.invoice', with(['data' => $this->data, 'charges' => $this->charges, 'terms' => $this->terms]));
 //        ini_set('max_execution_time', 300);
 //        return $pdf->stream();
@@ -195,18 +266,22 @@ class QuotesController extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     */
     public function sendQuote(Request $request){
         $alldata = $request->session()->get('session');
         $transact = new Transaction();
-        $transaction = $transact->findOrFail(7);
+        $transaction = $transact->findOrFail($alldata['id']);
         $transact->status_id = 2;
+        $transact->save();
         $invoice = $transaction->invoices()->create([]);
 
         if($request->session()->get('session1')){
-            for($x = 1 ; $x<20; $x++){
+            for($x = 1 ; $x<count(sess); $x++){
                 if($request->session()->get('session'.$x)){
                     $session = $request->session()->get('session'.$x);
-                    $invoice = $invoice->addAmountExclTax($session->amount, $session->charge, 0, $alldata['taxes']);
+                    $invoice = $invoice->addAmountExclTax(round($session->amount), $session->charge, 0, $alldata['taxes']);
                     $rates[] = array('id'=>($x),
                         'charge'=>$session->charge,
                         'amount'=>$session->amount,
@@ -222,6 +297,8 @@ class QuotesController extends Controller
                 }
             }
         }
+
+
 
 
         Notification::route('mail', $alldata['mail'])->notify(new QuoteSent($alldata, $rates, $terms, $invoice));
@@ -264,7 +341,25 @@ class QuotesController extends Controller
     }
 
     public function findcharge($id, $mode){
-        $amount = Charge::where('name','=', $id)->where('mode_id','=',$mode)->pluck('amount');
+//        $amount = Charge::where('name','=', $id)->where('mode_id','=',$mode)->pluck('amount');
+        $amount = Export::where('particulars', $id)->pluck($mode);
         return response()->json(['success'=>true, 'info'=>$amount]);
     }
+    public function findImport($id, $mode){
+//        $amount = Charge::where('name','=', $id)->where('mode_id','=',$mode)->pluck('amount');
+        $amount = Import::where('particulars', $id)->pluck($mode);
+        return response()->json(['success'=>true, 'info'=>$amount]);
+    }
+
+    public function flush(Request $request){
+        $request->session()->flush();
+    }
+
+    public function approved()
+    {
+        $quo = Transaction::with('destination','origin','quotation','goods', 'consignee')->where('status_id', 3)->get();
+        return view('admin.quotation.approved',compact('quo'));
+    }
+
+
 }

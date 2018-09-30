@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Commodity;
 
-class CategoryController extends Controller
+class tarffRateController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -16,18 +18,10 @@ class CategoryController extends Controller
     {
         $this->middleware('auth:admin');
     }
-
-    public function import()
+    public function index()
     {
-        return view('admin.quotation.importTbl');
-    }
-    public function export()
-    {
-        return view('admin.quotation.exportTbl');
-    }
-    public function domestic()
-    {
-        return view('admin.quotation.domesticTbl');
+        $comm = Commodity::all();
+        return view('admin.monitor.dutiesandtaxes',compact('comm'));
     }
 
     /**
@@ -70,7 +64,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $comms = Commodity::findOrFail($id);
+
+        return response()->json($comms);
     }
 
     /**
@@ -82,7 +78,11 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $comms= Commodity::findOrFail($id);
+        $comms->type=$request->editType;
+        $comms->tax=$request->editTax;
+        $comms->update();
+        return redirect('admin.monitor.dutiesandtaxes');
     }
 
     /**

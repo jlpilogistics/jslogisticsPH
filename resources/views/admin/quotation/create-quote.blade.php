@@ -7,8 +7,7 @@
     <meta name="description" content="Modern admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities with bitcoin dashboard.">
     <meta name="keywords" content="admin template, modern admin template, dashboard template, flat admin template, responsive admin template, web app, crypto dashboard, bitcoin dashboard">
     <meta name="author" content="PIXINVENT">
-    <title>Basic DataTables - Modern Admin - Clean Bootstrap 4 Dashboard HTML Template + Bitcoin
-        Dashboard
+    <title>Admin Jexsan
     </title>
     <link rel="apple-touch-icon" href="{{URL::asset('app-assets/images/ico/apple-icon-120.png')}}">
     <link rel="shortcut icon" type="image/x-icon" href="{{URL::asset('app-assets/images/ico/favicon.ico')}}">
@@ -54,201 +53,338 @@
             </div>
         </div>
         <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-head">
-                    <div class="card-header">
-                        <h4 class="card-title">Quote #{{$data->transact}} details</h4>
-                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                    </div>
-                    <div class="px-1">
-                        <ul class="list-inline list-inline-pipe text-left border-bottom-grey border-bottom-lighten-3">
-                            <li>Requested a Quote on:
-                                <span class="text-muted">{{$data->created_at}}</span>
-                            </li>
-                            <li>Status:
-                                <span class="text-muted">{{$data->status->name}}</span>
-                            </li>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-head">
+                        <div class="card-header">
+                            <h4 class="card-title">Quote #{{$data->transact}} details</h4>
+                            <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                        </div>
+                        <div class="px-1">
+                            <ul class="list-inline list-inline-pipe text-left border-bottom-grey border-bottom-lighten-3">
+                                <li>Requested a Quote on:
+                                    <span class="text-muted">{{$data->created_at}}</span>
+                                </li>
+                                <li>Status:
+                                    <span class="text-muted">{{$data->status->name}}</span>
+                                </li>
 
-                            <li><a href="#" class="text-muted" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Export as PDF"><i class="la la-file-pdf-o"></i></a></li>
-                        </ul>
+                                <li><a href="#" class="text-muted" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Export as PDF"><i class="la la-file-pdf-o"></i></a></li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="card-content collapse show">
-                    <div class="card-body">
-                        <form class="form form-horizontal" method="post" action="{{action('QuotesController@store')}}">
-                            {{csrf_field()}}
-                            <input type="hidden" name="user_id" value="{{$client->id}}">
-                            <input type="hidden" name="id" value="{{$data->id}}">
-                            <input type="hidden" name="name" value="{{$client->firstName}} {{$client->lastName}}">
-                            <input type="hidden" name="address" value="{{$client->address}}">
-                            <input type="hidden" name="quotenumber" value="{{$data->transact}}">
-                            <input type="hidden" name="city" value="{{$client->city}}">
-                            <input type="hidden" name="country" value="{{$client->country}}">
-                            <input type="hidden" name="term" value="{{$data->goods->term}}">
-                            <input type="hidden" name="mail" value="{{$client->email}}">
-                            <input type="hidden" class="mode" value="{{$ref_id}}">
-                            <input type="hidden" name="client_ref" value="{{$client->client_ref}}">
-                            <div class="form-body">
-                                <h4 class="form-section"><i class="la la-eye"></i> Quote to:</h4>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group row">
-                                            <label class="col-md-4 label-control" for="userinput1">Name</label>
-                                            <div class="col-md-8">
-                                                <p class="float-right">{{$client->firstName}} {{$client->lastName}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group row">
-                                            <label class="col-md-4 label-control" for="userinput2">Date Quoted</label>
-                                            <div class="col-md-8">
-                                                {{{$mytime = Carbon\Carbon::now()->toFormattedDateString()}}}
-                                                <input type="hidden" name="datequoted" value="{{$mytime}}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">~
-                                        <div class="form-group row">
-                                            <label class="col-md-4 label-control" for="userinput2">Quote ID</label>
-                                            <div class="col-md-8">
-                                                <p class="float-right">{{$data->transact}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group row">
-                                            <label class="col-md-5 label-control" for="userinput1">Email Address</label>
-                                            <div class="col-md-7">
-                                                <p class="float-right">{{$client->email}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group row">
-                                            <label class="col-md-4 label-control" for="userinput3">Valid Until</label>
-                                            <div class="col-md-8">
-                                                <input type="date" id="userinput3" class="form-control border-primary" placeholder="Username"
-                                                       name="validity">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <h4 class="form-section"><i class="ft-mail"></i> Charges/Rates</h4>
-                                <div class="col-lg-12 col-sm-12">
-                                    <table class="table table-bordered">
-                                        <thead class="bg-teal bg-lighten-4">
-                                            <tr>
-                                                    <th width="20%">Currency</th>
-                                                    <th width="30%">Charges</th>
-                                                    <th width="20%">Enter Amount in Peso</th>
-                                                    <th width="20%">Total</th>
-                                                    <th width="10%" style="text-align: center;">
-                                                        <a href="#/" class="addRow"><i class="glyphicon glyphicon-plus"></i>+</a>
-                                                    </th>
-                                                </tr>
-                                        </thead>
-                                        <tbody class="tbodyRow">
-                                        @if(Session::has('session1'))
-                                            @for($x = 1 ; $x<20; $x++)
-                                                @if(Session::has('session'.$x))
-                                            <tr>
-                                                @if($x < 2)
-                                                <td><select name="currency" class="form-control currency">
-                                                        <option selected="true" value="{{ Session::get('session')['currency']}}">{{ Session::get('session')['symbol']}}</option>
-                                                        @foreach($currency as $key=>$val)
-                                                            <option value="{{$val}}">{{$key}}</option>
-                                                        @endforeach
-                                                    </select></td>
-                                                    @else
-                                                    <td></td>
-                                                @endif
-                                                <td>{!! Form::select('charge[]', $charge, Session::get('session'. $x)->charge,['class'=>'form-control charge', 'id'=>'charge']) !!}</td>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <form class="form form-horizontal" method="post" action="{{action('QuotesController@store')}}">
+                                {{csrf_field()}}
+                                <input type="hidden" name="user_id" value="{{$client->id}}">
+                                <input type="hidden" name="client_ref" value="{{$client->client_ref}}">
+                                <input type="hidden" name="company" value="{{$client->company}}">
+                                <input type="hidden" name="id" value="{{$data->id}}">
+                                <input type="hidden" name="name" value="{{$client->firstName}} {{$client->lastName}}">
+                                <input type="hidden" name="address" value="{{$client->address}}">
+                                <input type="hidden" name="quotenumber" value="{{$data->transact}}">
+                                <input type="hidden" name="city" value="{{$client->city}}">
+                                <input type="hidden" name="country" value="{{$client->country}}">
+                                <input type="hidden" name="term" value="{{$data->goods->term}}">
+                                <input type="hidden" class="shiptypes" value="{{$data->goods->shiptypes}}">
+                                <input type="hidden" name="mail" value="{{$client->email}}">
+                                <input type="hidden" class="mode" value="{{$mode}}">
 
-                                                <td><input type="text" class="form-control amount numbersOnly" name="amount[]" value="{{ Session::get('session')['amount'][$x-1]}}"></td>
-                                                <td><span style="font-size: 14px" class="current">{{Session::get('session')['symbol']}}</span><p class="lead totalRow float-right" >{{Session::get('session'. $x)->amount}}</p></td>
-                                                <input type="hidden" value="{{$pesos}}" class="pesoRate" name="pesoRate">
-                                                <td><a href="#/" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>x</a></td>
-                                            </tr>
-                                            @endif
-                                                @endfor
-                                            @else
-                                            <tr>
-                                                <td><select name="currency" class="form-control currency">
-                                                        <option selected="true" disabled value="">Currency</option>
-                                                        @foreach($currency as $key=>$val)
-                                                            <option value="{{$val}}">{{$key}}</option>
-                                                        @endforeach
-                                                    </select></td>
-                                                <td>{!! Form::select('charge[]', $charge, null,['class'=>'form-control charge', 'id'=>'charge']) !!}</td>
-                                                <td><input type="text" class="form-control amount numbersOnly" name="amount[]"></td>
-                                                <td><span style="font-size: 14px" class="current"></span><p class="lead totalRow float-right" ></p></td>
-                                                <input type="hidden" value="{{$pesos}}" class="pesoRate" name="pesoRate">
-                                                <td><a href="#/" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>x</a></td>
-                                            </tr>
-                                            @endif
-                                            <input type="hidden" name="symbol" value="" id="myText">
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-7 col-sm-12 text-center text-md-left">
+                                <div class="form-body">
+                                    <h4 class="form-section"><i class="la la-eye"></i> Quote to:</h4>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group row">
+                                                <label class="col-md-4 label-control" for="userinput1">Name</label>
+                                                <div class="col-md-8">
+                                                    <p class="float-right">{{$client->firstName}} {{$client->lastName}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group row">
+                                                <label class="col-md-4 label-control" for="userinput2">Date Quoted</label>
+                                                <div class="col-md-8">
+                                                    {{{$mytime = Carbon\Carbon::now()->toFormattedDateString()}}}
+                                                    <input type="hidden" name="datequoted" value="{{$mytime}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">~
+                                            <div class="form-group row">
+                                                <label class="col-md-4 label-control" for="userinput2">Quote ID</label>
+                                                <div class="col-md-8">
+                                                    <p class="float-right">{{$data->transact}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group row">
+                                                <label class="col-md-5 label-control" for="userinput1">Email Address</label>
+                                                <div class="col-md-7">
+                                                    <p class="float-right">{{$client->email}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group row">
+                                                <label class="col-md-4 label-control" for="userinput3">Valid Until</label>
+                                                <div class="col-md-8">
+                                                    <input type="date" id="userinput3" class="form-control border-primary" placeholder="Username"
+                                                           name="validity">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4 class="form-section"><i class="ft-mail"></i> Charges/Rates to the Shipper</h4>
+                                    <div class="col-lg-12 col-sm-12">
                                         <table class="table table-bordered">
                                             <thead class="bg-teal bg-lighten-4">
                                             <tr>
-                                                <th>Terms and Conditions <a href="#/" class="addTerms" style="float: right"><i class="glyphicon glyphicon-plus"></i>+</a></th>
+                                                <th width="20%">Currency</th>
+                                                <th width="30%">Charges</th>
+                                                <th width="20%">Amount in Peso</th>
+                                                <th width="20%" class="text-right">Total</th>
+                                                <th width="10%" style="text-align: center;">
+                                                    <a href="#/" class="addRow"><i class="glyphicon glyphicon-plus"></i>+</a>
+                                                </th>
                                             </tr>
                                             </thead>
-                                            <tbody class="terms">
-                                            <tr>
-                                                <td><textarea type="text" class="form-control" style="resize: none" name="conditions[]"></textarea></td>
-                                            </tr>
+                                            <tbody class="tbodyRow">
+                                            @if(Session::has('session1'))
+                                                @for($x = 1 ; $x<count($stdrd); $x++)
+                                                    @if(Session::has('session'.$x))
+                                                        <tr>
+                                                            @if($x < 2)
+
+                                                                <td><select name="currency" class="form-control currency">
+                                                                        <option selected="true" value="{{ Session::get('session')['currency']}}">{{ Session::get('session')['symbol']}}</option>
+                                                                        @foreach($currency as $key=>$val)
+                                                                            <option value="{{$val}}">{{$key}}</option>
+                                                                        @endforeach
+                                                                    </select></td>
+                                                            @else
+                                                                <td></td>
+                                                            @endif
+
+
+                                                            <td><input type="text" readonly value="{{Session::get('session'. $x)->charge}}" class="form-control charge" name="charge[]"></td>
+                                                            <td><input type="text" readonly class="form-control amount numbersOnly" name="amount[]" value="{{ Session::get('session')['amount'][$x-1]}}"></td>
+                                                            <td><span style="font-size: 14px" class="current">{{Session::get('session')['symbol']}}</span><p class="lead totalRow float-right" >{{Session::get('session'. $x)->amount}}</p></td>
+                                                            <input type="hidden" value="{{$pesos}}" class="pesoRate" name="pesoRate">
+                                                            <td><a href="#/" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>x</a></td>
+                                                        </tr>
+                                                    @endif
+                                                @endfor
+                                            @else
+                                                <?php $x = 0; ?>
+                                                @foreach($stdrd1 as $keys=>$values)
+                                                    <?php $x++; ?>
+                                                    <tr>
+                                                        @if(isset($keys))
+                                                            @if($x==1)
+                                                                <td><select name="currency" class="form-control currency">
+                                                                        <option selected="true" disabled value="">Currency</option>
+                                                                        @foreach($currency as $key=>$val)
+                                                                            <option value="{{$val}}">{{$key}}</option>
+                                                                        @endforeach
+                                                                    </select></td>
+                                                            @else
+                                                                <td></td>
+                                                            @endif
+                                                            <td><input type="text" readonly value="{{$values}}" class="form-control charge" name="charge[]"></td>
+                                                            <td><input type="text" readonly value="{{$keys}}" class="form-control amount numbersOnly" name="amount[]"></td>
+                                                            <td><span style="font-size: 14px" class="current"></span><p class="lead totalRow float-right"></p></td>
+                                                            <input type="hidden" value="{{$pesos}}" class="pesoRate" name="pesoRate">
+                                                            <td><a href="#/" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>x</a></td>
+                                                        @else
+                                                            <td width="100%">There is no charges intended for the shipper</td>
+                                                        @endif
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+
+                                            <input type="hidden" name="symbol" value="" id="myText">
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="col-md-5 col-sm-12">
-                                        <p class="lead">Total amount</p>
-                                        <div class="table-responsive">
-                                            <table class="table">
-                                                <tbody>
+                                    <h4 class="form-section"><i class="ft-mail"></i> Charges/Rates to the Consignee</h4>
+                                    <div class="col-lg-12 col-sm-12">
+                                        <table class="table table-bordered">
+                                            <thead class="bg-teal bg-lighten-4">
+                                            <tr>
+                                                <th width="20%">Currency</th>
+                                                <th width="30%">Charges</th>
+                                                <th width="20%">Amount in Peso</th>
+                                                <th width="20%" class="text-right">Total</th>
+                                                <th width="10%" style="text-align: center;">
+                                                    <a href="#/" class="addRow"><i class="glyphicon glyphicon-plus"></i>+</a>
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="tbodyRow">
+                                            @if(Session::has('session1'))
+                                                @for($x = 1 ; $x<count($stdrd); $x++)
+                                                    @if(Session::has('session'.$x))
+                                                        <tr>
+                                                            @if($x < 2)
+
+                                                                <td><select name="currency" class="form-control currency">
+                                                                        <option selected="true" value="{{ Session::get('session')['currency']}}">{{ Session::get('session')['symbol']}}</option>
+                                                                        @foreach($currency as $key=>$val)
+                                                                            <option value="{{$val}}">{{$key}}</option>
+                                                                        @endforeach
+                                                                    </select></td>
+                                                            @else
+                                                                <td></td>
+                                                            @endif
+
+
+                                                            <td><input type="text" readonly value="{{Session::get('session'. $x)->charge}}" class="form-control charge" name="charge[]"></td>
+                                                            <td><input type="text" readonly class="form-control amount numbersOnly" name="amount[]" value="{{ Session::get('session')['amount'][$x-1]}}"></td>
+                                                            <td><span style="font-size: 14px" class="current">{{Session::get('session')['symbol']}}</span><p class="lead totalRow float-right" >{{Session::get('session'. $x)->amount}}</p></td>
+                                                            <input type="hidden" value="{{$pesos}}" class="pesoRate" name="pesoRate">
+                                                            <td><a href="#/" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>x</a></td>
+                                                        </tr>
+                                                    @endif
+                                                @endfor
+                                            @else
+                                                <?php $x = 0; ?>
+                                                @foreach($stdrd2 as $keys=>$values)
+                                                    <?php $x++; ?>
+                                                    <tr>
+                                                        @if($x==1)
+                                                            <td><select name="currency" class="form-control currency">
+                                                                    <option selected="true" disabled value="">Currency</option>
+                                                                    @foreach($currency as $key=>$val)
+                                                                        <option value="{{$val}}">{{$key}}</option>
+                                                                    @endforeach
+                                                                </select></td>
+                                                        @else
+                                                            <td></td>
+                                                        @endif
+                                                        <td><input type="text" readonly value="{{$values}}" class="form-control charge" name="charge[]"></td>
+                                                        <td><input type="text" readonly value="{{$keys}}" class="form-control amount numbersOnly" name="amount[]"></td>
+                                                        <td><span style="font-size: 14px" class="current"></span><p class="lead totalRow float-right"></p></td>
+                                                        <input type="hidden" value="{{$pesos}}" class="pesoRate" name="pesoRate">
+                                                        <td><a href="#/" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>x</a></td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+                                            <input type="hidden" name="symbol" value="" id="myText">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <h4 class="form-section"><i class="ft-mail"></i> Additional Charges (If Applicable)</h4>
+                                    <div class="col-lg-12 col-sm-12">
+                                        <table class="table table-bordered">
+                                            <thead class="bg-teal bg-lighten-4">
+                                            <tr>
+                                                <th width="20%">Currency</th>
+                                                <th width="30%">Charges</th>
+                                                <th width="20%">Amount in Peso</th>
+                                                <th width="20%" class="text-right">Total</th>
+                                                <th width="10%" style="text-align: center;">
+                                                    <a href="#/" class="addRow"><i class="glyphicon glyphicon-plus"></i>+</a>
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="tbodyRow" id="sprow">
+                                            {{--@if(Session::has('session1'))--}}
+                                            {{--@for($x = 1 ; $x<count($nonstdrd); $x++)--}}
+                                            {{--@if(Session::has('session'.$x))--}}
+                                            {{--<tr>--}}
+                                            {{--@if($x < 2)--}}
+                                            {{--<td><select name="currency" class="form-control currency">--}}
+                                            {{--<option selected="true" value="{{ Session::get('session')['currency']}}">{{ Session::get('session')['symbol']}}</option>--}}
+                                            {{--@foreach($currency as $key=>$val)--}}
+                                            {{--<option value="{{$val}}">{{$key}}</option>--}}
+                                            {{--@endforeach--}}
+                                            {{--</select></td>--}}
+                                            {{--@else--}}
+                                            {{--<td></td>--}}
+                                            {{--@endif--}}
+                                            {{--<td>{!! Form::select('charge[]', $charge, Session::get('session'. $x)->charge,['class'=>'form-control charge', 'id'=>'charge']) !!}</td>--}}
+
+                                            {{--<td><input type="text" readonly class="form-control amount numbersOnly" name="amount[]" value="{{ Session::get('session')['amount'][$x-1]}}"></td>--}}
+                                            {{--<td><span style="font-size: 14px" class="current">{{Session::get('session')['symbol']}}</span><p class="lead totalRow float-right" >{{Session::get('session'. $x)->amount}}</p></td>--}}
+                                            {{--<input type="hidden" value="{{$pesos}}" class="pesoRate" name="pesoRate">--}}
+                                            {{--<td><a href="#/" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>x</a></td>--}}
+                                            {{--</tr>--}}
+                                            {{--@endif--}}
+                                            {{--@endfor--}}
+                                            {{--@else--}}
+                                            <tr>
+                                                <td></td>
+                                                <td>{!! Form::select('noncharge[]', $nonstdrd, null,['class'=>'form-control charge', 'id'=>'charge']) !!}</td>
+                                                <td><input type="text" readonly class="form-control amounts numbersOnly" name="nonamount[]"></td>
+                                                <td><span style="font-size: 14px" class="current"></span><p class="lead totalRows float-right" ></p></td>
+                                                <input type="hidden" value="{{$pesos}}" class="pesoRate" name="pesoRate">
+                                                <td><a href="#/" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>x</a></td>
+                                            </tr>
+                                            {{--@endif--}}
+                                            <input type="hidden" name="symbol" value="" id="myText">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-7 col-sm-12 text-center text-md-left">
+                                            <table class="table table-bordered">
+                                                <thead class="bg-teal bg-lighten-4">
                                                 <tr>
-                                                    <td>Sub Total</td>
-                                                    <td class="text-right"><b class="subtotal">{{Session::get('session')['subtotals']}}</b> </td>
+                                                    <th>Terms and Conditions <a href="#/" class="addTerms" style="float: right"><i class="glyphicon glyphicon-plus"></i>+</a></th>
                                                 </tr>
+                                                </thead>
+                                                <tbody class="terms">
                                                 <tr>
-                                                    <td>TAX (12%)</td>
-                                                    <td class="text-right tax">{{Session::get('session')['taxes']}}</td>
+                                                    <td><textarea type="text" class="form-control" style="resize: none" name="conditions[]"></textarea></td>
                                                 </tr>
-                                                <tr>
-                                                    <td class="text-bold-800">Total</td>
-                                                    <td class="text-bold-800 text-right total">{{Session::get('session')['mytotals']}}</td>
-                                                </tr>
-                                                <input type="hidden" name="subtotals" value="" id="mySub">
-                                                <input type="hidden" name="taxes" value="" id="myTax">
-                                                <input type="hidden" name="mytotals" value="" id="myTotal">
                                                 </tbody>
                                             </table>
                                         </div>
+                                        <div class="col-md-5 col-sm-12">
+                                            <p class="lead">Total amount</p>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>Sub Total</td>
+                                                        <td class="text-right"><b class="subtotal">{{Session::get('session')['subtotals']}}</b> </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>TAX (12%)</td>
+                                                        <td class="text-right tax">{{Session::get('session')['taxes']}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-bold-800">Total</td>
+                                                        <td class="text-bold-800 text-right total">{{Session::get('session')['mytotals']}}</td>
+                                                    </tr>
+                                                    <input type="hidden" name="subtotals" value="" id="mySub">
+                                                    <input type="hidden" name="taxes" value="" id="myTax">
+                                                    <input type="hidden" name="mytotals" value="" id="myTotal">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-actions right">
-                                <button type="button" class="btn btn-warning mr-1">
-                                    <i class="ft-x"></i> Cancel
-                                </button>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="la la-check-square-o"></i> Save
-                                </button>
-                            </div>
-                        </form>
+                                <div class="form-actions right">
+                                    <button type="button" class="btn btn-warning mr-1">
+                                        <i class="ft-x"></i> Cancel
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="la la-check-square-o"></i> Save
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </section>
 @stop
 
@@ -320,10 +456,25 @@
                     var rate  = cur / peso;
                     var amount = row.find('.amount').val();
                     var tot = amount * rate;
-                    var tota = tot.toFixed(2);
-                        row.find('.totalRow').text("");
-                        row.find('.totalRow').text(tota);
+                    var tota = Math.round(tot);
+                    row.find('.totalRow').text("");
+                    row.find('.totalRow').text(tota + '.00');
                     total();
+                });
+                $(this).find('.amounts').each(function () {
+                    var row = $(this).parent().parent();
+                    var curName = $('.currency option:selected').text(); // The value of the selected option
+                    $('.current').html(curName);
+                    // alert(row.find('.currency').val());
+                    row.find('.amounts').addClass('numbersOnly');
+                    var cur = $('.currency').val(); // The value of the selected option
+                    var peso = $('.pesoRate').val();
+                    var rate  = cur / peso;
+                    var amount = row.find('.amounts').val();
+                    var tot = amount * rate;
+                    var tota = Math.round(tot);
+                    row.find('.totalRows').text("");
+                    row.find('.totalRows').text(tota + '.00');
                 });
                 // $(this).find('td').each(function () {
                 //     alert('x');
@@ -368,21 +519,21 @@
         function addRow(){
             var tr = '<tr>\n' +
                 '                                                <td></td>\n' +
-                '                                                <td><select name="charge[]" class="form-control charge">\n' +
+                '                                                <td><select name="noncharge[]" class="form-control charge">\n' +
                 '                                                        <option selected="true" disabled value="">Select Charges</option>\n' +
-                '                                                        @foreach($charge as $key=>$val)\n' +
-                '                                                            <option value="{{$val}}">{{$val}}</option>\n' +
+                '                                                        @foreach($nonstdrd as $ke=>$va)\n' +
+                '                                                            <option value="{{$va}}">{{$va}}</option>\n' +
                 '                                                        @endforeach\n' +
                 '                                                    </select></td>\n' +
-                '                                                <td><input type="text" class="form-control amount numbersOnly" name="amount[]"></td>\n' +
-                '                                                <td><span style="font-size: 14px" class="current"></span><p class="lead totalRow float-right" ></p></td>\n' +
+                '                                                <td><input type="text" readonly class="form-control amounts numbersOnly" name="nonamount[]"></td>\n' +
+                '                                                <td><span style="font-size: 14px" class="current"></span><p class="lead totalRows float-right" ></p></td>\n' +
                 '                                                <td><a href="#/" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>x</a></td>\n' +
                 '                                            </tr>';
 
-                $('.tbodyRow').append(tr);
+            $('#sprow').append(tr);
 
 
-                    $('.amount').addClass('numbersOnly');
+            $('.amount').addClass('numbersOnly');
 
 
         }
@@ -395,7 +546,7 @@
         }
 
 
-        $('body').delegate('.remove' ,'click', function () {
+        $('tbody').delegate('.remove' ,'click', function () {
 
             $(this).parent().parent().remove();
         });
@@ -409,27 +560,28 @@
         $('tbody').delegate('.charge','change',function () {
 
             var row = $(this).parent().parent();
+            var th = $(this);
             $.ajax({
-                url: '/charges/' + $(this).val() + '/' + $('.mode').val(),
+                url: '/charges/' + $('.shiptypes').val() + '/' + row.find('.charge option:selected').text() + '/' + $('.mode').val(),
                 type: 'get',
                 data: {},
                 success: function(data) {
 
                     if (data.success == true) {
 
-                        row.find('.amount').val(data.info);
+                        row.find('.amounts').val(data.info);
                         var curName = $('.currency option:selected').text(); // The value of the selected option
                         $('.current').html(curName);
                         // alert(row.find('.currency').val());
-                        row.find(".amount").addClass("numbersOnly");
+                        row.find(".amounts").addClass("numbersOnly");
                         var cur = $('.currency').val(); // The value of the selected option
                         var peso = $('.pesoRate').val();
                         var rate  = cur / peso;
-                        var amount = row.find('.amount').val();
+                        var amount = row.find('.amounts').val();
                         var tot = amount * rate;
-                        var tota = tot.toFixed(2);
-                        row.find('.totalRow').text("");
-                        row.find('.totalRow').text(tota);
+                        var tota = Math.round(tot);
+                        row.find('.totalRows').text("");
+                        row.find('.totalRows').text(tota + '.00');
                         total();
 
                     } else {
@@ -442,6 +594,10 @@
             });
         });
 
+
+
     </script>
+
+
 
 @stop

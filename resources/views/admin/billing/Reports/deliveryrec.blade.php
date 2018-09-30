@@ -1,51 +1,70 @@
-@extends('admin.billing.assets')
-        <!DOCTYPE html>
-<html class="loading" lang="en" data-textdirection="ltr">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    @yield('assets')
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{URL::asset('app-assets/css-rtl/bootstrap.min.css')}}">
+    <script src="{{URL::asset('app-assets/js/core/libraries/jquery.min.js')}}"></script>
+    <script src="{{URL::asset('app-assets/vendors/js/editors/ckeditor/styles.js')}}"></script>
+    <style>
+        @media screen {
+            #printDr {
+                display: none;
+            }
+        }
+
+        @media print {
+            body * {
+                visibility:hidden;
+            }
+            #printDr, #printDr * {
+                visibility:visible;
+            }
+            #printDr {
+                position:absolute;
+                left:0;
+                top:0;
+            }
+        }
+    </style>
 </head>
+<div class="modal fade" id="dl" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Report</h4>
+            </div>
+            <div class="modal-body">
+                <div id="printthisDr">
 
-@section('content')
-<div class="card">
-    <div class="card-content">
-        <div class="card-body">
-            <div class="card-body pb-0">
-                <body>
-                        <b><p style="font-family:Cambria;font-size:250%;text-align:center;">JEXSAN LOGISTICS
-                                PHILIPPINES  INC.</p></b>
-                        <b><p style="font-family:Arial;font-size:90%;text-align:center;">
-                                5th Flr. Raha Sulayman Bldg., 108 Benavidez St.
-                                <br>
-                                Legaspi Village Makati City, Philippines 1229
-                                <br>
-                                Telephone No. : (632) 813-2071 / Telefax No. : (632) 864-0828
-                                <br>
-                                VAT REG TIN: 008-603-352-00000
-                                <br>
-                                www.jlpi.com
-                            </p></b>
-                        <br>
-                        <br>
+                    <b><p style="font-family:Cambria;font-size:250%;text-align:center;">JEXSAN LOGISTICS
+                            PHILIPPINES  INC.</p></b>
+                    <b><p style="font-family:Arial;font-size:90%;text-align:center;">
+                            5th Flr. Raha Sulayman Bldg., 108 Benavidez St.
+                            <br>
+                            Legaspi Village Makati City, Philippines 1229
+                            <br>
+                            Telephone No. : (632) 813-2071 / Telefax No. : (632) 864-0828
+                            <br>
+                            VAT REG TIN: 008-603-352-00000
+                            <br>
+                            www.jlpi.com
+                        </p></b>
+                    <br>
+                    <br>
                     <div class="col-md-6">
-                            <h4><b><p style="font-family: Arial;text-align:left;">DELIVERY RECEIPT</p></b></h4>
-                        </div>
-                        <div class="col-md-6">
-                            <h4><p style="font-family: Arial;text-align:center;">Date:______________, 20______</p></h4>
-                        </div>
-
-                        <br>
-
-                        <div class="col-md-12">
-                            <h4><b><p style="font-family:Cambria;text-align:left;font-size:90%">
-                                        Delivered to: ___________________________________________________________________________________________________________________________________________________________
-                                        <br>
-                                        Address     : _______________________________________________________________________________________________________________________________________________________________
-                                        <br>
-                                        Address     : _______________________________________________________________________________________________________________________________________________________________
-                                        <br>
-                                        TIN     : __________________________________________________________________________________ Bus. Style_________________________________ P.O. No. : _________________________
-                                    </p></b></h4>
-                        </div>
+                        <h4><b><p style="font-family: Arial;text-align:left;">DELIVERY RECEIPT</p></b></h4>
+                    </div>
+                    <div class="col-md-12">
+                        <h4><b><p style="font-family:Cambria;text-align:left;font-size:90%">
+                                    Date:
+                                    <br>
+                                    Delivered to:
+                                    <br>
+                                    Address     :
+                                </p></b></h4>
+                    </div>
 
 
                     <div class="row;col-md-12;">
@@ -155,7 +174,7 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <h4><b><p style="font-family: Cambria;text-align:left;">DELIVERY RECEIPT:_____________________________________________________________
+                            <h4><b><p style="font-family: Cambria;text-align:left;">DELIVERY RECEIPT:
                                     </p></b></h4>
 
                             <p style="font-family:Arial+Narrow"><b><h5>
@@ -170,10 +189,10 @@
                                         0392 Quirino Ave. Dongali Pque. City
                                         <br>
                                         VAT REG. TIN: 212-902-597-00000
-                              </h5>  </b> </p>
+                                    </h5>  </b> </p>
                         </div>
                         <div class="col-md-6">
-                            <h4><b><p style="font-family: Cambria;text-align:left;">BY:__________________________________________________________________________________</p></b></h4>
+                            <h4><b><p style="font-family: Cambria;text-align:left;">BY:</p></b></h4>
 
                             <p style="font-family:Arial+Narrow"><b><h5>
                             <p style="text-align:center;">Authorized Signature</p>
@@ -193,11 +212,36 @@
                             </p></b></h5>
                         </div>
                     </div>
+
                 </div>
-                </body>
+                     <div class="modal-footer">
+                            <input type="submit" name="btnRD" value="Print" id="btnRD" class="btn btn-sucess">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
             </div>
         </div>
     </div>
 </div>
 </html>
-@stop
+
+<script>
+    document.getElementById("btnRD").onclick = function () {
+        printElement(document.getElementById("printthisDr"));
+    }
+
+    function printElement(elem) {
+        var domClone = elem.cloneNode(true);
+
+        var $printSection = document.getElementById("printDr");
+
+        if (!$printSection) {
+            var $printSection = document.createElement("div");
+            $printSection.id = "printDr";
+            document.body.appendChild($printSection);
+        }
+
+        $printSection.innerHTML = "";
+        $printSection.appendChild(domClone);
+        window.print();
+    }
+</script>

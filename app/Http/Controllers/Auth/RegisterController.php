@@ -125,7 +125,7 @@ class RegisterController extends Controller
         {
 
             $message->from('jlpilogistics@gmail.com', 'Jexsan Logistics Philippines Inc.')
-                    ->subject('Quotation Requested');
+                    ->subject('Jexsan Account Confirmation');
 
             $message->to($this->emailTo);
 

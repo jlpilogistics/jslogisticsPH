@@ -40,7 +40,12 @@
                     <p>Request Status</p>
                 </a>
             </li>
-
+            <li class="list-group-item">
+                <a href="{{url('client-bill')}}">
+                    <i class="ft-file-text"></i>
+                    <p>Received Billing</p>
+                </a>
+            </li>
             <li class="list-group-item">
                 <a href="/client-request/">
                     <i class="ft-edit-3"></i>

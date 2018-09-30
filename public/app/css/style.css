@@ -2454,7 +2454,7 @@ transform: scale(1);
 }
 /*11.) 404 */
 .error-box {
-	padding: 215px 0 184px;
+	padding: 30px 0 184px;
 	background: #eaedf0;
 }
 .error-box h1 {

@@ -6,28 +6,28 @@
 </head>
 @section('content')
     <section id="configuration">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Pending Requests</h4>
-                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                </div>
-                <div class="card-content collapse show">
-                    <div class="card-body card-dashboard">
-                        <table class="table table-striped table-bordered zero-configuration " >
-                            <thead>
-                            <tr>
-                                <th>Date of Request</th>
-                                <th>Type of Shipment</th>
-                                <th>Mode of Shipment</th>
-                                <th>Origin</th>
-                                <th>Destination</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {{--Data will be coming from approved shipment--}}
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Schedule Export Haulage</h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body card-dashboard">
+                            <table class="table table-striped table-bordered zero-configuration " >
+                                <thead>
+                                <tr>
+                                    <th>Date of Request</th>
+                                    <th>Type of Shipment</th>
+                                    <th>Mode of Shipment</th>
+                                    <th>Origin</th>
+                                    <th>Destination</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{--Data will be coming from approved shipment--}}
                                 <tr>
                                     <td>rewrwerwer</td>
                                     <td>dgretewrwe</td>
@@ -110,23 +110,23 @@
                                     </td>
                                 </tr>
 
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <th>Date of Request</th>
-                                <th>Type of Shipment</th>
-                                <th>Mode of Shipment</th>
-                                <th>Origin</th>
-                                <th>Destination</th>
-                                <th>Action</th>
-                            </tr>
-                            </tfoot>
-                        </table>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>Date of Request</th>
+                                    <th>Type of Shipment</th>
+                                    <th>Mode of Shipment</th>
+                                    <th>Origin</th>
+                                    <th>Destination</th>
+                                    <th>Action</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 @endsection

@@ -119,7 +119,7 @@ class HomeController extends Controller
 //        }
         try {
             $this->authorizeForUser(Auth::user(), 'confirm', [$client]);
-            $client = Client::findOrFail(3);
+            $clients = Client::findOrFail($client->id);
             $quote = Transaction::with('destination','origin','quotation','goods','consignee','documents')->where('transact', $transaction)->first();
             $rate = Invoice::with('lines')->where('reference', $invoice)->first();
             $base = new GuzzleHttp\Client([
@@ -143,7 +143,7 @@ class HomeController extends Controller
             if($consign = $quote->consignee){
                 $docu = $quote->documents;
             }
-            return view('client.confirm', compact('quote', 'rate', 'client','pesos','gbps','consign','docu'));
+            return view('client.confirm', compact('quote', 'rate', 'client','pesos','gbps','consign','docu','clients'));
         } catch (AuthorizationException $e) {
             return view('errors.503');
         }

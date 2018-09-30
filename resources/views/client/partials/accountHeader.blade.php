@@ -22,37 +22,71 @@
     <div class="main-header">
         <div class="container">
             <div class="row">
-                <div class="col-xs-12 col-sm-3">
-
-                </div>
-                <div class="col-xs-12 col-sm-9 custom-nav">
+                <div class="col-xs-10 col-sm-12 custom-nav">
                     <nav>
                         <div id='cssmenu'>
                             <ul class="navigation">
                                 <li class='active'>
+                                    <a href="{{url('/Main')}}">Home</a>
+
                                 </li>
                                 <li>
+                                    <a href="{{url('/about')}}">about us</a>
                                 </li>
                                 <li>
+                                    <a href="javascript:void(0);">services</a>
                                     <ul class="sub-menu">
                                         <li>
+                                            <a href="{{url('/import')}}">Import</a>
                                         </li>
                                         <li>
+                                            <a href="{{url('/export')}}">Export</a>
                                         </li>
                                         <li>
+                                            <a href="{{url('/domestic')}}">Domestic</a>
                                         </li>
                                     </ul>
                                 </li>
+
                                 <li>
+                                    <a href="{{url('/location')}}">Status</a>
                                 </li>
-                                <li>
-                                </li>
-                                <li>
-                                </li>
+
+                                @if (Auth::guest())
+                                    <li>
+                                        <a href="{{url('/users/signup')}}">Sign up</a>
+
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('users/login')}}">Login</a>
+                                    </li>
+                                @else
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+
+                                            Hello, {{{ Auth::user()->name}}}<span class="caret"></span>
+                                        </a>
+                                        <ul class="sub-menu">
+                                            <li><a href="{{ url('/client-status/' . Auth::user()->id) }}">Dashboard</a></li>
+                                            <li><a href="{{ url('/client-account/'. Auth::user()->id) }}">Account Profile</a></li>
+                                            <li><a href="{{ url('/users/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                        </ul>
+
+                                    </li>
+                                @endif
+
+
                             </ul>
                         </div>
                     </nav>
+
+                    <div class="nav-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>

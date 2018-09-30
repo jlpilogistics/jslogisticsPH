@@ -35,7 +35,7 @@
             </div>
 
             <ul class="nav nav-sidebar list-group">
-                <li class="list-group-item">
+                <li class="list-group-item" style="padding: -10px -10px;">
 
                     <a href="{{route('account',$clients->id)}}">
                         <i class="ft-user-check"></i>
@@ -48,7 +48,12 @@
                         <p>Request Status</p>
                     </a>
                 </li>
-
+                <li class="list-group-item">
+                    <a href="{{url('client-bill')}}">
+                        <i class="ft-file-text"></i>
+                        <p>Received Billing</p>
+                    </a>
+                </li>
                 <li class="list-group-item">
                     <a href="/client-request/">
                         <i class="ft-edit-3"></i>
@@ -64,7 +69,7 @@
 @stop
 @section('content')
     @extends('client.partials.accountHeader')
-    <div class="main-panel">
+    <div class="main-panel" style="background-image: url('{{url('/app/images/cli2.jpg')}}');background-repeat: no-repeat;background-size: 210%">
         <div class="content">
             <div class="container-fluid">
                 <div class="row">

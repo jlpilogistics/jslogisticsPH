@@ -1,5 +1,5 @@
 
-@extends('admin.billing.assets')
+@extends('admin.partials.assets')
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 <head>  
@@ -16,8 +16,6 @@
                 <div class="card-head">
                   <div class="card-header">
                     <h4 class="card-title">List of Customers</h4>
-                    <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a><br>
-                    <input type="search" id="search-contacts" class="form-control col-3 " placeholder="Search Customers...">
                   </div>
                 </div>
                 <div class="card-content">
@@ -62,16 +60,7 @@
                             </td>
                             <td>{{$data->goods->shiptypes}}</td>
                             <td>
-                              <span class="dropdown">
-                                <button id="btnSearchDrop2" type="button" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="true" class="btn btn-primary dropdown-toggle dropdown-menu-right"><i class="ft-settings"></i></button>
-                                <span aria-labelledby="btnSearchDrop2" class="dropdown-menu mt-1 dropdown-menu-right">
-                                  <a href="#" class="dropdown-item"><i class="ft-edit-2"></i>Transaction</a>
-                                  <a href="#" class="dropdown-item"><i class="ft-trash-2"></i>Add reports</a>
-                                  <a href="#" class="dropdown-item"><i class="ft-plus-circle primary"></i>Cash Advance</a>
-                                  <a href="#" class="dropdown-item"><i class="ft-plus-circle info"></i>List of Reports</a>
-                                </span>
-                              </span>
+                        <a href="{{url('/profile')}}" class="btn btn-primary">View Profile</a>
                             </td>
                           </tr>
                             @endforeach

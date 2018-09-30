@@ -56,11 +56,12 @@
                                 <li>
                                     <a href="{{url('/location')}}">Status</a>
                                 </li>
-                                <li>
-                                    <a href="{{url('/users/signup')}}">Sign up</a>
 
-                                </li>
                                 @if (Auth::guest())
+                                    <li>
+                                        <a href="{{url('/users/signup')}}">Sign up</a>
+
+                                    </li>
                                     <li>
                                         <a href="{{ url('users/login')}}">Login</a>
                                     </li>

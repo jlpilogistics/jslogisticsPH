@@ -18,6 +18,7 @@ use App\Product;
 use GuzzleHttp;
 use Illuminate\Support\Facades\Auth;
 use Session;
+use Stanley\Geocodio\Geocodio;
 
 class ProductController extends Controller
 {
@@ -52,16 +53,16 @@ class ProductController extends Controller
         $quote = $request->session()->get('quote');
         $goods = $request->session()->get('goods');
         $commodity = Commodity::all()->pluck('type','type');
-        $terms = Incoterm::all()->pluck('name','name');
+        $terms = Incoterm::all()->pluck('name','code');
         $clients = Client::findOrFail(Auth::user()->client_id)->first();
-//        $base = new GuzzleHttp\Client([
-//            'base_uri' => 'http://data.fixer.io/',
-//        ]);
-//        $response = $base->request('GET', 'api/latest?access_key=' . env('FIXER_API_KEY') . '&symbols=PHP,phpUSD,JPY,GBP,AUD,CHF,CAD,MXN,CNY,NZD&format=1');
-//        $response_data = json_decode($response->getBody()->getContents());
-//        foreach ($response_data as $currency) {
-//            $rates[] = $currency;
-//        }
+        $base = new GuzzleHttp\Client([
+            'base_uri' => 'http://data.fixer.io/',
+        ]);
+        $response = $base->request('GET', 'api/latest?access_key=' . env('FIXER_API_KEY') . '&symbols=PHP,phpUSD,JPY,GBP,AUD,CHF,CAD,MXN,CNY,NZD&format=1');
+        $response_data = json_decode($response->getBody()->getContents());
+        foreach ($response_data as $currency) {
+            $rates[] = $currency;
+        }
 //        $request->session()->flush();
         $packages = Package::all()->pluck('type','type');
 
@@ -81,14 +82,14 @@ class ProductController extends Controller
             'zip' => 'required',
             'city' => 'required',
             'country' => 'required',
-            'etd' => 'required',
+            'etd' => 'required|date|date_format:Y-m-d|after:tomorrow',
             'port' => 'required',
         ]);
         $validatedDest = $request->validate([
             'dzip' => 'required',
             'dcountry' => 'required',
             'dcity' => 'required',
-            'deta' => 'required',
+            'deta' => 'required|date|date_format:Y-m-d|after:etd',
             'dport' => 'required',
         ]);
         $validatedGoods = $request->validate([
@@ -203,7 +204,17 @@ class ProductController extends Controller
 
             return view('errors.503');
         }else{
-            $request->session()->flush();
+            $request->session()->forget('quote');
+            $request->session()->forget('origin');
+            $request->session()->forget('dest');
+            $request->session()->forget('goods');
+            if($request->session()->get('quote1')){
+                for($x = 1 ; $x<20; $x++){
+                    if($request->session()->get('quote'.$x)){
+                        $request->session()->forget('quote'.$x);
+                    }
+                }
+            }
             return redirect('/Main');
         }
 

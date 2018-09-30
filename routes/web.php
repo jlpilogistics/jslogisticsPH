@@ -41,7 +41,7 @@
 
 
 
-
+    Route::resource('duties', 'tarffRateController');
     Route::resource('/quotations', 'QuotesController');
     Route::resource('drivers', 'DriversController');
     Route::resource('vehicles', 'VehiclesController');
@@ -74,7 +74,7 @@ Route::get('export', 'Client\HomeController@showExport');
 Route::get('imports', 'CategoryController@import');
 Route::get('exports', 'CategoryController@export');
 Route::get('domestics', 'CategoryController@domestic');
-Route::get('approved', 'CategoryController@approved');
+Route::get('approved', 'QuotesController@approved');
 Route::get('monitor', 'monitorController@index');
 Route::get('client-lists', 'BillingController@index');
 Route::get('profile', 'BillingController@clientprofile');
@@ -85,6 +85,7 @@ Route::resource('/maintenance', 'FuelMaintenanceController@addMain');
 Route::get('/maintenance', 'FuelMaintenanceController@showMain');
 Route::get('/fuel', 'FuelMaintenanceController@showFuel');
 Route::get('/haulage-import', 'HaulageController@index');
+Route::get('/haulage-export', 'HaulageController@haulageExport');
 Route::get('/sched-import', 'HaulageController@show');
 Route::get('quote/createStep1', 'Client\QuotesController@createStep1');
 Route::post('quote/createStep1', 'Client\QuotesController@postCreateStep1');
@@ -107,9 +108,8 @@ Route::get('/products/create-step3', 'Client\ProductController@createStep3');
 Route::post('/products/create-step3', 'Client\ProductController@postCreateStep3');
 Route::get('/products/create-step4', 'Client\ProductController@createStep4');
 Route::post('/products/store', 'Client\ProductController@store')->name('store');
-Route::get('/charges/{id}/{mode}', 'QuotesController@findcharge');
 Route::get('/quotations/create-quote/{id}', 'QuotesController@createQuote')->name('quotations.create-quote');
-Route::post('/quotations/send-quote/', 'QuotesController@sendQuote')->name('quotations.send-quote');
+Route::post('/quotations/send/quote', 'QuotesController@sendQuote')->name('quotations.send-quote');
 Route::get('/multifileupload', 'HomeController@multifileupload')->name('multifileupload');
 Route::post('/multifileupload', 'HomeController@store')->name('multifileupload');
 Route::get('client-account/{client}', 'Client\HomeController@account')->name('account');//New
@@ -120,6 +120,9 @@ Route::get('client-bill', 'Client\HomeController@receivedBill');//New
 Route::get('/quote-summary', 'Client\ProductController@createStep4');//New
 Route::post('/image-view','Client\HomeController@finish');
 Route::post('/image-upload/{id}','Client\HomeController@imageUpload');
+Route::get('/charges/Export/{id}/{mode}', 'QuotesController@findcharge');
+Route::get('/charges/Import/{id}/{mode}', 'QuotesController@findImport');
+
 
 
 

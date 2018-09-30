@@ -17,9 +17,13 @@ class HaulageController extends Controller
     }
     public function index()
     {
-        return view('admin.fleet.tblHaulagemport');
+        return view('admin.fleet.haulageImport');
     }
 
+    public function haulageExport()
+    {
+        return view('admin.fleet.haulageExport');
+    }
     /**
      * Show the form for creating a new resource.
      *

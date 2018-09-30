@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-@extends('admin.billing.assets')
+@extends('admin.partials.assets')
 <html class="loading" lang="en" data-textdirection="ltr">
 <head >
     @yield('assets')
@@ -101,32 +101,73 @@
                         </div>
                             <br>
                             <br>
-                            <table class="table">
+                            <h3>Standard Charges</h3>
+                            <table class="table" cellpadding="0" cellspacing="0">
                                 <thead>
                                     <tr >
 
-                                        <th class="text-lg-left" >#</th>
-                                        <th class="text-lg-left" >Shipment Charges</th>
-                                        <th class="text-right">Currency</th>
+                                        <th class="text-lg-center" >#</th>
+                                        <th class="text-lg-center" >Shipment Charges</th>
+                                        <th class="text-center">Currency</th>
                                         <th class="text-right">Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                <?php $x = 0;
+                                ?>
                                 @foreach($charges as $item)
+
+                                         <?php  $x++;
+                                    ?>
                                 <tr>
-                                    <td >{{$item['id']}}</td>
-                                    <td>
+                                    <td  class="text-lg-center" style="padding: 0px 0px 0px 0px;">{{$item['id']}}</td>
+                                    <td style="padding: 0px 0px 0px 0px;" class="text-lg-center">
                                         <p class="text-muted">{{$item['charge']}}</p>
                                     </td>
-                                    @if($item['id'] == 1)
-                                    <td class="text-right">{{$data['symbol']}}</td>
+                                    @if($x == 1)
+                                    <td style="padding: 0px 0px;" class="text-right">{{$data['symbol']}}</td>
                                     @else
-                                        <td class="text-right"></td>
+                                        <td class="text-right" style="padding: 0px 0px;" ></td>
                                     @endif
-                                    <td class="text-right">{{$item['amount']}}</td>
+                                    <td class="text-right" style="padding: 0px 40px 0px 0px;">{{$item['amount']}}</td>
                                 </tr>
                                     @endforeach
                                 </tbody>
+
+                            </table>
+                            <h3>Additional Charges (if applicable)</h3>
+                            <table class="table" cellpadding="0" cellspacing="0">
+                                <thead>
+                                <tr >
+
+                                    <th class="text-lg-center" width="15%"></th>
+                                    <th class="text-lg-center" width="40%"></th>
+                                    <th class="text-center"></th>
+                                    <th class="text-right"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php $x = 0;
+                                ?>
+                                @foreach($noncharges as $item)
+
+                                    <?php  $x++;
+                                    ?>
+                                    <tr>
+                                        <td  class="text-lg-center" style="padding: 0px 0px 0px 0px;">{{$item['id']}}</td>
+                                        <td style="padding: 0px 0px 0px 0px;" class="text-lg-center">
+                                            <p class="text-muted">{{$item['charge']}}</p>
+                                        </td>
+                                        @if($x == 1)
+                                            <td style="padding: 0px 0px;" class="text-right">{{$data['symbol']}}</td>
+                                        @else
+                                            <td class="text-right" style="padding: 0px 0px;" ></td>
+                                        @endif
+                                        <td class="text-right" style="padding: 0px 40px 0px 0px;">{{$item['amount']}}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+
                             </table>
                             <table cellpadding="0" cellspacing="0" style="width: 450px; float: left">
                                 <tr><h6>Terms & Condition</h6></tr>

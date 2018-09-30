@@ -47,7 +47,12 @@
                         <p>Request Status</p>
                     </a>
                 </li>
-
+                <li class="list-group-item">
+                    <a href="{{url('client-bill')}}">
+                        <i class="ft-file-text"></i>
+                        <p>Received Billing</p>
+                    </a>
+                </li>
                 <li class="list-group-item">
                     <a href="/client-request/">
                         <i class="ft-edit-3"></i>
@@ -62,7 +67,7 @@
 @stop
 @section('content')
     @extends('client.partials.accountHeader')
-    <div class="main-panel">
+    <div class="main-panel" style="background-image: url('{{url('/app/images/cli2.jpg')}}');background-repeat: no-repeat;background-size: 210%">
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -80,9 +85,9 @@
                                     <div class="form-group">
 
                                         @if(Session::has('quote'))
-                                            {!! Form::select('shiptypes', $type,  Session::get('quote')->shiptypes, ['class'=>'quote-service drop', 'id'=>'1']) !!}
+                                            {!! Form::select('shiptypes', $type,  Session::get('quote')->shiptypes, ['class'=>'quote-service drop ', 'id'=>'1', 'tabindex' => 1]) !!}
                                         @else
-                                            {!! Form::select('shiptypes', $type, null, ['class'=>'quote-city drop form-control', 'id'=>'transaction']) !!}
+                                            {!! Form::select('shiptypes', $type, null, ['class'=>'quote-city drop form-control', 'id'=>'transaction', 'tabindex'=>1]) !!}
                                         @endif
                                         {{--<select class="form-control" name="shiptypes">--}}
                                         {{--<option {{{ (isset($product->shiptypes) && $product->shiptypes == 'Apple') ? "selected=\"selected\"" : "" }}}>Apple</option>--}}
@@ -101,7 +106,7 @@
                                                 {!! Form::select('mode', array(''=>'Choose Mode of Shipment','FTL'=>'FTL','LTL'=>'LTL'), $quote->mode,['class'=>'quote-service drop form-control', 'id'=>'mode'] ) !!}
                                             @endif
                                         @else
-                                            {!! Form::select('mode', array(''=>'Choose Mode of Shipment'), null,['class'=>'quote-service drop form-control', 'id'=>'mode'] ) !!}
+                                            {!! Form::select('mode', array(''=>'Choose Mode of Shipment'), null,['class'=>'quote-service drop form-control', 'id'=>'mode', 'tabindex'=>1] ) !!}
                                         @endif
                                     </div>
                                 </div>
@@ -117,80 +122,75 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-
-                            </div>
                             <label ><h5><strong>ORIGIN</strong></h5></label>
                             <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        {!! Form::label('zip', 'Zip Code') !!}
-                                        <input type="text" value="{{{ $origin->zip or '' }}}" class="form-control quote-city" id="company" name="zip"/>
+                                <div class="col-md-8">
+                                    <div  id="locationField">
+                                        {!! Form::label('port', 'Origin via Port') !!}
+                                        <input type="search" id="address-input" value="{{{ $origin->port or old('port') }}}" class="form-control quote-city font-size-small" tabindex = "1" onFocus="geolocate()" name="port"/>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
+                                        {!! Form::label('zip', 'Zip Code') !!}
+                                        <input type="text" value="{{{ $origin->zip or old('zip') }}}" class="form-control quote-city disabledInput" tabindex = "1" id="zip" readonly="readonly" name="zip"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
                                         {!! Form::label('country', 'Country') !!}
-                                        <input type="text" value="{{{ $origin->country or '' }}}" class="form-control quote-city" id="company" name="country"/>
+                                        <input type="text" value="{{{ $origin->country or old('country') }}}" class="form-control quote-city" tabindex = "1" id="country" readonly="readonly" name="country"/>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         {!! Form::label('city', 'City') !!}
-                                        <input type="text" value="{{{ $origin->city or '' }}}" class="form-control quote-city" id="company" name="city"/>
+                                        <input type="text" value="{{{ $origin->city or old('city') }}}" class="form-control quote-city" readonly="readonly" tabindex = "1" id="city" name="city"/>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4"></div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         {!! Form::label('etd', 'Departure Date') !!}
-                                        <input type="date" value="{{{ $origin->etd or '' }}}" class="form-control quote-city" id="company" name="etd"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        {!! Form::label('port', 'Origin via Port') !!}
-                                        <input type="text" value="{{{ $origin->port or '' }}}" class="form-control quote-city" id="company" name="port"/>
+                                        <input type="date" value="{{{ $origin->etd or old('etd') }}}" class="form-control quote-city" tabindex = "1" id="company" name="etd"/>
                                     </div>
                                 </div>
                             </div>
                             <label ><h5><strong>Destination</strong></h5></label>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-8">
                                     <div class="form-group">
-                                        {!! Form::label('zips', 'Zip Code') !!}
-                                        <input type="text" value="{{{ $dest->dzip or '' }}}" class="form-control quote-city" id="company" name="dzip"/>
+                                        {!! Form::label('ports', 'Destination via Port') !!}
+                                        <input type="search" value="{{{ $dest->dport or old('dport') }}}" class="form-control quote-city" tabindex = "1" id="searchDest" name="dport"/>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
+                                        {!! Form::label('zips', 'Zip Code') !!}
+                                        <input type="text" value="{{{ $dest->dzip or old('dzip') }}}" class="form-control quote-city" tabindex = "1" readonly="readonly" id="zips" name="dzip"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
                                         {!! Form::label('countrys', 'Country') !!}
-                                        <input type="text" value="{{{ $dest->dcountry or '' }}}" class="form-control quote-city" id="company" name="dcountry"/>
+                                        <input type="text" value="{{{ $dest->dcountry or old('dcountry') }}}" class="form-control quote-city" tabindex = "1" readonly="readonly" id="countrys" name="dcountry"/>
 
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         {!! Form::label('citys', 'City') !!}
-                                        <input type="text" value="{{{ $dest->dcity or '' }}}" class="form-control quote-city" id="company" name="dcity"/>
+                                        <input type="text" value="{{{ $dest->dcity or old('dcity') }}}" class="form-control quote-city" tabindex = "1" readonly="readonly" id="citys" name="dcity"/>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-4"></div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         {!! Form::label('etas', 'Arrival Date') !!}
-                                        <input type="date" value="{{{ $dest->deta or '' }}}" class="form-control quote-city" id="company" name="deta"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        {!! Form::label('ports', 'Destination via Port') !!}
-                                        <input type="text" value="{{{ $dest->dport or '' }}}" class="form-control quote-city" id="company" name="dport"/>
+                                        <input type="date" value="{{{ $dest->deta or old('deta') }}}" class="form-control quote-city" tabindex = "1" id="company" name="deta"/>
                                     </div>
                                 </div>
                             </div>
@@ -211,13 +211,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     {!! Form::label('commodity', 'Commodity') !!}
-                                    {!! Form::select('goods', array(''=>'Select type of goods', 'List of Goods'=>$commodity) , Session::has('goods') ? Session::get('goods')->goods : null, ['class'=>'form-control quote-service drop', 'id'=>'transact']) !!}
+                                    {!! Form::select('goods', array(''=>'Select type of goods', 'List of Goods'=>$commodity) , Session::has('goods') ? Session::get('goods')->goods : null, ['class'=>'form-control quote-service drop', 'id'=>'transact','tabindex'=>1]) !!}
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     {!! Form::label('prod', 'Product Name') !!}
-                                    <input type="text" value="{{{ $goods->name or '' }}}" class="form-control quote-city" id="company" name="name"/>
+                                    <input type="text" value="{{{ $goods->name or old('name') }}}" class="form-control quote-city" id="company" tabindex="1" name="name"/>
                                 </div>
                             </div>
                         </div>
@@ -225,13 +225,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     {!! Form::label('inco', 'Incoterm') !!}
-                                    {!! Form::select('term',array(''=>'Select agreement', 'Incoterms'=>$terms), Session::has('goods') ? Session::get('goods')->term : null, ['class'=>'quote-service drop', 'id'=>'transact']) !!}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    {!! Form::label('cv', 'Commercial Value:') !!}
-                                    <input type="number" class="form-control bfh-number" min="0" name="insurance">
+                                    {!! Form::select('term',array(''=>'Select agreement', 'Incoterms'=>$terms), Session::has('goods') ? Session::get('goods')->term : null, ['class'=>'quote-service drop', 'id'=>'transact','tabindex'=>1]) !!}
                                 </div>
                             </div>
                             {{--<div class="col-md-6">--}}
@@ -259,11 +253,11 @@
                                 <div class="col-sm-0">
                                     {!! Form::label('prodT', 'Temperature Product') !!}
                                     <label class="radio">
-                                        <input type="radio"id="ytemp" name="temp" value="Yes" checked>
+                                        <input type="radio"id="ytemp" name="temp" tabindex="1" value="Yes" checked>
                                         <span> Yes </span>
                                     </label>
                                     <label class="radio">
-                                        <input type="radio" id="ntemp" name="temp" value="No">
+                                        <input type="radio" id="ntemp" name="temp" tabindex="1" value="No">
                                         <span>NO </span>
                                     </label>
 
@@ -274,11 +268,11 @@
                                     {!! Form::label('prodD', 'Dangerous Product') !!}
                                     <div class="right-space">
                                         <label class="radio">
-                                            <input type="radio"id="ydanger" name="danger" value="Yes" checked>
+                                            <input type="radio"id="ydanger" name="danger" tabindex="1" value="Yes" checked>
                                             <span> Yes </span>
                                         </label>
                                         <label class="radio">
-                                            <input type="radio" id="ndanger" name="danger" value="No">
+                                            <input type="radio" id="ndanger" name="danger" tabindex="1" value="No">
                                             <span>NO </span>
                                         </label>
                                         <br><br>
@@ -286,7 +280,7 @@
                                 </div>
                             </div>
                         </div>
-                        <label ><h5><strong>INSURANCE COST</strong></h5></label>
+                        {{--<label ><h5><strong>INSURANCE COST</strong></h5></label>--}}
                         {{--<div class="row">--}}
                             {{--<div class="col-md-6">--}}
                                 {{--<div class="form-group">--}}
@@ -304,7 +298,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                     {!! Form::label('description', 'Description') !!}
-                                <textarea name="description" ng-model="formData.message" ng-class="{'error' : errorTextarea}" rows="5" cols="55" style="height: 49px; margin: 0px; width: 391px;"></textarea>
+                                <textarea name="description" value="{{old('description')}}" ng-model="formData.message" tabindex="1" ng-class="{'error' : errorTextarea}" rows="5" cols="55" style="height: 49px; margin: 0px; width: 391px;"></textarea>
 
                             </div>
                         </div>
@@ -384,21 +378,21 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input type="number" class="form-control bfh-number dimitemfld calculate_dims quantity" min="0" name="quantity[][quantity]"></td>
+                                                    <input type="number" value="{{old('quantity[][quanity]')}}" class="form-control bfh-number dimitemfld calculate_dims quantity" tabindex="1" min="0" name="quantity[][quantity]"></td>
                                                 <td>
-                                                    {!! Form::select('package[][package]', $packages, null,['class'=>'quote-service drop form-control calculate_dims', 'id'=>'transact', 'style'=>'width: 80px']) !!}
+                                                    {!! Form::select('package[][package]', $packages, null,['class'=>'quote-service drop form-control calculate_dims', 'id'=>'transact', 'style'=>'width: 80px','tabindex'=>1]) !!}
                                                 </td>
                                                 <td>
-                                                    <input type="number" class="form-control bfh-number dimitemfld calculate_dims length" min="0" name="length[][length]"></td>
+                                                    <input type="number" value="{{old('length[][length]')}}" class="form-control bfh-number dimitemfld calculate_dims length" min="0" tabindex="1" name="length[][length]"></td>
                                                 <td>
-                                                    <input type="number" class="form-control bfh-number dimitemfld calculate_dims width" min="0" name="width[][width]"></td>
+                                                    <input type="number" value="{{old('width[][width]')}}" class="form-control bfh-number dimitemfld calculate_dims width" min="0" tabindex="1" name="width[][width]"></td>
                                                 <td>
-                                                    <input type="number" class="form-control bfh-number dimitemfld calculate_dims height" min="0" name="height[][height]"></td>
+                                                    <input type="number" value="{{old('height[][height]')}}" class="form-control bfh-number dimitemfld calculate_dims height" min="0" tabindex="1" name="height[][height]"></td>
                                                 <td>
-                                                    <input type="number" class="form-control bfh-number dimitemfld calculate_dims weight" min="0" name="weight[][weight]">
+                                                    <input type="number" value="{{old('weight[][weight]')}}" class="form-control bfh-number dimitemfld calculate_dims weight" min="0" tabindex="1" name="weight[][weight]">
                                                 </td>
-                                                <td hidden><input type="hidden" name="charge" class="charge"></td>
-                                                <td hidden> <input type="hidden" name="volumetric" class="volumetric"></td>
+                                                <td hidden><input type="hidden" value="{{old('charge')}}" tabindex="1" name="charge" class="charge"></td>
+                                                <td hidden> <input type="hidden" value="{{old('volumetric')}}" tabindex="1" name="volumetric" class="volumetric"></td>
                                                 <td>
                                                     <a href='javascript:void(0);'  class='remove'><button type="button" class="btn btn-danger2 btn-sm deldimrow " style="width: 40px"><i class="fa fa-remove"></i></button></a>
                                                 </td>
@@ -417,13 +411,34 @@
                             <div class="col-md-3 col-md-offset-3">
                                 <div class="form-group">
                                     {!! Form::label('aw', 'Actual Weight (kg)') !!}
-                                    <input type="number" disabled class="form-control bfh-number chargee" min="0" name="aweight">
+                                    <input type="number" tabindex="1" value="{{old('aweight')}}" readonly class="form-control bfh-number chargee" min="0" name="aweight">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     {!! Form::label('vw', 'Volume Weight (kg)') !!}
-                                    <input type="number" disabled class="form-control bfh-number volumetrics" min="0" name="avolume">
+                                    <input type="number" tabindex="1" value="{{old('avolume')}}" readonly class="form-control bfh-number volumetrics" min="0" name="avolume">
+
+                                </div>
+                            </div>
+                        </div>
+                        <label ><h5><strong>Commercial Value</strong></h5></label>
+                        <div class="row">
+                            <div class="col-md-3 col-md-offset-3">
+                                <div class="form-group">
+                                    {!! Form::label('aw', 'Currency') !!}
+                                    <select name="currency" class="form-control danger">
+                                        <option selected="true" disabled value="">Currency</option>
+                                        @foreach($currency as $key=>$val)
+                                            <option value="{{$key}}">{{$key}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('vw', 'Amount') !!}
+                                    <input type="number" tabindex="1" value="{{old('insurance')}}" class="form-control bfh-number" min="0" name="insurance">
 
                                 </div>
                             </div>

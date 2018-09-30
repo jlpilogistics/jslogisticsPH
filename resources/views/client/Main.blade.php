@@ -102,7 +102,7 @@
                     <div id="services-slides" class="services-slider">
                         <div class="slides-tab zoom">
                             <figure>
-                                <a href="#"><img src="{{URL::asset('app/images/goods-train.jpg')}}" alt="" /></a>
+                                <a href="#"><img src="{{URL::asset('app/images/sixwheel.jpg')}}" alt="" /></a>
                             </figure>
                             <div class="slides-text">
                                 <h4><a href="#">LAND TRANSPORT</a></h4>
@@ -116,7 +116,7 @@
                         </div>
                         <div class="slides-tab zoom">
                             <figure>
-                                <a href="#"><img src="{{URL::asset('app/images/plane.jpg')}}" alt="" /></a>
+                                <a href="#"><img src="{{URL::asset('app/images/seaandair.jpg')}}" alt="" /></a>
                             </figure>
                             <div class="slides-text">
                                 <h4><a href="#">SEA AND AIR FREIGHT SERVICES</a></h4>
@@ -130,7 +130,7 @@
                         </div>
                         <div class="slides-tab zoom">
                             <figure>
-                                <a href="#"><img src="{{URL::asset('app/images/yard.jpg')}}" alt="" /></a>
+                                <a href="#"><img src="{{URL::asset('app/images/broker.jpg')}}" alt="" /></a>
                             </figure>
                             <div class="slides-text">
                                 <h4><a href="#">BROKERAGE</a></h4>
@@ -146,7 +146,7 @@
                         <div></div>
                         <div class="slides-tab zoom">
                             <figure>
-                                <a href="#"><img src="{{URL::asset('app/images/yard.jpg')}}" alt="" /></a>
+                                <a href="#"><img src="{{URL::asset('app/images/image4.jpg')}}" alt="" /></a>
                             </figure>
                             <div class="slides-text">
                                 <h4><a href="#">WAREHOUSING</a></h4>
@@ -162,7 +162,7 @@
                         </div>
                         <div class="slides-tab zoom">
                             <figure>
-                                <a href="#"><img src="{{URL::asset('app/images/yard.jpg')}}" alt="" /></a>
+                                <a href="#"><img src="{{URL::asset('app/images/sea1.jpg')}}" alt="" /></a>
                             </figure>
                             <div class="slides-text">
                                 <h4><a href="#">SEA DELIVERY</a></h4>
@@ -257,40 +257,7 @@
             </div>
             <!-- Testimonial section ends here -->
             <!-- Query section starts here -->
-            <div class="query">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-10">
-                            <h5>DO YOU STILL HAVE A QUESTION REGARING OUR SERVICES?</h5>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc consequat elementum tempor. Duis porta lectus ut dui consequat.
-                            </p>
-                        </div>
-                        <div class="col-xs-12 col-sm-2">
-                            <a href="contact-us.html" class="contact-us button">contact us</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Query section ends here -->
-            <!-- Newsletter starts here -->
-            <div class="newsletter">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-4 col-md-3">
-                            <span> <i class="fa fa-envelope-o"></i> NEWSLETTER SIGNUP </span>
-                        </div>
-                        <div class="col-xs-12 col-sm-8 col-md-9">
-                            <form class="sign-up">
-                                <input id="name" class="contact-name" type="text" placeholder="Name">
-                                <input id="mail" class="mail" type="text" name="email" placeholder="Email Address">
-                                <button class="fa fa-paper-plane"></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Newsletter ends here -->
+
         </div>
         <!--Section box ends Here -->
     </section>

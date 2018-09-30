@@ -98,4 +98,33 @@
     <!-- Modal Script-->
     <script src="{{URL::asset('app-assets/js/scripts/forms/select/form-select2.js')}}" type="text/javascript"></script>
     <script src="{{URL::asset('app-assets/js/scripts/modal/components-modal.js')}}" type="text/javascript"></script>
+    <script>
+        $(document).on('click','.open_modal',function(){
+            var url = "duties";
+            var tour_id= $(this).val();
+
+            $.get(url + '/' + tour_id + '/edit', function (data) {
+                //success data
+                console.log(data);
+                $('#type').val(data.type);
+                $('#tax').val(data.tax);
+            })
+        });
+
+        $(document).on('click','.open_modal',function() {
+            var ids= $(this).val();
+            $.ajax({
+                url: 'duties/' + ids + '/update',
+                method: "POST",
+                data: {
+                    type: $('#type').val(),
+                    tax: $('#tax').val(),
+                },
+                success: function (data) {
+                    // console.log(data);
+                }
+            });
+        });
+
+    </script>
 @stop

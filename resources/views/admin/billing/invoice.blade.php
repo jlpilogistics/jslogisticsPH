@@ -169,20 +169,20 @@
       <td class="text-align-right">Amount</td>
     </tr>
     @foreach($charges as $item)
-    <tr class="item">
-      <td >{{$item['id']}}</td>
-      <td>{{$item['charge']}}</td>
-      @if($item['id'] == 1)
-      <td>{{$data['symbol']}}</td>
-      @else
-        <td></td>
-      @endif
-      <td class="text-align-right">{{$item['amount']}}</td>
-    </tr>
+      <tr class="item">
+        <td >{{$item['id']}}</td>
+        <td>{{$item['charge']}}</td>
+        @if($item['id'] == 1)
+          <td>{{$data['symbol']}}</td>
+        @else
+          <td></td>
+        @endif
+        <td class="text-align-right">{{$item['amount']}}</td>
+      </tr>
     @endforeach
     <tr class="total">
       <td></td>
-        <td></td>
+      <td></td>
       <td colspan="4" class="text-align-right">
         Subtotal: {{$data['symbol']}} {{$data['subtotals']}}<br/>
         Included tax: {{$data['symbol']}} {{$data['taxes']}}<br/>
@@ -196,11 +196,11 @@
             <th>Terms and Conditions</th>
           </tr>
           <tr>
-              <td>
-                @foreach($terms as $item)
+            <td>
+              @foreach($terms as $item)
                 {{$item['list']}}<br>
-                @endforeach
-              </td>
+              @endforeach
+            </td>
           </tr>
         </table>
       </td>

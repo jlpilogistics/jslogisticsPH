@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="{{URL::asset('app-assets/vendors/css/forms/toggle/bootstrap-switch.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{URL::asset('app-assets/vendors/css/forms/toggle/switchery.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{URL::asset('app-assets/css/core/colors/palette-switch.css')}}">
+
     <link href="{{URL::asset('app/css/skin.less')}}" rel="stylesheet/less">
     <link rel="stylesheet"
           href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -39,6 +40,11 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css"/>
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    <link rel="stylesheet" type="text/css" href="//github.com/downloads/lafeber/world-flags-sprite/flags16.css" />
+    <script src="https://cdn.jsdelivr.net/npm/places.js@1.11.0"></script>
+
+
     <style type="text/css">
         .main-section{
             margin:0 auto;
@@ -52,12 +58,52 @@
             display: none;
         }
 
-         body {
-             zoom: 90%;
-         }
+        * {
+            box-sizing: border-box;
+        }
+        .modal-dialog {
+            width: 85%;
+            height: 60%;
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+
+        }
+        .column {
+            float: left;
+            width: 27%;
+            padding: 10px;
+            height: 300px; /* Should be removed. Only for demonstration */
+
+        }
+        .column1 {
+            float: left;
+            width: 23%;
+            padding: 10px;
+            height: 300px; /* Should be removed. Only for demonstration */
+
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        td{
+            font-family: "Times New Roman", Times, serif;
+            font-size: medium;
+            color: #000002;
+            padding: 13px;
+
+        }
+
+        body {
+            zoom: 95%;
+        }
+      
+        input[type="text"][disabled] {
+            color: red;
+        }
     </style>
 @stop
-<script>alert($id);</script>
 
 @section('scripts')
     <script type="text/javascript" src="{{URL::asset('app/js/jquery-1.11.1.js')}}"></script>
@@ -173,7 +219,7 @@
                     var quan = row.find('.quantity').val();
                     var length = row.find('.length').val();
                     var width = row.find('.width').val();
-                    var height = row.find('.length').val();
+                    var height = row.find('.height').val();
                     var weight = row.find('.weight').val();
 
                     var charge = quan * weight;
@@ -276,6 +322,118 @@
 
 
     </script>
+    {{--<script>--}}
+        {{--// This example displays an address form, using the autocomplete feature--}}
+        {{--// of the Google Places API to help users fill in the information.--}}
+
+        {{--// This example requires the Places library. Include the libraries=places--}}
+        {{--// parameter when you first load the API. For example:--}}
+        {{--// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">--}}
+
+        {{--var placeSearch, autocomplete;--}}
+        {{--var componentForm = {--}}
+            {{--street_number: 'short_name',--}}
+            {{--route: 'long_name',--}}
+            {{--locality: 'long_name',--}}
+            {{--administrative_area_level_1: 'short_name',--}}
+            {{--country: 'long_name',--}}
+            {{--postal_code: 'short_name'--}}
+        {{--};--}}
+
+        {{--function initAutocomplete() {--}}
+            {{--// Create the autocomplete object, restricting the search to geographical--}}
+            {{--// location types.--}}
+            {{--autocomplete = new google.maps.places.Autocomplete(--}}
+                {{--/** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),--}}
+                {{--{types: ['geocode']});--}}
+
+            {{--// When the user selects an address from the dropdown, populate the address--}}
+            {{--// fields in the form.--}}
+            {{--autocomplete.addListener('place_changed', fillInAddress);--}}
+        {{--}--}}
+
+        {{--function fillInAddress() {--}}
+            {{--// Get the place details from the autocomplete object.--}}
+            {{--var place = autocomplete.getPlace();--}}
+
+            {{--for (var component in componentForm) {--}}
+                {{--document.getElementById(component).value = '';--}}
+                {{--document.getElementById(component).disabled = false;--}}
+            {{--}--}}
+
+            {{--// Get each component of the address from the place details--}}
+            {{--// and fill the corresponding field on the form.--}}
+            {{--for (var i = 0; i < place.address_components.length; i++) {--}}
+                {{--var addressType = place.address_components[i].types[0];--}}
+                {{--if (componentForm[addressType]) {--}}
+                    {{--var val = place.address_components[i][componentForm[addressType]];--}}
+                    {{--document.getElementById(addressType).value = val;--}}
+                {{--}--}}
+            {{--}--}}
+        {{--}--}}
+
+        {{--// Bias the autocomplete object to the user's geographical location,--}}
+        {{--// as supplied by the browser's 'navigator.geolocation' object.--}}
+        {{--function geolocate() {--}}
+            {{--if (navigator.geolocation) {--}}
+                {{--navigator.geolocation.getCurrentPosition(function(position) {--}}
+                    {{--var geolocation = {--}}
+                        {{--lat: position.coords.latitude,--}}
+                        {{--lng: position.coords.longitude--}}
+                    {{--};--}}
+                    {{--var circle = new google.maps.Circle({--}}
+                        {{--center: geolocation,--}}
+                        {{--radius: position.coords.accuracy--}}
+                    {{--});--}}
+                    {{--autocomplete.setBounds(circle.getBounds());--}}
+                {{--});--}}
+            {{--}--}}
+        {{--}--}}
+    {{--</script>--}}
+    {{--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41YlDT32uBPo5SPSrtcoDvv1VXX6_4Rw&libraries=places&callback=initAutocomplete"--}}
+            {{--async defer></script>--}}
+    {{--<script>--}}
+        {{--var placesAutocomplete = places({--}}
+            {{--container: document.querySelector('#address-input')--}}
+        {{--});--}}
+    {{--</script>--}}
+    <script>
+        (function() {
+            var placesAutocomplete = places({
+                container: document.querySelector('#address-input'),
+                type: 'address',
+                templates: {
+                    value: function(suggestion) {
+                        return suggestion.name;
+                    }
+                }
+            });
+            placesAutocomplete.on('change', function resultSelected(e) {
+                document.querySelector('#country').value = e.suggestion.country || '';
+                document.querySelector('#city').value = e.suggestion.city || '';
+                document.querySelector('#zip').value = e.suggestion.postcode || '';
+            });
+        })();
+        (function() {
+            var placesAutocomplete = places({
+                container: document.querySelector('#searchDest'),
+                type: 'address',
+                templates: {
+                    value: function(suggestion) {
+                        return suggestion.name;
+                    }
+                }
+            });
+            placesAutocomplete.on('change', function resultSelected(e) {
+                document.querySelector('#countrys').value = e.suggestion.country || '';
+                document.querySelector('#citys').value = e.suggestion.city || '';
+                document.querySelector('#zips').value = e.suggestion.postcode || '';
+            });
+        })();
+    </script>
+
+
+
 
 
 

@@ -23,7 +23,7 @@
                     <th>ETA</th>
                     <th>Final Destination</th>
                     <th>Current Status</th>
-                    <th>Update Status</th>
+                    <th>Remarks</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -118,7 +118,7 @@
                     <th>ETA</th>
                     <th>Final Destination</th>
                     <th>Current Status</th>
-                    <th>Update Status</th>
+                    <th>Remarks</th>
                   </tr>
                   </tfoot>
                 </table>

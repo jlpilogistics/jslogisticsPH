@@ -13,7 +13,7 @@
                     <ul class="menu-content">
                         <li><a class="menu-item" href="{{url('quotations')}}" data-i18n="nav.page_layouts.1_column">Pending Request Quote</a>
                         </li>
-                        <li><a class="menu-item" href="/approved" data-i18n="nav.page_layouts.2_columns">Approved Request</a>
+                        <li><a class="menu-item" href="/approved" data-i18n="nav.page_layouts.2_columns">Confirmed Shipment</a>
                         </li>
                         <li><a class="menu-item" href="#" data-i18n="nav.page_layouts.3_columns.main">Shipment Type Table</a>
                             <ul class="menu-content">
@@ -26,7 +26,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li><a class="menu-item" href="#" data-i18n="nav.page_layouts.2_columns">Documentation</a>
+                        <li><a class="menu-item" href="/duties" data-i18n="nav.page_layouts.2_columns">Tariff Rates</a>
                         </li>
                         <li class="navigation-divider"></li>
 
@@ -38,15 +38,26 @@
                 </li>
                 <li class=" nav-item"><a href="#"><i class="la la-truck"></i><span class="menu-title" data-i18n="nav.page_layouts.main">Manage Fleet</span></a>
                     <ul class="menu-content">
-                        <li><a class="menu-item" href="/monitor" data-i18n="nav.page_layouts.1_column">Monitor</a>
+                        <li><a class="menu-item" href="#" data-i18n="nav.page_layouts.1_column">Monitor</a>
+                            <ul class="menu-content">
+                                <li><a class="menu-item" href="/monitor" data-i18n="nav.page_layouts.3_columns.left_sidebar">Export</a>
+                                </li>
+                                <li><a class="menu-item" href="#"
+                                       data-i18n="nav.page_layouts.3_columns.left_sticky_sidebar">Import</a>
+                                </li>
+                                <li><a class="menu-item" href="#"
+                                       data-i18n="nav.page_layouts.3_columns.left_sticky_sidebar">Domestics</a>
+                                </li>
+                            </ul>
                         </li>
                         <li><a class="menu-item" href="" data-i18n="nav.page_layouts.2_columns">Schedule Haulage</a>
                             <ul class="menu-content">
-                                <li><a class="menu-item" href="#" data-i18n="nav.page_layouts.3_columns.left_sidebar">Export Haulage</a>
+                                <li><a class="menu-item" href="/haulage-export" data-i18n="nav.page_layouts.3_columns.left_sidebar">Export Haulage</a>
                                 </li>
                                 <li><a class="menu-item" href="/haulage-import"
                                        data-i18n="nav.page_layouts.3_columns.left_sticky_sidebar">Import Haulage</a>
                                 </li>
+
                             </ul>
                         </li>
                         <li><a class="menu-item" href="#" data-i18n="nav.page_layouts.3_columns.main">Add Here</a>
@@ -92,12 +103,12 @@
 
                 <li><a class="menu-item" href="#" data-i18n="nav.page_layouts.3_columns.main">Shipment Type Table</a>
                     <ul class="menu-content">
-                        <li><a class="menu-item" href="#" data-i18n="nav.page_layouts.3_columns.left_sidebar">Import</a>
+                        <li><a class="menu-item" href="{{url('imports')}}" data-i18n="nav.page_layouts.3_columns.left_sidebar">Import</a>
                         </li>
-                        <li><a class="menu-item" href="#"
+                        <li><a class="menu-item" href="{{url('exports')}}"
                                data-i18n="nav.page_layouts.3_columns.left_sticky_sidebar">Export</a>
                         </li>
-                        <li><a class="menu-item" href="#" data-i18n="nav.page_layouts.3_columns.right_sidebar">Domestic</a>
+                        <li><a class="menu-item" href="{{url('domestics')}}" data-i18n="nav.page_layouts.3_columns.right_sidebar">Domestic</a>
                         </li>
                     </ul>
                 </li>

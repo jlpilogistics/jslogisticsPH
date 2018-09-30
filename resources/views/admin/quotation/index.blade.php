@@ -169,7 +169,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Confirmed Shipment</h4>
+                        <h4 class="card-title">Awaiting Confirmation</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -185,9 +185,9 @@
                             <table class="table table-striped table-bordered zero-configuration " >
                                 <thead>
                                 <tr>
-                                    <th>Confirmation Date</th>
+                                    <th>Date Quoted</th>
                                     <th>Shipper</th>
-                                    <th>Consignee</th>
+                                    <th>Email</th>
                                     <th>Ship To</th>
                                     <th>Action</th>
                                 </tr>
