@@ -178,34 +178,21 @@
                         <div class="table-title">
                             <div class="row">
 
-                                <div class="col-sm-6"><h2>Manage <b>Domains</b></h2></div>
+                                <div class="col-sm-6"><h2>Request for Quote (Status) <b></b></h2></div>
                                 <div class="col-sm-6">
-                                    <div class="btn-group" data-toggle="buttons">
-                                        <label class="btn btn-info active">
-                                            <input type="radio" name="status" value="all" checked="checked"> All
-                                        </label>
-                                        <labael class="btn btn-success">
-                                            <input type="radio" name="status" value="active"> Active
-                                        </labael>
-                                        <label class="btn btn-warning">
-                                            <input type="radio" name="status" value="inactive"> Inactive
-                                        </label>
-                                        <label class="btn btn-danger">
-                                            <input type="radio" name="status" value="expired"> Expired
-                                        </label>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
-                        <table class="table table-striped table-hover">
+                        <table class="table table-striped tableW-hover">
                             <thead>
                             <tr>
-                                <th>Request ID</th>
-                                <th>Status</th>
-                                <th>Date</th>
-                                <th>Mode</th>
-                                <th>Origin</th>
-                                <th>Destination</th>
+                                <th style="font-size: 14px;">Request ID</th>
+                                <th style="font-size: 14px;">Status</th>
+                                <th style="font-size: 14px;">Date</th>
+                                <th style="font-size: 14px;">Mode</th>
+                                <th style="font-size: 14px;">Origin</th>
+                                <th style="font-size: 14px;">Destination</th>
                                 <th width="15%"></th>
                             </tr>
                             </thead>
@@ -213,16 +200,16 @@
                             @foreach($request as $data)
                                 <tr>
                                     @foreach($data->invoices as $invoice)
-                                        <td>{{$getInv = $invoice->reference}}</td>
+                                        <td style="font-size: 14px;">{{$getInv = $invoice->reference}}</td>
                                     @endforeach
                                     <td>{{$data->status->name}}</td>
                                     @foreach($data->invoices as $invoice)
-                                        <td>{{$invoice->created_at->toFormattedDateString()}}</td>
+                                        <td style="font-size: 14px;">{{$invoice->created_at->toFormattedDateString()}}</td>
                                     @endforeach
-                                    <td>{{$data->goods->mode}}</td>
-                                    <td>{{$data->origin->city}}, {{$data->origin->country}}</td>
-                                    <td>{{$data->destination->dcity}}, {{$data->destination->dcountry}}</td>
-                                    <td><button type="button" onclick="window.location='{{ route('confirm.quote', [$data->transact, $getInv ,$data->client_id]) }}'" class="btn btn-success mr-1 mb-1">{{{ ($data->status_id != 2) ? 'View shipment' : 'Confirm shipment' }}}</button></td>
+                                    <td  style="font-size: 14px;">{{$data->goods->mode}}</td>
+                                    <td style="font-size: 14px;">{{$data->origin->city}}, {{$data->origin->country}}</td>
+                                    <td style="font-size: 14px;">{{$data->destination->dcity}}, {{$data->destination->dcountry}}</td>
+                                    <td style="font-size: 14px;"><button type="button" onclick="window.location='{{ route('confirm.quote', [$data->transact, $getInv ,$data->client_id]) }}'" class="btn btn-success mr-1 mb-1">{{{ ($data->status_id != 2) ? 'View shipment' : 'Confirm shipment' }}}</button></td>
                                 </tr>
                             @endforeach
                             </tbody>

@@ -84,6 +84,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
 
+
+
                                         @if(Session::has('quote'))
                                             {!! Form::select('shiptypes', $type,  Session::get('quote')->shiptypes, ['class'=>'quote-service drop ', 'id'=>'1', 'tabindex' => 1]) !!}
                                         @else
@@ -101,9 +103,9 @@
                                         {{--{{ Form::select('CompanyID', $comp, array($selectedId), array('id' => 'seCompanyID')) }}--}}
                                         @if(Session::has('quote'))
                                             @if(Session::get('quote')->shiptypes == 'Import' || Session::get('quote')->shiptypes == 'Export')
-                                                {!! Form::select('mode', array(''=>'Choose Mode of Shipment','Air'=>'Air', 'FCL20'=>'FCL20','FCL40'=>'FCL40','LCL'=>'LCL'), $quote->mode,['class'=>'quote-service drop form-control', 'id'=>'mode'] ) !!}
+                                                {!! Form::select('mode', array(''=>'Choose Mode of Shipment','Air'=>'Air Freight', 'FCL20'=>'Full Container Load (20ft)','FCL40'=>'Full Container Load (40ft)','LCL'=>'Less than a Container Load'), $quote->mode,['class'=>'quote-service drop form-control', 'id'=>'mode'] ) !!}
                                             @elseif(Session::get('quote')->shiptypes == 'Domestic')
-                                                {!! Form::select('mode', array(''=>'Choose Mode of Shipment','FTL'=>'FTL','LTL'=>'LTL'), $quote->mode,['class'=>'quote-service drop form-control', 'id'=>'mode'] ) !!}
+                                                {!! Form::select('mode', array(''=>'Choose Mode of Shipment','FTL'=>'Full Truck Load','LTL'=>'Less than a Truck Load'), $quote->mode,['class'=>'quote-service drop form-control', 'id'=>'mode'] ) !!}
                                             @endif
                                         @else
                                             {!! Form::select('mode', array(''=>'Choose Mode of Shipment'), null,['class'=>'quote-service drop form-control', 'id'=>'mode', 'tabindex'=>1] ) !!}
@@ -299,7 +301,6 @@
                             <div class="col-md-6">
                                     {!! Form::label('description', 'Description') !!}
                                 <textarea name="description" value="{{old('description')}}" ng-model="formData.message" tabindex="1" ng-class="{'error' : errorTextarea}" rows="5" cols="55" style="height: 49px; margin: 0px; width: 391px;"></textarea>
-
                             </div>
                         </div>
 
@@ -324,10 +325,10 @@
                                             <th></th>
                                             <th>pieces</th>
                                             <th>package</th>
-                                            <th>length</th>
-                                            <th>width</th>
-                                            <th>height</th>
-                                            <th>weight Kg</th>
+                                            <th>length in <span class="dimss"></span></th>
+                                            <th>width in <span class="dimss"></span></th>
+                                            <th>height in <span class="dimss"></span></th>
+                                            <th>weight in Kg</th>
                                             <th>
                                                 <button name="add-dim-row" id="addMore" type="button" class="btn btn-info btn-sm " style="width: 40px"><i class="fa fa-plus-circle"></i></button>
                                             </th>

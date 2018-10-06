@@ -47,17 +47,14 @@
                     <div class="card-body">
                         <div class="media d-flex">
                             <div class="media-body text-left">
-                                <h3 class="info">30</h3>
+                                <h3 class="info">{{ App\Goods::where('transaction_id')->count() }}</h3>
                                 <h6>Request Quotation</h6>
                             </div>
                             <div>
                                 <i class="icon-book-open info font-large-2 float-right"></i>
                             </div>
                         </div>
-                        <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
-                            <div class="progress-bar bg-gradient-x-info" role="progressbar" style="width: 80%"
-                                 aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -68,17 +65,14 @@
                     <div class="card-body">
                         <div class="media d-flex">
                             <div class="media-body text-left">
-                                <h3 class="warning">20</h3>
+                                <h3 class="warning">{{ App\Transaction::where('status_id','=','1')->count() }}</h3>
                                 <h6>Approved Quotation</h6>
                             </div>
                             <div>
                                 <i class="icon-like warning font-large-2 float-right"></i>
                             </div>
                         </div>
-                        <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
-                            <div class="progress-bar bg-gradient-x-warning" role="progressbar" style="width: 65%"
-                                 aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -89,17 +83,14 @@
                     <div class="card-body">
                         <div class="media d-flex">
                             <div class="media-body text-left">
-                                <h3 class="success">146</h3>
+                                <h3 class="success">{{ App\User::where('verified','=','1')->count() }}</h3>
                                 <h6>New Customers</h6>
                             </div>
                             <div>
                                 <i class="icon-user-follow success font-large-2 float-right"></i>
                             </div>
                         </div>
-                        <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
-                            <div class="progress-bar bg-gradient-x-success" role="progressbar" style="width: 75%"
-                                 aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -110,23 +101,21 @@
                     <div class="card-body">
                         <div class="media d-flex">
                             <div class="media-body text-left">
-                                <h3 class="danger">$10000.00</h3>
+                                <h3 class="danger">Php. 10000.00</h3>
                                 <h6>Collection</h6>
                             </div>
                             <div>
                                 <i class="icon-wallet danger font-large-2 float-right"></i>
                             </div>
                         </div>
-                        <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
-                            <div class="progress-bar bg-gradient-x-danger" role="progressbar" style="width: 85%"
-                                 aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Recent Transactions -->
+
     <div class="row">
         <div id="recent-transactions" class="col-12">
             <div class="card">
@@ -149,94 +138,17 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="text-truncate"><i class="la la-dot-circle-o success font-medium-1 mr-1"></i>                          Paid</td>
-                                <td class="text-truncate"><a href="#">INV-001001</a></td>
-                                <td class="text-truncate">
-                          <span class="avatar avatar-xs">
-                            <img class="box-shadow-2" src="../../../app-assets/images/portrait/small/avatar-s-4.png"
-                                 alt="avatar">
-                          </span>
-                                    <span>Elizabeth W.</span>
-                                </td>
-                                <td class="text-truncate p-1">
-                                    <ul class="list-unstyled users-list m-0">
-                                        <li data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="Primdonna"
-                                            class="avatar avatar-sm pull-up">
-                                            <p>BAGS</p>
-                                        </li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-outline-danger round">Food</button>
-                                </td>
-                                <td>
-                                    <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
-                                        <div class="progress-bar bg-gradient-x-danger" role="progressbar" style="width: 25%"
-                                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </td>
-                                <td class="text-truncate">$ 1200.00</td>
-                            </tr>
-                            <tr>
-                                <td class="text-truncate"><i class="la la-dot-circle-o danger font-medium-1 mr-1"></i>                          Declined</td>
-                                <td class="text-truncate"><a href="#">INV-001002</a></td>
-                                <td class="text-truncate">
-                          <span class="avatar avatar-xs">
-                            <img class="box-shadow-2" src="../../../app-assets/images/portrait/small/avatar-s-5.png"
-                                 alt="avatar">
-                          </span>
-                                    <span>Doris R.</span>
-                                </td>
-                                <td class="text-truncate p-1">
-                                    <ul class="list-unstyled users-list m-0">
-                                        <li data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="Volta Chem"
-                                            class="avatar avatar-sm pull-up">
-                                            <p>CHEMICAL</p>
-                                        </li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-outline-warning round">Electronics</button>
-                                </td>
-                                <td>
-                                    <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
-                                        <div class="progress-bar bg-gradient-x-warning" role="progressbar" style="width: 45%"
-                                             aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </td>
-                                <td class="text-truncate">$ 1850.00</td>
-                            </tr>
-                            <tr>
-                                <td class="text-truncate"><i class="la la-dot-circle-o warning font-medium-1 mr-1"></i>                          Pending</td>
-                                <td class="text-truncate"><a href="#">INV-001003</a></td>
-                                <td class="text-truncate">
-                          <span class="avatar avatar-xs">
-                            <img class="box-shadow-2" src="../../../app-assets/images/portrait/small/avatar-s-6.png"
-                                 alt="avatar">
-                          </span>
-                                    <span>Megan S.</span>
-                                </td>
-                                <td class="text-truncate p-1">
-                                    <ul class="list-unstyled users-list m-0">
-                                        <li data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="Fine Estate"
-                                            class="avatar avatar-sm pull-up">
-                                            <p>JEWELRY </p>
-                                        </li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-outline-success round">Groceries</button>
-                                </td>
-                                <td>
-                                    <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
-                                        <div class="progress-bar bg-gradient-x-success" role="progressbar" style="width: 75%"
-                                             aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </td>
-                                <td class="text-truncate">$ 3200.00</td>
-                            </tr>
-
+                            @foreach($count as $counts)
+                                <tr>
+                                    <td>{{$counts->transaction_id}}</td>
+                                    <td>{{$counts->dport}}</td>
+                                    <td>{{$counts->dzip}}</td>
+                                    <td>{{$counts->dcountry}}</td>
+                                    <td>{{$counts->dcity}}</td>
+                                    <td>{{$counts->deta}}</td>
+                                    <td>{{$counts->created_at}}</td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>

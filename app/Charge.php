@@ -12,6 +12,6 @@ class Charge extends Model
 
     public function convertRate($currency, $peso, $convert){
         $result = ($currency/$peso)*$convert;
-        return number_format($result, 2, '.', ',');
+        return $result;
     }
 }

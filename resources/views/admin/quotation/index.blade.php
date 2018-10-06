@@ -188,7 +188,7 @@
                                     <th>Date Quoted</th>
                                     <th>Shipper</th>
                                     <th>Email</th>
-                                    <th>Ship To</th>
+                                    <th>Quote will Expire in</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -200,9 +200,13 @@
                                         ?>
                                         <td>{{$quotations->updated_at}}</td>
                                         <td>{{$client->firstName}} {{$client->lastName}}</td>
-                                        <td>{{$quotations->consignee->firstName}} {{$quotations->consignee->lastName}}</td>
-                                        <td>{{$quotations->consignee->address}}, {{$quotations->consignee->city}}, {{$quotations->consignee->country}} {{$quotations->consignee->zip}}</td>
-                                        <td><button type="button" onclick="window.location='{{ route('quotations.show', $quotations->id ) }}'" class="btn btn-success mr-1 mb-1">View Request</button></td>
+                                        <td>{{$client->email}}</td>
+                                        <td>{{ Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::parse($quotations->created_at)->copy()->addWeek())}} days</td>
+                                        <td><button type="button" onclick="window.location='{{ route('quotations.send-sms', $quotations->client_id) }}'" class="btn btn-success mr-1 mb-1">View Quote</button>
+                                        </td>
+                                            <td><button type="button" onclick="window.location='{{ route('quotations.send-sms', $quotations->client_id) }}'" class="btn btn-success mr-1 mb-1">View Quote</button>
+                                            </td>
+
                                     </tr>
                                 @endforeach
                                 </tbody>

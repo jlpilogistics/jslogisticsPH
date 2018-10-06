@@ -12,6 +12,7 @@ class Transaction extends Model
     use IsInvoicableTrait;
 
     protected $with = ['invoices'];
+    protected $fillable = ['status_id'];
 
     public function generateTransaction() {
         $number = mt_rand(10000000, 99999999); // better than rand()
@@ -50,6 +51,8 @@ class Transaction extends Model
     public function documents(){
         return $this->hasMany('App\Document');
     }
+
+
 
 
 

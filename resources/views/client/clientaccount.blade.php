@@ -79,7 +79,7 @@
                                 <h4 class="title">Edit Profile</h4>
                             </div>
                             <div class="content">
-                                <form>
+                                <form >
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">

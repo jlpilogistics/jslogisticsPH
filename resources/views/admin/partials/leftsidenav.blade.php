@@ -40,12 +40,12 @@
                     <ul class="menu-content">
                         <li><a class="menu-item" href="#" data-i18n="nav.page_layouts.1_column">Monitor</a>
                             <ul class="menu-content">
-                                <li><a class="menu-item" href="/monitor" data-i18n="nav.page_layouts.3_columns.left_sidebar">Export</a>
+                                <li><a class="menu-item" href="/monitor-export" data-i18n="nav.page_layouts.3_columns.left_sidebar">Export</a>
                                 </li>
-                                <li><a class="menu-item" href="#"
+                                <li><a class="menu-item" href="monitor-import"
                                        data-i18n="nav.page_layouts.3_columns.left_sticky_sidebar">Import</a>
                                 </li>
-                                <li><a class="menu-item" href="#"
+                                <li><a class="menu-item" href="monitor-domestic"
                                        data-i18n="nav.page_layouts.3_columns.left_sticky_sidebar">Domestics</a>
                                 </li>
                             </ul>

@@ -14,6 +14,7 @@
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.4.0",
         "nesbot/carbon": "^1.25",
+        "nexmo/client": "^1.5",
         "sander-van-hooft/laravel-invoicable": "^1.0",
         "shippo/shippo-php": "^1.4"
     },

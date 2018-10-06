@@ -74,6 +74,7 @@ class HomeController extends Controller
             $request = Transaction::with('destination','origin','quotation','goods','invoices','consignee')->where('client_id', $clients->id)->where('status_id', '!=',1)->get();
 
 
+//            return $request;
             return view('client.clientStatus', compact('request', 'clients'));
         } catch (AuthorizationException $e) {
             return $e;

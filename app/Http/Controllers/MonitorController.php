@@ -22,7 +22,14 @@ class MonitorController extends Controller
         $tasks = Driver::all();
         return view('admin.monitor.monitor',compact('tasks'));
     }
-
+    public function importMonitor()
+    {
+        return view('admin.monitor.ImportMonitor');
+    }
+    public function domesticMonitor()
+    {
+        return view('admin.monitor.DomesticMonitor');
+    }
     /**
      * Show the form for creating a new resource.
      *

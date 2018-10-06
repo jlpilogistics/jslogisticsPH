@@ -37,26 +37,12 @@
           href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css"/>
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
     <link rel="stylesheet" type="text/css" href="//github.com/downloads/lafeber/world-flags-sprite/flags16.css" />
     <script src="https://cdn.jsdelivr.net/npm/places.js@1.11.0"></script>
 
 
     <style type="text/css">
-        .main-section{
-            margin:0 auto;
-            padding: 20px;
-            margin-top: 100px;
-            background-color: #fff;
-            box-shadow: 0px 0px 20px #c1c1c1;
-        }
-        .fileinput-remove,
-        .fileinput-upload{
-            display: none;
-        }
 
         * {
             box-sizing: border-box;
@@ -95,9 +81,7 @@
 
         }
 
-        body {
-            zoom: 95%;
-        }
+
       
         input[type="text"][disabled] {
             color: red;
@@ -109,11 +93,6 @@
     <script type="text/javascript" src="{{URL::asset('app/js/jquery-1.11.1.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('app/js/jquery.repeater.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('app/js/jquery-1.11.3.min.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/js/fileinput.js" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/themes/fa/theme.js" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" type="text/javascript"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" type="text/javascript"></script>
-
 
     <script type="text/javascript">
         $(document).ready(function(){
@@ -121,11 +100,11 @@
             $("#transaction").on("change", function(){
                 var selected = this.value;
                 if (selected == 'Import' || selected == 'Export') {
-                    var resultData = ["Air", "FCL40", "FCL20", "LCL"];
+                    var resultData = {"Air":"Air Freight", "FCL20":"Full Container Load (20ft)", "FCL40":"Full Container Load (40ft)", "LCL":"Less than a Container Load"};
                     var myselect = $('<select>');
                     $('#mode').empty();
                     $.each(resultData, function (index, key) {
-                        myselect.append($('<option></option>').val(key).html(key));
+                        myselect.append($('<option></option>').val(index).html(key));
                     });
                     $('#mode').append(myselect.html());
                 }
@@ -189,6 +168,10 @@
     <!--  client assets    -->
     <script>
 
+        $('#formSubmit').on('submit',function(){
+            $(".fileinput-upload-button").click();
+        })
+
         $(function(){
             $('#addMore').on('click', function() {
                 var data = $("#tb tr:eq(1)").clone(true).appendTo("#tb");
@@ -215,6 +198,7 @@
                 $(this).find('.charge').each(function () {
 
                     var row = $(this).parent().parent();
+                    $('.dimss').text(row.find('.dimension').val());
                     var dim = row.find('.dimension').val();
                     var quan = row.find('.quantity').val();
                     var length = row.find('.length').val();
@@ -271,11 +255,11 @@
     <script>
         $(document).ready(function() {
             $('#table').DataTable();
+            document.getElementsByClassName('fileinput-upload-button').style.visibility = 'hidden';
 
         } );
 
         $(".show-cost-details").click(function () {
-
             //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
             $('.costs-details').slideToggle(500, function () {
                 //execute this after slideToggle is done
@@ -285,8 +269,8 @@
                     return $('.costs-details').is(":visible") ? "Hide Details" : "Show Details";
                 });
             });
-
-        }); $(".show-quote-details").click(function () {
+        });
+        $(".show-quote-details").click(function () {
 
             //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
             $('.confirm').slideToggle(500, function () {
@@ -297,30 +281,7 @@
                     return $('.confirm').is(":visible") ? "Hide Forms" : "Confirm Quote";
                 });
             });
-
         });
-
-
-            $("#file-1").fileinput({
-                theme: 'fa',
-                uploadUrl: "/image-upload/" + $('#img').val() ,
-
-                uploadExtraData: function() {
-                    return {
-                        _token: $("input[name='_token']").val(),
-                    };
-                },
-                allowedFileExtensions: ['jpg', 'png', 'gif'],
-                overwriteInitial: false,
-                maxFileSize:5000,
-                maxFilesNum: 10,
-                slugCallback: function (filename) {
-                    return filename.replace('(', '_').replace(']', '_');
-                }
-            });
-
-
-
     </script>
     {{--<script>--}}
         {{--// This example displays an address form, using the autocomplete feature--}}
@@ -412,6 +373,7 @@
                 document.querySelector('#country').value = e.suggestion.country || '';
                 document.querySelector('#city').value = e.suggestion.city || '';
                 document.querySelector('#zip').value = e.suggestion.postcode || '';
+                document.querySelector('#state').value = e.suggestion.administrative || '';
             });
         })();
         (function() {
@@ -430,7 +392,37 @@
                 document.querySelector('#zips').value = e.suggestion.postcode || '';
             });
         })();
+
     </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/js/fileinput.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/themes/fa/theme.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" type="text/javascript"></script>
+
+
+    <script type="text/javascript">
+        $("#file-1").fileinput({
+
+            theme: 'fa',
+            uploadUrl: "/image-upload/" + $('#img').val(),
+            uploadExtraData: function() {
+                return {
+                    _token: $("input[name='_token']").val(),
+                };
+            },
+            allowedFileExtensions: ['jpg', 'png', 'gif'],
+            overwriteInitial: false,
+            maxFileSize:2000,
+            maxFilesNum: 10,
+            slugCallback: function (filename) {
+                return filename.replace('(', '_').replace(']', '_');
+            }
+
+
+        });
+    </script>
+
 
 
 

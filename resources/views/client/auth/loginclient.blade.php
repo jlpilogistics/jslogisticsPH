@@ -81,19 +81,35 @@
                                                 {{ session('warning') }}
                                             </div>
                                         @endif
+                                            @if ($errors->has('password'))
+                                                <div class="alert alert-warning">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </div>
+                                            @endif
+                                            @if ($errors->has('email'))
+                                                <div class="alert alert-warning">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </div>
+                                            @endif
+
                                         <form role="form" action="{{route('user.login.submit')}}" method="post" class="login-form">
                                             {{ csrf_field() }}
+                                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
 
                                             <div class="form-group">
                                                 <label class="sr-only" for="form-username">Email Address</label>
-                                                <input type="text" name="email" placeholder="Email Address ..." class="form-username form-control" id="form-username">
+                                                <input type="text" name="email" placeholder="Email Address ..." class="form-username form-control" value="{{ old('email') }}" id="form-username">
+
                                             </div>
+                                                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                             <div class="form-group">
                                                 <label class="sr-only" for="form-password">Password</label>
                                                 <input type="password" name="password" placeholder="Password..." class="form-password form-control" id="form-password">
+
                                             </div>
                                             <button type="submit" class="btn">Sign in!</button>
                                         </form>
+                                    </div>
                                     </div>
                                 </div>
 

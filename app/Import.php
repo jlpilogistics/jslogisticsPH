@@ -17,10 +17,11 @@ class Import extends Model
             $rates->fcl20 = $brate;
             $rates->save();
         }
-        if(($title == 'Export') && ($mode == 'Air')){
+        if(($title == 'Import') && ($mode == 'Air')){
             $rates = $this->where('airfreight', 1)->where('particulars', 'Brokerage Fee')->first();
             $rates->air = $brate;
             $rates->save();
+
         }
     }
 }

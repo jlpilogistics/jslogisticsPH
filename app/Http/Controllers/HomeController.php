@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Destination;
 
 class HomeController extends Controller
 {
@@ -16,6 +17,8 @@ class HomeController extends Controller
         $this->middleware('auth:admin');
     }
 
+
+
     /**
      * Show the application dashboard.
      *
@@ -23,6 +26,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.index');
+        $count = Destination::where('dcountry', '=', 'Philippines')
+            ->orderBy('id', 'desc')
+            ->get();
+        return view('admin.index',compact('count'));
     }
 }

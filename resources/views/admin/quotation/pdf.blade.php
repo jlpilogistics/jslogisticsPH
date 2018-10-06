@@ -58,29 +58,29 @@
                 <section class="card">
                     <div id="printablediv" >
                         <div id="invoice-template" class="card-body">
-                        <img src="{{URL::asset('app-assets/images/logo/Jexsan.png')}}" class="center-block center" alt="company logo"/>
-                        <div id="invoice-customer-details" class="row pt-2">
-                            <div class="col-sm-12 text-center text-md-left">
-                            <table class="ml-2 px-0 list-unstyled">
-                                <tr>
-                                        <th >Jexsan Logistics Philippines Inc. </th>
+                            <img src="{{URL::asset('app-assets/images/logo/Jexsan.png')}}" class="center-block center" alt="company logo"/>
+                            <div id="invoice-customer-details" class="row pt-2">
+                                <div class="col-sm-12 text-center text-md-left">
+                                    <table class="ml-2 px-0 list-unstyled">
+                                        <tr>
+                                            <th >Jexsan Logistics Philippines Inc. </th>
 
-                                </tr>
-                                <tr>
-                                    <td>Benavidez St., Raja Sulayman Bldg., Bel Air</td>
-                                    <td><b> Quotation No:</b>   {{$data['quotenumber']}}  </td>
-                                </tr>
-                                <tr>
-                                    <td>Makati City, Metro Manila, Philippines</td>
-                                    <td ><b>Total Quote:</b>  {{$data['symbol']}} {{$data['mytotals']}} </td>
-                                </tr>
-                            </table>
+                                        </tr>
+                                        <tr>
+                                            <td>Benavidez St., Raja Sulayman Bldg., Bel Air</td>
+                                            <td><b> Quotation No:</b>   {{$data['quotenumber']}}  </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Makati City, Metro Manila, Philippines</td>
+                                            <td ><b>Total Quote:</b>  {{$data['symbol']}} {{$data['mytotals']}} </td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
-                        <div id="invoice-customer-details" class="row pt-2">
-                            <div class="col-sm-12 text-center text-md-left">
-                                <p class="ml-2 text-muted"><b>Quote To</b></p>
-                                <table class="ml-2 px-0 list-unstyled">
+                            <div id="invoice-customer-details" class="row pt-2">
+                                <div class="col-sm-12 text-center text-md-left">
+                                    <p class="ml-2 text-muted"><b>Quote To</b></p>
+                                    <table class="ml-2 px-0 list-unstyled">
                                         <tr>
                                             <td class="text-bold-800">{{$data['name']}}</td>
                                         </tr>
@@ -97,59 +97,25 @@
                                             <td class="text-muted">{{$data['validity']}}</td>
                                         </tr>
                                     </table>
+                                </div>
                             </div>
-                        </div>
                             <br>
                             <br>
                             <h3>Standard Charges</h3>
                             <table class="table" cellpadding="0" cellspacing="0">
                                 <thead>
-                                    <tr >
+                                <tr >
 
-                                        <th class="text-lg-center" >#</th>
-                                        <th class="text-lg-center" >Shipment Charges</th>
-                                        <th class="text-center">Currency</th>
-                                        <th class="text-right">Amount</th>
-                                    </tr>
+                                    <th class="text-lg-center" >#</th>
+                                    <th class="text-lg-center" >Shipment Charges</th>
+                                    <th class="text-center">Currency</th>
+                                    <th class="text-right">Amount</th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 <?php $x = 0;
                                 ?>
                                 @foreach($charges as $item)
-
-                                         <?php  $x++;
-                                    ?>
-                                <tr>
-                                    <td  class="text-lg-center" style="padding: 0px 0px 0px 0px;">{{$item['id']}}</td>
-                                    <td style="padding: 0px 0px 0px 0px;" class="text-lg-center">
-                                        <p class="text-muted">{{$item['charge']}}</p>
-                                    </td>
-                                    @if($x == 1)
-                                    <td style="padding: 0px 0px;" class="text-right">{{$data['symbol']}}</td>
-                                    @else
-                                        <td class="text-right" style="padding: 0px 0px;" ></td>
-                                    @endif
-                                    <td class="text-right" style="padding: 0px 40px 0px 0px;">{{$item['amount']}}</td>
-                                </tr>
-                                    @endforeach
-                                </tbody>
-
-                            </table>
-                            <h3>Additional Charges (if applicable)</h3>
-                            <table class="table" cellpadding="0" cellspacing="0">
-                                <thead>
-                                <tr >
-
-                                    <th class="text-lg-center" width="15%"></th>
-                                    <th class="text-lg-center" width="40%"></th>
-                                    <th class="text-center"></th>
-                                    <th class="text-right"></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php $x = 0;
-                                ?>
-                                @foreach($noncharges as $item)
 
                                     <?php  $x++;
                                     ?>
@@ -163,12 +129,50 @@
                                         @else
                                             <td class="text-right" style="padding: 0px 0px;" ></td>
                                         @endif
-                                        <td class="text-right" style="padding: 0px 40px 0px 0px;">{{$item['amount']}}</td>
+                                        <td class="text-right" style="padding: 0px 40px 0px 0px;">{{number_format($item['amount'], 2, '.', ',')}}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
 
                             </table>
+                            @if(isset($noncharges))
+                                <h3>Additional Charges (if applicable)</h3>
+                                <table class="table" cellpadding="0" cellspacing="0">
+                                    <thead>
+                                    <tr >
+
+                                        <th class="text-lg-center" width="15%"></th>
+                                        <th class="text-lg-center" width="40%"></th>
+                                        <th class="text-center"></th>
+                                        <th class="text-right"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <?php $x = 0;
+                                    ?>
+                                    @foreach($noncharges as $item)
+
+                                        <?php  $x++;
+                                        ?>
+                                        <tr>
+                                            <td  class="text-lg-center" style="padding: 0px 0px 0px 0px;">{{$item['id']}}</td>
+                                            <td style="padding: 0px 0px 0px 0px;" class="text-lg-center">
+                                                <p class="text-muted">{{$item['charge']}}</p>
+                                            </td>
+                                            @if($x == 1)
+                                                <td style="padding: 0px 0px;" class="text-right">{{$data['symbol']}}</td>
+                                            @else
+                                                <td class="text-right" style="padding: 0px 0px;" ></td>
+                                            @endif
+                                            <td class="text-right" style="padding: 0px 40px 0px 0px;">{{$item['amount']}}</td>
+                                        </tr>
+                                    @endforeach
+
+                                    </tbody>
+
+                                </table>
+                            @endif
                             <table cellpadding="0" cellspacing="0" style="width: 450px; float: left">
                                 <tr><h6>Terms & Condition</h6></tr>
                                 @foreach($terms as $item)

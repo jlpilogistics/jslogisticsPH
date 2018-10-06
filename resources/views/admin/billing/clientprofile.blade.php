@@ -82,12 +82,12 @@
 
 
                             <tr>
-                                <td>1234124</td>
-                                <td>41241</td>
-                                <td>42413</td>
-                                <td>dfsfd</td>
-                                <td>fdfsfd</td>
-                                <td>fdfsfsf</td>
+                                <td>20</td>
+                                <td>25</td>
+                                <td>15</td>
+                                <td>30</td>
+                                <td>Batangas Port</td>
+                                <td>In Transit</td>
                             </tr>
                         </table>
                     </div>
@@ -111,47 +111,52 @@
                     <div class="card-header">
                         <h4 class="card-title">Generate Billing Reports</h4>
                     </div>
-                        <div class="card-body card-dashboard ">
-                            <div class="row skin skin-line">
-                                <div class="col-md-6 col-sm-12">
-                                    <fieldset>
-                                        <button type="button" class="btn btn-blue-grey" data-toggle="modal"
-                                                data-backdrop="false" data-target="#soa">
-                                            Statement of Account
-                                        </button>
-                                    </fieldset>
-                                    <fieldset>
-                                        <button type="button" class="btn btn-blue-grey" data-toggle="modal"
-                                                data-backdrop="false" data-target="#bs">
-                                            Billing Statement
-                                        </button>
-                                    </fieldset>
-                                    <fieldset>
-                                        <button type="button" class="btn btn-blue-grey" data-toggle="modal"
-                                                data-backdrop="false" data-target="#pl">
-                                            Packing List
-                                        </button>
+                    <div class="card-body card-dashboard ">
+                        <div class="row skin skin-square">
+                            <div class="col-md-6 col-sm-12">
+                                <fieldset>
+                                    <input type="checkbox">
+                                    <a data-toggle="modal"
+                                       data-backdrop="false" data-target="#soa">
+                                        Statement of Account
+                                    </a>
+                                </fieldset>
+                                <fieldset>
+                                    <input type="checkbox">
+                                    <a  data-toggle="modal"
+                                        data-backdrop="false" data-target="#bs">
+                                        Billing Statement
+                                    </a>
+                                </fieldset>
+                                <fieldset>
+                                    <input type="checkbox">
+                                    <a data-toggle="modal"
+                                       data-backdrop="false" data-target="#pl">
+                                        Packing List
+                                    </a>
+                                </fieldset>
 
-                                    </fieldset>
-
-                                </div>
-                                <div class="col-md-6 col-sm-12">
-                                    <fieldset>
-                                        <button type="button" class="btn btn-blue-grey" data-toggle="modal"
-                                                data-backdrop="false" data-target="#ar">
-                                            Acknowledgement Receipt
-                                        </button>
-                                    </fieldset>
-                                    <fieldset>
-                                        <button type="button" class="btn btn-blue-grey" data-toggle="modal"
-                                                data-backdrop="false" data-target="#dl">
-                                            Delivery Receipt
-                                        </button>
-                                    </fieldset>
-
-                                </div>
                             </div>
+                            <div class="col-md-6 col-sm-12">
+                                <fieldset>
+                                    <input type="checkbox">
+                                    <a  data-toggle="modal"
+                                        data-backdrop="false" data-target="#ar">
+                                        Acknowledgement Receipt
+                                    </a>
+                                </fieldset>
+                                <fieldset>
+                                    <input type="checkbox">
+                                    <a data-toggle="modal"
+                                       data-backdrop="false" data-target="#dl">
+                                        Delivery Receipt
+                                    </a>
+                                </fieldset>
+
+                            </div>
+
                         </div>
+                    </div>
                 </div>
             </div>
 

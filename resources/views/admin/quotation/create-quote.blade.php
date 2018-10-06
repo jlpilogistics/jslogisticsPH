@@ -91,6 +91,7 @@
                                 <input type="hidden" name="mail" value="{{$client->email}}">
                                 <input type="hidden" class="mode" value="{{$mode}}">
 
+
                                 <div class="form-body">
                                     <h4 class="form-section"><i class="la la-eye"></i> Quote to:</h4>
                                     <div class="row">
@@ -158,7 +159,7 @@
                                                 @for($x = 1 ; $x<count($stdrd); $x++)
                                                     @if(Session::has('session'.$x))
                                                         <tr>
-                                                            @if($x < 2)
+                                                            @if($x<2)
 
                                                                 <td><select name="currency" class="form-control currency">
                                                                         <option selected="true" value="{{ Session::get('session')['currency']}}">{{ Session::get('session')['symbol']}}</option>
@@ -227,45 +228,46 @@
                                             </thead>
                                             <tbody class="tbodyRow">
                                             @if(Session::has('session1'))
-                                                @for($x = 1 ; $x<count($stdrd); $x++)
-                                                    @if(Session::has('session'.$x))
-                                                        <tr>
-                                                            @if($x < 2)
+                                                {{--@for($x = 1 ; $x<count($stdrd); $x++)--}}
+                                                    {{--@if(Session::has('session'.$x))--}}
+                                                        {{--<tr>--}}
+                                                            {{--@if($x < 2)--}}
 
-                                                                <td><select name="currency" class="form-control currency">
-                                                                        <option selected="true" value="{{ Session::get('session')['currency']}}">{{ Session::get('session')['symbol']}}</option>
-                                                                        @foreach($currency as $key=>$val)
-                                                                            <option value="{{$val}}">{{$key}}</option>
-                                                                        @endforeach
-                                                                    </select></td>
-                                                            @else
-                                                                <td></td>
-                                                            @endif
+                                                                {{--<td><select name="currency" class="form-control currency">--}}
+                                                                        {{--<option selected="true" value="{{ Session::get('session')['currency']}}">{{ Session::get('session')['symbol']}}</option>--}}
+                                                                        {{--@foreach($currency as $key=>$val)--}}
+                                                                            {{--<option value="{{$val}}">{{$key}}</option>--}}
+                                                                        {{--@endforeach--}}
+                                                                    {{--</select></td>--}}
+                                                            {{--@else--}}
+                                                                {{--<td></td>--}}
+                                                            {{--@endif--}}
 
-
-                                                            <td><input type="text" readonly value="{{Session::get('session'. $x)->charge}}" class="form-control charge" name="charge[]"></td>
-                                                            <td><input type="text" readonly class="form-control amount numbersOnly" name="amount[]" value="{{ Session::get('session')['amount'][$x-1]}}"></td>
-                                                            <td><span style="font-size: 14px" class="current">{{Session::get('session')['symbol']}}</span><p class="lead totalRow float-right" >{{Session::get('session'. $x)->amount}}</p></td>
-                                                            <input type="hidden" value="{{$pesos}}" class="pesoRate" name="pesoRate">
-                                                            <td><a href="#/" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>x</a></td>
-                                                        </tr>
-                                                    @endif
-                                                @endfor
+                                                            {{--<td></td>--}}
+                                                            {{--<td><input type="text" readonly value="{{Session::get('session'. $x)->charge}}" class="form-control charge" name="charge[]"></td>--}}
+                                                            {{--<td><input type="text" readonly class="form-control amount numbersOnly" name="amount[]" value="{{ Session::get('session')['amount'][$x-1]}}"></td>--}}
+                                                            {{--<td><span style="font-size: 14px" class="current">{{Session::get('session')['symbol']}}</span><p class="lead totalRow float-right" >{{Session::get('session'. $x)->amount}}</p></td>--}}
+                                                            {{--<input type="hidden" value="{{$pesos}}" class="pesoRate" name="pesoRate">--}}
+                                                            {{--<td><a href="#/" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>x</a></td>--}}
+                                                        {{--</tr>--}}
+                                                    {{--@endif--}}
+                                                {{--@endfor--}}
                                             @else
-                                                <?php $x = 0; ?>
+<!--                                                --><?php //$x = 0; ?>
                                                 @foreach($stdrd2 as $keys=>$values)
-                                                    <?php $x++; ?>
+<!--                                                    --><?php //$x++; ?>
                                                     <tr>
-                                                        @if($x==1)
-                                                            <td><select name="currency" class="form-control currency">
-                                                                    <option selected="true" disabled value="">Currency</option>
-                                                                    @foreach($currency as $key=>$val)
-                                                                        <option value="{{$val}}">{{$key}}</option>
-                                                                    @endforeach
-                                                                </select></td>
-                                                        @else
-                                                            <td></td>
-                                                        @endif
+                                                        {{--@if($x==1)--}}
+                                                            {{--<td><select name="currency" class="form-control currency">--}}
+                                                                    {{--<option selected="true" disabled value="">Currency</option>--}}
+                                                                    {{--@foreach($currency as $key=>$val)--}}
+                                                                        {{--<option value="{{$val}}">{{$key}}</option>--}}
+                                                                    {{--@endforeach--}}
+                                                                {{--</select></td>--}}
+                                                        {{--@else--}}
+                                                            {{--<td></td>--}}
+                                                        {{--@endif--}}
+                                                        <td></td>
                                                         <td><input type="text" readonly value="{{$values}}" class="form-control charge" name="charge[]"></td>
                                                         <td><input type="text" readonly value="{{$keys}}" class="form-control amount numbersOnly" name="amount[]"></td>
                                                         <td><span style="font-size: 14px" class="current"></span><p class="lead totalRow float-right"></p></td>

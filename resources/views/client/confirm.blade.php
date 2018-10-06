@@ -3,6 +3,22 @@
 <html class="loading" lang="en" data-textdirection="ltr">
 <head>
     @yield('assets')
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css"/>
+    <style type="text/css">
+        .main-section{
+            margin:0 auto;
+            padding: 20px;
+            margin-top: 100px;
+            background-color: #fff;
+            box-shadow: 0px 0px 20px #c1c1c1;
+        }
+        .fileinput-remove,
+        .fileinput-upload{
+            display: none;
+        }
+    </style>
 </head>
 @section('sidenav')
     <style>
@@ -139,10 +155,7 @@
                                         <th>#</th>
                                         <th>Charge Type</th>
                                         <th class="text-right">Amount in Peso</th>
-                                        <th>Currency</th>
-                                        <th>Rate</th>
-                                        <th class="text-right">Total</th>
-                                        <th class="text-right"></th>
+                                        <th class="text-right">Currency</th>
                                         <th class="text-right">Total</th>
                                     </tr>
                                     </thead>
@@ -152,32 +165,33 @@
                                     <tr>
                                         <td>{{$x++}}</td>
                                         <td>{{$rates->description}}</td>
-                                        <td>{{$rates->amount * ($pesos/$gbps)}}</td>
-                                        @if($x == 2)
-                                            <td>{{$quote->goods->currency}}</td>
+                                        @if($rates->amount == 0)
+
+                                            <td class="text-right"><b>At Cost</b></td>
                                         @else
-                                            <td></td>
+                                            <td class="text-right">{{number_format($rates->amount * ($pesos/$gbps), 2, '.', ',')}}</td>
                                         @endif
+
                                         @if($x == 2)
-                                            <td>{{$pesos/$gbps}}</td>
+                                            <td class="text-right">{{$quote->goods->currency}}</td>
                                         @else
                                             <td></td>
                                         @endif
 
-                                        <td>{{$rates->amount}}</td>
-                                        @if($x == 2)
-                                            <td>{{$quote->goods->currency}}</td>
-                                            @else
-                                            <td></td>
+                                        @if($rates->amount == 0)
+
+                                            <td><b>At Cost</b></td>
+                                        @else
+                                            <td class="text-right">{{number_format($rates->amount, 2, '.', ',')}}</td>
                                         @endif
-                                        <td class="text-right">{{$rates->amount}}</td>
+
                                     </tr>
                                         @endforeach
                                     </tbody>
                                     <tfoot class="font-bold">
                                     <tr>
-                                        <td colspan="6"></td>
-                                        <td>Total:</td>
+                                        <td colspan="3"></td>
+                                        <td>Total:<span class="text-right">{{$quote->goods->currency}}</span></td>
                                         <td class="text-right">{{$rate->total}}</td>
                                     </tr>
                                     </tfoot>
@@ -285,122 +299,180 @@
                                     </script>
                                 @endif
                                 <div class="clearfix"></div>
+                            </form>
                         </div>
+
                     </div>
                 </div>
-
-                {{--COMMODITY FORM RIGHT CARD--}}
-                    @if($quote->status_id == 3)
-                        <section id="image-gallery" class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Image gallery</h4>
-                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                                <div class="heading-elements">
-                                    <ul class="list-inline mb-0">
-                                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                        <li><a data-action="close"><i class="ft-x"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <div class="card-text">
-                                        <p>Image gallery grid with photo-swipe integration. Display images gallery
-                                            in 4-2-1 columns and photo-swipe provides gallery features.</p>
-                                    </div>
-                                </div>
-                                <div class="card-body  my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
-
-                                    <div class="row">
-                                        @foreach($docu as $document)
-                                            <figure class="col-lg-3 col-md-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                                                <a href="/upload/{{$document->file}}" itemprop="contentUrl" data-size="480x360">
-                                                    <img class="img-thumbnail img-fluid" src="/upload/{{$document->file}}"
-                                                         itemprop="thumbnail" alt="Image description" />
-                                                </a>
-                                            </figure>
-                                        @endforeach
-                                    </div>
-
-                                </div>
-                                <!--/ Image grid -->
-                                <!-- Root element of PhotoSwipe. Must have class pswp. -->
-                                <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <!-- Background of PhotoSwipe.
-                                   It's a separate element as animating opacity is faster than rgba(). -->
-                                    <div class="pswp__bg"></div>
-                                    <!-- Slides wrapper with overflow:hidden. -->
-                                    <div class="pswp__scroll-wrap">
-                                        <!-- Container that holds slides.
-                                        PhotoSwipe keeps only 3 of them in the DOM to save memory.
-                                        Don't modify these 3 pswp__item elements, data is added later on. -->
-                                        <div class="pswp__container">
-                                            <div class="pswp__item"></div>
-                                            <div class="pswp__item"></div>
-                                            <div class="pswp__item"></div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="card">
+                            <div class="content">
+                                <form action="/image-view" id="formSubmit" method="post">
+                                    {{ csrf_field() }}
+                                    {{--LEFT CARD--}}
+                                    @if($quote->goods->shiptypes == 'Import')
+                                        <label><h5><strong>Port of Origin</strong></h5></label>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Company Name</label>
+                                                    <input type="text" value="{{{ isset($consign) && ($quote->status_id == 3) ? $consign->company : '' }}}" class="form-control quote-city" id="company" name="company"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                </div>
+                                            </div>
                                         </div>
-                                        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-                                        <div class="pswp__ui pswp__ui--hidden">
-                                            <div class="pswp__top-bar">
-                                                <!--  Controls are self-explanatory. Order can be changed. -->
-                                                <div class="pswp__counter"></div>
-                                                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-                                                <button class="pswp__button pswp__button--share" title="Share"></button>
-                                                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-                                                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-                                                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-                                                <!-- element will get class pswp__preloader-active when preloader is running -->
-                                                <div class="pswp__preloader">
-                                                    <div class="pswp__preloader__icn">
-                                                        <div class="pswp__preloader__cut">
-                                                            <div class="pswp__preloader__donut"></div>
-                                                        </div>
+                                        <label ><h5><strong>Date of Arrival</strong></h5></label> <hr>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Zip Code</label>
+                                                    <input type="text" value="{{{ isset($consign) && ($quote->status_id == 3) ? $consign->zip : '' }}}" class="form-control quote-city" id="company" name="zip"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <label>Street Address</label>
+                                                    <input type="text" value="{{{ isset($consign) && ($quote->status_id == 3) ? $consign->address : '' }}}" class="form-control quote-city" id="company" name="address"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <label><h5><strong>Delivery Date</strong></h5></label>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Company Name</label>
+                                                    <input type="text" value="{{{ isset($consign) && ($quote->status_id == 3) ? $consign->company : '' }}}" class="form-control quote-city" id="company" name="company"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <label><h5><strong>Delivery Time</strong></h5></label>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Company Name</label>
+                                                    <input type="text" value="{{{ isset($consign) && ($quote->status_id == 3) ? $consign->company : '' }}}" class="form-control quote-city" id="company" name="company"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @elseif($quote->goods->shiptypes == 'Export')
+                                            <label><h5><strong>Port of Loading</strong></h5></label>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Company Name</label>
+                                                        <input type="text" value="{{{ isset($consign) && ($quote->status_id == 3) ? $consign->company : '' }}}" class="form-control quote-city" id="company" name="company"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                                                <div class="pswp__share-tooltip"></div>
+                                            <label ><h5><strong>Collection Point</strong></h5></label> <hr>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div  id="locationField">
+                                                    {!! Form::label('port', 'Origin via Port') !!}
+                                                    <input type="search" id="address-input" value="{{{ $origin->port or old('port') }}}" class="form-control quote-city font-size-small" tabindex = "1" onFocus="geolocate()" name="port"/>
+                                                </div>
                                             </div>
-                                            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-                                            </button>
-                                            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-                                            </button>
-                                            <div class="pswp__caption">
-                                                <div class="pswp__caption__center"></div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    {!! Form::label('zip', 'Zip Code') !!}
+                                                    <input type="text" value="{{{ $origin->zip or old('zip') }}}" class="form-control quote-city disabledInput" tabindex = "1" id="zip" readonly="readonly" name="zip"/>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--/ PhotoSwipe -->
-                        </section>
-                    @else
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    {!! Form::label('country', 'State') !!}
+                                                    <input type="text" value="{{{ $origin->country or old('country') }}}" class="form-control quote-city" tabindex = "1" id="state" readonly="readonly" name="country"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    {!! Form::label('city', 'City') !!}
+                                                    <input type="text" value="{{{ $origin->city or old('city') }}}" class="form-control quote-city" readonly="readonly" tabindex = "1" id="city" name="city"/>
+                                                </div>
+                                            </div>
 
-                        <div class="col-lg-6 col-md-6">
-                            <div class="card card-user" >
-                                <div class="content"><br>
-                                    <h1 class="text-center text-danger">Upload Scanned Documents</h1><br>
-                                    <div class="form-group">
-                                        <div class="file-loading">
-                                            <input id="file-1" type="file" name="file" multiple class="file"  data-overwrite-initial="false" data-min-file-count="2">
                                         </div>
-                                        <input type="submit" id="fileupload" value="Confirm Shipment">
-                                    </div>
-                                </div>
+                                            <label><h5><strong>Pick-up Date</strong></h5></label>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Company Name</label>
+                                                        <input type="text" value="{{{ isset($consign) && ($quote->status_id == 3) ? $consign->company : '' }}}" class="form-control quote-city" id="company" name="company"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <label><h5><strong>Pick-up Time</strong></h5></label>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Company Name</label>
+                                                        <input type="text" value="{{{ isset($consign) && ($quote->status_id == 3) ? $consign->company : '' }}}" class="form-control quote-city" id="company" name="company"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    @endif
 
+
+                                    {{--<div class="text-center">--}}
+                                    {{--<button type="submit" class="btn btn-info btn-fill btn-wd">Update Profile</button>--}}
+                                    {{--</div>--}}
+                                    @if($quote->status_id == 3)
+                                        <script>
+                                            $("input[type=text]").attr('disabled', true);
+                                        </script>
+                                    @endif
+                                    <div class="clearfix"></div>
                             </div>
+
                         </div>
+                    </div>
 
-                        @endif
+                {{--COMMODITY FORM RIGHT CARD--}}
+
+                    <div class="col-lg-12 col-md-12">
+                        <div class="card card-user" >
+                            <div class="content"><br>
+                                <h1 class="text-center text-danger">Upload Scanned Documents</h1><br>
+                                <div class="form-group">
+                                    <div class="file-loading">
+                                        <input id="file-1" type="file" name="file" multiple class="file"  data-overwrite-initial="false" data-min-file-count="2">
+                                    </div>
+                                    <input type="submit" id="fileupload" value="Confirm Shipment">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
 
 
-
-
+                </form>
 
                 </div>
-            </form>
             </div>
         </div>
     </div>

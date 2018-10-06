@@ -9,6 +9,9 @@ use App\Commodity;
 use App\Export;
 use App\Import;
 use App\Notifications\QuoteSent;
+use App\Notifications\SMSNotification;
+use App\Product;
+use App\Services\Shipping;
 use App\Session;
 use App\User;
 use GuzzleHttp;
@@ -22,6 +25,7 @@ use Illuminate\Http\Request;
 
 
 use App\Http\Requests;
+use Shippo_CarrierAccount;
 
 class QuotesController extends Controller
 {
@@ -85,6 +89,7 @@ class QuotesController extends Controller
         $peso = $base->request('GET', 'api/latest?access_key=' . env('FIXER_API_KEY') . '&symbols=PHP&format=1');
         $peso_data = json_decode($peso->getBody()->getContents());
         $data = Transaction::with('origin','destination','goods','quotation')->findOrFail($id);
+        $client = Client::findOrFail($data->client_id);
         $value = $data->goods->insurance;
         foreach ($response_data as $currency) {
             $rates[] = $currency;
@@ -98,6 +103,43 @@ class QuotesController extends Controller
         }else{
             $insurance = 0.02;
         }
+
+//        $product = array(
+//            'length'=> '100',
+//            'width'=> '150',
+//            'height'=> '200',
+//            'distance_unit'=> 'cm',
+//            'weight'=> '12',
+//            'mass_unit'=> 'kg',
+//        );
+//        $user = array(
+//            'name' => $client->lastName,
+//            'company' => $client->company,
+//            'street1' => $data->origin->port,
+//            'city' => $data->origin->city,
+//            'state' => '',
+//            'zip' => $data->origin->zip,
+//            'country' => $data->origin->country,
+//            'phone' => $client->phone,
+//            'email' => $client->email,
+//        );
+//        $address = array(
+//            'object_purpose' => 'QUOTE',
+//            'name' => 'Eric Barnes',
+//            'company' => 'dotdev inc.',
+//            'street1' => '814 Mission St.',
+//            'city' => 'San Francisco',
+//            'state' => 'CA',
+//            'zip' => '94105',
+//            'country' => 'US',
+//            'phone' => '+1 555 341 9393',
+//            'email' => 'shippotle@goshippo.com',
+//        );
+//        $insure = $data->goods->insurance;
+//        $curr = $data->goods->currency;
+//
+//        $rates = new Shipping();
+//        $ratess = $rates->rates($user, $product, $address, $insure, $curr);
 
 
         $totVal = $value * $insurance;
@@ -133,6 +175,7 @@ class QuotesController extends Controller
             $import->importRates($type, $mode, $brate);
             $stdrd = $import->where('standard', 1)->where($term,1)->where('oceanfreight', 1)->get();
             $stdrd1 =  $import->where('standard', 1)->where($term,1)->where('oceanfreight', 1)->pluck('particulars',$mode);
+            $stdrd2 =  $import->where('standard', 1)->where($term,0)->where('oceanfreight', 1)->pluck('particulars', $mode);
             $nonstdrd = $import->where('standard', 0)->where($term,1)->where('oceanfreight', 1)->pluck('particulars','particulars');
         }
         if(($mode) == 'Air'  && ($type) == 'Export'){
@@ -140,6 +183,7 @@ class QuotesController extends Controller
             $export->rateCharge($type, $mode, $brate);
             $stdrd = $export->where('standard', 1)->where($term,1)->where('airfreight', 1)->get();
             $stdrd1 =  $export->where('standard', 1)->where($term,1)->where('airfreight', 1)->pluck('particulars',$mode);
+            $stdrd2 =  $export->where('standard', 1)->where($term,0)->where('airfreight', 1)->pluck('particulars', $mode);
             $nonstdrd = $export->where('standard', 0)->where($term,1)->where('airfreight', 1)->pluck('particulars','particulars');
         }
         if(($mode) == 'Air'  && ($type) == 'Import'){
@@ -147,10 +191,13 @@ class QuotesController extends Controller
             $import->importRates($type, $mode, $brate);
             $stdrd = $import->where('standard', 1)->where($term,1)->where('airfreight', 1)->get();
             $stdrd1 =  $import->where('standard', 1)->where($term,1)->where('airfreight', 1)->pluck('particulars',$mode);
+            $stdrd2 =  $import->where('standard', 1)->where($term,0)->where('airfreight', 1)->pluck('particulars', $mode);
             $nonstdrd = $import->where('standard', 0)->where($term,1)->where('airfreight', 1)->pluck('particulars','particulars');
         }
+//        echo Shippo_CarrierAccount::all();
+//        return $ratess;
 
-        return view('admin.quotation.create-quote', compact('stdrd','stdrd1','stdrd2','nonstdrd','mode','currency','data','client','pesos','ref_id'));
+        return view('admin.quotation.create-quote', compact('stdrd','stdrd1','stdrd2','nonstdrd','mode','currency','data','client','pesos','ref_id', 'ratess'));
     }
 
 
@@ -184,21 +231,30 @@ class QuotesController extends Controller
             );
 
         }
-        for($i=0;$i<count($data['noncharge']);$i++){
+        if(isset($data['noncharge'])){
+        for($i=0;$i<count($data['noncharge']);$i++) {
             $curr = $request->currency;
             $peso = $request->pesoRate;
             $convert = $request->nonamount[$i];
-            $result = $ch->convertRate($curr,$peso, $convert);
+            $result = $ch->convertRate($curr, $peso, $convert);
 
-            $noncharges[] = array('id'=>($i+1),
-                'charge'=>$request->noncharge[$i],
-                'amount'=>$result,
+            $noncharges[] = array('id' => ($i + 1),
+                'charge' => $request->noncharge[$i],
+                'amount' => $result,
             );
-
+            }
+            $this->noncharges = $noncharges;
+            $x = 0;
+            foreach($noncharges as $itm){
+                $x++;
+                $nonsession = new Session();
+                $nonsession->fill($itm);
+                $request->session()->put('nonsession'.$x, $nonsession);
+            }
         }
         $this->data = $data;
         $this->charges = $charges;
-        $this->noncharges = $noncharges;
+
         $this->terms = $terms;
 
         $x = 0;
@@ -208,13 +264,7 @@ class QuotesController extends Controller
             $session->fill($item);
             $request->session()->put('session'.$x, $session);
         }
-        $x = 0;
-        foreach($noncharges as $itm){
-            $x++;
-            $nonsession = new Session();
-            $nonsession->fill($itm);
-            $request->session()->put('nonsession'.$x, $nonsession);
-        }
+
         $y = 0;
         foreach($terms as $items){
             $y++;
@@ -270,18 +320,19 @@ class QuotesController extends Controller
      * @param Request $request
      */
     public function sendQuote(Request $request){
+
         $alldata = $request->session()->get('session');
         $transact = new Transaction();
         $transaction = $transact->findOrFail($alldata['id']);
-        $transact->status_id = 2;
-        $transact->save();
+        $transaction->status_id = 2;
+        $transaction->update();
         $invoice = $transaction->invoices()->create([]);
 
         if($request->session()->get('session1')){
-            for($x = 1 ; $x<count(sess); $x++){
+            for($x = 1 ; $x<20; $x++){
                 if($request->session()->get('session'.$x)){
                     $session = $request->session()->get('session'.$x);
-                    $invoice = $invoice->addAmountExclTax(round($session->amount), $session->charge, 0, $alldata['taxes']);
+                    $invoice = $invoice->addAmountExclTax($session->amount, $session->charge, 0, $alldata['taxes']);
                     $rates[] = array('id'=>($x),
                         'charge'=>$session->charge,
                         'amount'=>$session->amount,
@@ -298,11 +349,7 @@ class QuotesController extends Controller
             }
         }
 
-
-
-
         Notification::route('mail', $alldata['mail'])->notify(new QuoteSent($alldata, $rates, $terms, $invoice));
-
     }
 
 
@@ -360,6 +407,15 @@ class QuotesController extends Controller
         $quo = Transaction::with('destination','origin','quotation','goods', 'consignee')->where('status_id', 3)->get();
         return view('admin.quotation.approved',compact('quo'));
     }
+
+    public function sendSms($id) {
+
+        $client = Client::findOrFail($id);
+        $client->phone_number = $client->phone;
+        $client->notify(new SMSNotification($client));
+
+    }
+
 
 
 }

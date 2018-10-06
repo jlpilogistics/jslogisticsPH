@@ -83,7 +83,7 @@
                                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                                 <div class="input-group">
                                     <input type='text' name="editType" class="form-control tariff" id="type" value=""
-                                    />
+                                    readonly/>
                                 </div><br>
                                 <div class="input-group">
                                     <input type='text' name="editTax" class="form-control" id="tax" value=""

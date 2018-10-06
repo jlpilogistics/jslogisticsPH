@@ -39,15 +39,12 @@
     Route::post('/admin/logout','Auth\AdminLoginController@logout')->name('admin.logout');
 
 
-
-
     Route::resource('duties', 'tarffRateController');
     Route::resource('/quotations', 'QuotesController');
     Route::resource('drivers', 'DriversController');
     Route::resource('vehicles', 'VehiclesController');
     Route::get('monitor', 'monitorController@index');
     Route::get('client-lists', 'BillingController@index');
-    Route::get('profile', 'BillingController@clientprofile');
     Route::get('invoice', 'BillingController@create');
     Route::resource('users-admin', 'Auth\UsersController');
     Route::get('admin-registration', 'RegTrial@index');//New
@@ -55,8 +52,6 @@
     Route::get('/users/signup', 'Auth\RegisterController@showSignup')->name('user.register');
     Route::post('/users/signup', 'Auth\RegisterController@register')->name('user.register.submit');
     Route::get('/user/verify/{token}', 'Auth\RegisterController@verifyUser');
-
-
 
 
 //Route::get('login',function(){
@@ -75,7 +70,9 @@ Route::get('imports', 'CategoryController@import');
 Route::get('exports', 'CategoryController@export');
 Route::get('domestics', 'CategoryController@domestic');
 Route::get('approved', 'QuotesController@approved');
-Route::get('monitor', 'monitorController@index');
+Route::get('monitor-export', 'monitorController@index');
+Route::get('monitor-import', 'monitorController@importMonitor');
+Route::get('monitor-domestic', 'monitorController@domesticMonitor');
 Route::get('client-lists', 'BillingController@index');
 Route::get('profile', 'BillingController@clientprofile');
 Route::get('invoice', 'BillingController@create');
@@ -122,6 +119,7 @@ Route::post('/image-view','Client\HomeController@finish');
 Route::post('/image-upload/{id}','Client\HomeController@imageUpload');
 Route::get('/charges/Export/{id}/{mode}', 'QuotesController@findcharge');
 Route::get('/charges/Import/{id}/{mode}', 'QuotesController@findImport');
+Route::get('/send/sms/notication/{id}', 'QuotesController@sendSms')->name('quotations.send-sms');
 
 
 
@@ -130,3 +128,7 @@ Route::get('/charges/Import/{id}/{mode}', 'QuotesController@findImport');
 //Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/shipment', function (){
+    return view('admin.shipment.index');
+})->middleware('auth:admin');

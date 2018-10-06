@@ -72,18 +72,9 @@ class LoginController extends Controller
         }
         return redirect()->intended($this->redirectPath());
     }
-    public function login(Request $request){
-        $this->validate($request, [
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
 
-        if(Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)){
-            return redirect()->intended(route('user.index'));
-        }
 
-        return redirect()->back()->withInput($request->only('email', 'remember'));
-    }
+
 
 
 }
