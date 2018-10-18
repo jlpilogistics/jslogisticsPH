@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/Main';
+    protected $redirectTo = '/client-request';
 
 
     public function showLoginForm()

@@ -1,4 +1,4 @@
-@extends('admin.users.assets')
+@extends('admin.partials.assets')
         <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 <head>

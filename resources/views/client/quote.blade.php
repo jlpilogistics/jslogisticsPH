@@ -344,7 +344,7 @@
                                                             {!! Form::select('dimused[][dimused]', array('cm'=>'cm', 'inch'=>'inch'), Session::get('quote'.$x)->dimused,['class'=>'quote-service drop form-control calculate_dims', 'id'=>'transact', 'style'=>'width: 80px']) !!}
                                                         </td>
                                                         <td>
-                                                            <input type="number" value="{{Session::get('quote'.$x)->quantity}}" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="quantity[][quantity]"></td>
+                                                            <input type="number" value="{{Session::get('quote'.$x)->quantity}}" class="form-control bfh-number dimitemfld calculate_dims quantity" min="0" name="quantity[][quantity]"></td>
                                                         <td>
                                                             {{--<select name="package[]package" class="form-control">--}}
                                                             {{--@foreach ($packages as $package)--}}
@@ -354,17 +354,22 @@
                                                             {!! Form::select('package[][package]', $packages, Session::get('quote'.$x)->package,['class'=>'quote-service drop form-control calculate_dims', 'id'=>'transact', 'style'=>'width: 80px']) !!}
                                                         </td>
                                                         <td>
-                                                            <input type="number" value="{{Session::get('quote'.$x)->length}}" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="length[][length]"></td>
+                                                            <input type="number" value="{{Session::get('quote'.$x)->length}}" class="form-control bfh-number dimitemfld calculate_dims length" min="0" name="length[][length]"></td>
                                                         <td>
-                                                            <input type="number" value="{{Session::get('quote'.$x)->width}}" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="width[][width]"></td>
+                                                            <input type="number" value="{{Session::get('quote'.$x)->width}}" class="form-control bfh-number dimitemfld calculate_dims width" min="0" name="width[][width]"></td>
                                                         <td>
-                                                            <input type="number" value="{{Session::get('quote'.$x)->height}}" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="height[][height]"></td>
+                                                            <input type="number" value="{{Session::get('quote'.$x)->height}}" class="form-control bfh-number dimitemfld calculate_dims height" min="0" name="height[][height]"></td>
                                                         <td>
-                                                            <input type="number" value="{{Session::get('quote'.$x)->weight}}" class="form-control bfh-number dimitemfld calculate_dims" min="0" name="weight[][weight]">
+                                                            <input type="number" value="{{Session::get('quote'.$x)->weight}}" class="form-control bfh-number dimitemfld calculate_dims weight" min="0" name="weight[][weight]">
                                                         </td>
+                                                        <td hidden><input type="hidden" value="{{old('charge')}}" tabindex="1" name="charge" class="charge"></td>
+                                                        <td hidden> <input type="hidden" value="{{old('volumetric')}}" tabindex="1" name="volumetric" class="volumetric"></td>
+                                                        <td hidden> <input type="hidden" value="{{old('cbm')}}" tabindex="1" name="cbm" class="cbm"></td>
+                                                        <td hidden> <input type="hidden" value="{{old('cbf')}}" tabindex="1" name="cbf" class="cbf"></td>
                                                         <td>
-                                                            <a href='javascript:void(0);'  class='remove'><button type="button" class="btn btn-danger2 btn-sm deldimrow " style="width: 40px; display: none"><i class="fa fa-remove"></i></button></a>
+                                                            <a href='javascript:void(0);'  class='remove'><button type="button" class="btn btn-danger2 btn-sm deldimrow " style="width: 40px"><i class="fa fa-remove"></i></button></a>
                                                         </td>
+
 
                                                     </tr>
                                                 @endif
@@ -379,7 +384,7 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input type="number" value="{{old('quantity[][quanity]')}}" class="form-control bfh-number dimitemfld calculate_dims quantity" tabindex="1" min="0" name="quantity[][quantity]"></td>
+                                                    <input type="number" value="{{old('quantity[][quantity]')}}" class="form-control bfh-number dimitemfld calculate_dims quantity" tabindex="1" min="0" name="quantity[][quantity]"></td>
                                                 <td>
                                                     {!! Form::select('package[][package]', $packages, null,['class'=>'quote-service drop form-control calculate_dims', 'id'=>'transact', 'style'=>'width: 80px','tabindex'=>1]) !!}
                                                 </td>
@@ -394,6 +399,8 @@
                                                 </td>
                                                 <td hidden><input type="hidden" value="{{old('charge')}}" tabindex="1" name="charge" class="charge"></td>
                                                 <td hidden> <input type="hidden" value="{{old('volumetric')}}" tabindex="1" name="volumetric" class="volumetric"></td>
+                                                <td hidden> <input type="hidden" value="{{old('cbm')}}" tabindex="1" name="cbm" class="cbm"></td>
+                                                <td hidden> <input type="hidden" value="{{old('cbf')}}" tabindex="1" name="cbf" class="cbf"></td>
                                                 <td>
                                                     <a href='javascript:void(0);'  class='remove'><button type="button" class="btn btn-danger2 btn-sm deldimrow " style="width: 40px"><i class="fa fa-remove"></i></button></a>
                                                 </td>
@@ -409,16 +416,23 @@
                         </div>
                         <label ><h5><strong>TOTAL WEIGHT</strong></h5></label>
                         <div class="row">
-                            <div class="col-md-3 col-md-offset-3">
+                            <div class="col-md-2 col-md-offset-2">
                                 <div class="form-group">
                                     {!! Form::label('aw', 'Actual Weight (kg)') !!}
                                     <input type="number" tabindex="1" value="{{old('aweight')}}" readonly class="form-control bfh-number chargee" min="0" name="aweight">
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     {!! Form::label('vw', 'Volume Weight (kg)') !!}
                                     <input type="number" tabindex="1" value="{{old('avolume')}}" readonly class="form-control bfh-number volumetrics" min="0" name="avolume">
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('vw', 'Total Cubic Meter (cbm)') !!}
+                                    <input type="number" tabindex="1" value="{{old('cbm')}}" readonly class="form-control bfh-number cubic" min="0" name="acbm">
 
                                 </div>
                             </div>
@@ -454,8 +468,7 @@
                             </div>
                         @endif
                         <div class="order-wrap" style="padding-bottom: 50px; float: right;">
-                            <a type="button" href="/products/create-step2" class="update-cart">Previous</a>
-                            <button type="submit" class="update-cart">Next</button>
+                            <button type="submit" class="btn btn-primary">Next</button>
                         </div>
                     </div>
                 </div>

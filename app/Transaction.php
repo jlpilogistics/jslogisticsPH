@@ -37,10 +37,10 @@ class Transaction extends Model
         return $this->hasMany('App\Quotation');
     }
     public function goods(){
-        return $this->hasOne('App\Goods');
+        return $this->hasOne(   'App\Goods');
     }
     public function clients(){
-            return $this->belongsTo('App\Client');
+        return $this->belongsTo('App\Client');
     }
     public function consignee(){
         return $this->belongsTo('App\Consignee');
@@ -51,8 +51,12 @@ class Transaction extends Model
     public function documents(){
         return $this->hasMany('App\Document');
     }
-
-
+    public function import_haulage(){
+        return $this->hasOne('App\Ihaulage');
+    }
+    public function export_haulage(){
+        return $this->hasOne('App\Ehaulage');
+    }
 
 
 

@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Client;
 use App\Client;
 use App\Consignee;
 use App\Document;
+use App\Ehaulage;
+use App\Exhaulage;
+use App\Haulage;
+use App\Ihaulage;
+use App\Monitor;
 use App\Transaction;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
@@ -13,6 +18,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\In;
 use SanderVanHooft\Invoicable\Invoice;
 
@@ -71,11 +77,12 @@ class HomeController extends Controller
         try {
             $this->authorizeForUser(Auth::user(), 'confirm', [$client]);
             $clients = Client::findOrFail($client)->first();
+
             $request = Transaction::with('destination','origin','quotation','goods','invoices','consignee')->where('client_id', $clients->id)->where('status_id', '!=',1)->get();
-
-
+            $latest = Transaction::with('destination','origin','quotation','goods','invoices','consignee')->where('client_id', $clients->id)->latest('updated_at')->first();
+            $monitor = Monitor::where('transaction_id', $latest->id)->get();
 //            return $request;
-            return view('client.clientStatus', compact('request', 'clients'));
+            return view('client.clientStatus', compact('request', 'clients', 'monitor', 'latest'));
         } catch (AuthorizationException $e) {
             return $e;
         }
@@ -154,8 +161,7 @@ class HomeController extends Controller
 
 
     public function finish(Request $request){
-
-        $consignee = Consignee::create([
+        $consignees = Consignee::create([
             'firstName' => $request->fname,
             'lastName' => $request->lname,
             'company' => $request->company,
@@ -167,10 +173,37 @@ class HomeController extends Controller
             'zip' => $request->zip,
             'postal' => $request->postal,
         ]);
+        $transact = Transaction::findOrFail($request->transactId);
+        $transact->consignee_id = $consignees->id;
+        $transact->save();
 
-            $transact = Transaction::findOrFail($request->transactId);
-            $transact->consignee_id = $consignee->id;
-            $transact->save();
+        if($request->shiptype == "Import") {
+
+            $consignee = new Ihaulage();
+            $consignee->unloading = $request->conunload;
+            $consignee->eta = $request->coneta;
+            $consignee->delivery_date = $request->condate;
+            $consignee->delivery_time = $request->contime;
+            $consignee->transaction_id = $transact->id;
+            $consignee->save();
+        }
+        if($request->shiptype == "Export") {
+            $consign = new Ehaulage();
+            $consign->loading = $request->conload;
+            $consign->zip = $request->conzip;
+            $consign->street = $request->constreet;
+            $consign->city = $request->concity;
+            $consign->state = $request->constate;
+            $consign->pickup_date = $request->condates;
+            $consign->pickup_time = $request->contimes;
+            $consign->transaction_id = $transact->id;
+            $consign->save();
+        }
+
+        $transact->status_id = 3;
+        $transact->update();
+
+        return redirect('/Main');
 
 
     }
@@ -188,8 +221,6 @@ class HomeController extends Controller
     {
         return view('client.receivedBilling');
     }
-
-
 
 }
 

@@ -11,4 +11,8 @@ class Vehicle extends Model
       'avail',
       'driver_id'
     ];
+
+    public function driver(){
+        return $this->belongsTo('App\Driver');
+    }
 }

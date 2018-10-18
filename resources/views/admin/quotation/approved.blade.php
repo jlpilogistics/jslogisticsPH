@@ -7,12 +7,10 @@
     <meta name="description" content="Modern admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities with bitcoin dashboard.">
     <meta name="keywords" content="admin template, modern admin template, dashboard template, flat admin template, responsive admin template, web app, crypto dashboard, bitcoin dashboard">
     <meta name="author" content="PIXINVENT">
-    <title>Basic DataTables - Modern Admin - Clean Bootstrap 4 Dashboard HTML Template + Bitcoin
-        Dashboard
+    <title>Admin-Jexsan Logistics
     </title>
-    <link rel="apple-touch-icon" href="{{URL::asset('app-assets/images/ico/apple-icon-120.png')}}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{URL::asset('app-assets/images/ico/favicon.ico')}}">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Quicksand:300,400,500,700"
+    <link rel="apple-touch-icon" href="{{URL::asset('app-assets/images/logo/Jexsan.png')}}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{URL::asset('app-assets/images/logo/Jexsan.png')}}">  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Quicksand:300,400,500,700"
           rel="stylesheet">
     <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css"
           rel="stylesheet">
@@ -101,7 +99,7 @@
                                         <td>{{$client->firstName}} {{$client->lastName}}</td>
                                         <td>{{$quotations->consignee->firstName}} {{$quotations->consignee->lastName}}</td>
                                         <td>{{$quotations->consignee->address}}, {{$quotations->consignee->city}}, {{$quotations->consignee->country}} {{$quotations->consignee->zip}}</td>
-                                        <td><button type="button" onclick="window.location='{{ route('quotations.show', $quotations->id ) }}'" class="btn btn-success mr-1 mb-1">View Request</button></td>
+                                        <td><button type="button" onclick="window.location='{{ route('shipment.index', [$client->id, $quotations->transact]) }}'" class="btn btn-success mr-1 mb-1">Shipment Order</button></td>
                                     </tr>
                                 @endforeach
                                 </tbody>

@@ -64,7 +64,11 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+
+
         return Validator::make($data, [
+
+
             'form-email' => 'required|string|email|max:255|unique:users,email',
             'form-password' => 'required|string|min:6|confirmed',
             'form-first-name' => 'required|string|max:255',
@@ -106,6 +110,7 @@ class RegisterController extends Controller
 
 
         $user = User::create([
+
             'name' => $data['form-first-name'],
             'email' => $data['form-email'],
             'password' => Hash::make($data['form-password']),
@@ -137,6 +142,9 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
+
+
+
         $this->validator($request->all());
 
         event(new Registered($user = $this->create($request->all())));

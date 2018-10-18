@@ -35,11 +35,10 @@
             </div>
 
             <ul class="nav nav-sidebar list-group">
-                <li class="list-group-item" style="padding: -10px -10px;">
-
-                    <a href="{{route('account',$clients->id)}}">
-                        <i class="ft-user-check"></i>
-                        <p> My Profile</p>
+                <li class="list-group-item">
+                    <a href="/client-request/">
+                        <i class="ft-edit-3"></i>
+                        <p>Request Quotation</p>
                     </a>
                 </li>
                 <li class="list-group-item" >
@@ -54,12 +53,16 @@
                         <p>Received Billing</p>
                     </a>
                 </li>
-                <li class="list-group-item">
-                    <a href="/client-request/">
-                        <i class="ft-edit-3"></i>
-                        <p>Request Quotation</p>
+
+                <li class="list-group-item" style="padding: -10px -10px;">
+
+                    <a href="{{route('account',$clients->id)}}">
+                        <i class="ft-user-check"></i>
+                        <p> My Profile</p>
                     </a>
                 </li>
+
+
 
             </ul>
         </div>

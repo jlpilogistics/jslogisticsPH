@@ -19,7 +19,7 @@
           <h4 class="modal-title">Modal Header</h4>
         </div>
         <div class="modal-body">
-          <form action="Addmaintenance" method="post" id="frmMain">
+          <form action="/maintenance" method="post" id="frmMain">
       <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="col-lg-4 col-sm-4">
           <div class="form-group">  

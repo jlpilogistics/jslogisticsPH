@@ -19,105 +19,107 @@
                                 <thead>
                                 <tr>
                                     <th>Date of Request</th>
-                                    <th>Type of Shipment</th>
-                                    <th>Mode of Shipment</th>
-                                    <th>Origin</th>
-                                    <th>Destination</th>
+                                    <th>Unloading Port Area</th>
+                                    <th>Estimated Time of Arrival</th>
+                                    <th>Delivery Date</th>
+                                    <th>Delivery Time</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {{--Data will be coming from approved shipment--}}
+                                {{--Data will be coming from haulage--}}
                                 <tr>
-                                    <td>rewrwerwer</td>
-                                    <td>dgretewrwe</td>
-                                    <td>243242</td>
-                                    <td>rewrw3</td>
-                                    <td>12134</td>
-                                    <td>
-                                        <div class="col-lg-4 col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                        data-backdrop="false" data-target="#info">
-                                                    Schedule Now
-                                                </button>
-                                                <!-- Modal -->
-                                                <div class="modal fade text-left" id="info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel11"
-                                                     aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header bg-info white">
-                                                                <h4 class="modal-title white" id="myModalLabel11">Schedule Import Haulage</h4>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <div class="card-content collapse show">
-                                                                    <div class="card-content">
-                                                                        <div class="table-responsive">
-                                                                            <table class="table table-borderless mb-0">
-                                                                                <tbody>
-                                                                                <tr>
-                                                                                    <td>
-                                                                                        <h4>Shipper: </h4>
-                                                                                    </td>
-                                                                                    <td class="type-info text-right">Gulf Oil</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>
-                                                                                        <h4>Commodity</h4>
-                                                                                    </td>
-                                                                                    <td class="type-info text-right">BAGS</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>
-                                                                                        <h4>ETA</h4>
-                                                                                    </td>
-                                                                                    <td class="type-info text-right">9:00am</td>
-                                                                                </tr>
+                                @foreach($haulage as $imp)
+                                    <tr>
+                                        <td>{{$imp->created_at}}</td>
+                                        <td>{{$imp->import_haulage->unloading}}</td>
+                                        <td>{{$imp->import_haulage->eta}}</td>
+                                        <td>{{$imp->import_haulage->delivery_date}}</td>
+                                        <td>{{$imp->import_haulage->delivery_time}}</td>
+                                        <td>
+                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                            data-backdrop="false" data-target="#info">
+                                                        Schedule Now
+                                                    </button>
+                                                    <!-- Modal -->
+                                                    <div class="modal fade text-left" id="info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel11"
+                                                         aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header bg-info white">
+                                                                    <h4 class="modal-title white" id="myModalLabel11">Schedule Import Haulage</h4>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="card-content collapse show">
+                                                                        <div class="card-content">
+                                                                            <div class="table-responsive">
+                                                                                <table class="table table-borderless mb-0">
+                                                                                    <tbody>
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <h4>Shipper: </h4>
+                                                                                        </td>
+                                                                                        <td class="type-info text-right">Gulf Oil</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <h4>Commodity</h4>
+                                                                                        </td>
+                                                                                        <td class="type-info text-right">BAGS</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <h4>ETA</h4>
+                                                                                        </td>
+                                                                                        <td class="type-info text-right">9:00am</td>
+                                                                                    </tr>
 
-                                                                                </tbody>
-                                                                            </table>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
 
-                                                                    <div class="card-body card-dashboard ">
-                                                                        <div class="input-group">
-                                                                            <div class="input-group-prepend">
-                                                                                <span class="input-group-text"><span class="la la-calendar-o"></span></span></div>
-                                                                            <input type='text' class="form-control pickadate" placeholder="Select a date"
-                                                                            />
-                                                                        </div><br>
-                                                                        <div class="input-group">
-                                                                            <div class="input-group-prepend">
-                                                                                <span class="input-group-text"><span class="ft-clock"></span></span></div>
-                                                                            <input type='text' class="form-control pickatime" placeholder="Select a time"
-                                                                            />
+                                                                        <div class="card-body card-dashboard ">
+                                                                            <div class="input-group">
+                                                                                <div class="input-group-prepend">
+                                                                                    <span class="input-group-text"><span class="la la-calendar-o"></span></span></div>
+                                                                                <input type='text' class="form-control pickadate" placeholder="Select a date"
+                                                                                />
+                                                                            </div><br>
+                                                                            <div class="input-group">
+                                                                                <div class="input-group-prepend">
+                                                                                    <span class="input-group-text"><span class="ft-clock"></span></span></div>
+                                                                                <input type='text' class="form-control pickatime" placeholder="Select a time"
+                                                                                />
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Close</button>
-                                                                <button type="button" class="btn btn-outline-info">Confirm</button>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Close</button>
+                                                                    <button type="button" class="btn btn-outline-info">Confirm</button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                                 <tfoot>
                                 <tr>
                                     <th>Date of Request</th>
-                                    <th>Type of Shipment</th>
-                                    <th>Mode of Shipment</th>
-                                    <th>Origin</th>
-                                    <th>Destination</th>
+                                    <th>Unloading Port Area</th>
+                                    <th>Estimated Time of Arrival</th>
+                                    <th>Delivery Date</th>
+                                    <th>Delivery time</th>
                                     <th>Action</th>
                                 </tr>
                                 </tfoot>

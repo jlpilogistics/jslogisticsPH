@@ -20,47 +20,42 @@
                                         <thead class=" bg-success white ">
                                         <tr>
                                             <th>Date Requested</th>
-                                            <th>Client</th>
-                                            <th>Quantity</th>
-                                            <th>Status</th>
+                                            <th>Shipper Id</th>
+                                            <th>Shipper Name </th>
+                                            <th>Origin</th>
+                                            <th>Consignee Name</th>
+                                            <th>Destination</th>
+                                            <th>Commodity</th>
+
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tokyo</td>
-                                            <td>63</td>
-                                            <td>2011/07/25</td>
-                                            <td>$170,750</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ashton Cox</td>
-                                            <td>Junior Technical Author</td>
-                                            <td>2009/01/12</td>
-                                            <td>$86,000</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>Cedric Kelly</td>
-                                            <td>Senior Javascript Developer</td>
-                                            <td>2012/03/29</td>
-                                            <td>$433,060</td>
-
-                                        </tr>
-
+                                        @foreach( $quote as $quo)
+                                            <?php
+                                            $client = \App\Client::where('id', $quo->client_id)->first();
+                                            $consignee = \App\Consignee::where('id', $quo->consignee_id)->first();
+                                            ?>
+                                            <tr>
+                                                <td>{{$quo->updated_at}}</td>
+                                                <td>{{$quo->transact}}</td>
+                                                <td>{{$client->firstName}}</td>
+                                                <td>{{$quo->origin->port}}</td>
+                                                <td>{{$quo->consignee_id}}</td>
+                                                <td>{{$quo->destination->dport}}</td>
+                                                <td>{{$quo->goods->goods}}</td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                         <tfoot>
                                         <tr>
                                             <th>Date Requested</th>
-                                            <th>Client</th>
-                                            <th>Quantity</th>
-                                            <th>Status</th>
+                                            <th>Shipper Id</th>
+                                            <th>Shipper Name </th>
+                                            <th>Origin</th>
+                                            <th>Consignee Name</th>
+                                            <th>Destination</th>
+                                            <th>Commodity</th>
+
                                         </tr>
                                         </tfoot>
                                     </table>

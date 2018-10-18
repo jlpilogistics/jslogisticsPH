@@ -6,14 +6,21 @@ use App\Brokerage;
 use App\Charge;
 use App\Client;
 use App\Commodity;
+use App\Consignee;
+use App\Driver;
+use App\Ehaulage;
 use App\Export;
+use App\Ihaulage;
 use App\Import;
+use App\Monitor;
 use App\Notifications\QuoteSent;
 use App\Notifications\SMSNotification;
 use App\Product;
 use App\Services\Shipping;
 use App\Session;
+use App\Status;
 use App\User;
+use App\Vehicle;
 use GuzzleHttp;
 use Mail;
 use Notification;
@@ -232,16 +239,16 @@ class QuotesController extends Controller
 
         }
         if(isset($data['noncharge'])){
-        for($i=0;$i<count($data['noncharge']);$i++) {
-            $curr = $request->currency;
-            $peso = $request->pesoRate;
-            $convert = $request->nonamount[$i];
-            $result = $ch->convertRate($curr, $peso, $convert);
+            for($i=0;$i<count($data['noncharge']);$i++) {
+                $curr = $request->currency;
+                $peso = $request->pesoRate;
+                $convert = $request->nonamount[$i];
+                $result = $ch->convertRate($curr, $peso, $convert);
 
-            $noncharges[] = array('id' => ($i + 1),
-                'charge' => $request->noncharge[$i],
-                'amount' => $result,
-            );
+                $noncharges[] = array('id' => ($i + 1),
+                    'charge' => $request->noncharge[$i],
+                    'amount' => $result,
+                );
             }
             $this->noncharges = $noncharges;
             $x = 0;
@@ -349,7 +356,13 @@ class QuotesController extends Controller
             }
         }
 
+
+        $pdf =  PDF::loadView('admin.billing.invoice', with(['data' => $alldata, 'charges' => $rates, 'terms' => $terms,'invoice'=>$invoice]));
+        ini_set('max_execution_time', 300);
+//        $pdf->download('invoice.pdf');
+//        $pdf->save(storage_path('public/quotations/quote.pdf'));
         Notification::route('mail', $alldata['mail'])->notify(new QuoteSent($alldata, $rates, $terms, $invoice));
+        return redirect('/quotations');
     }
 
 
@@ -404,15 +417,34 @@ class QuotesController extends Controller
 
     public function approved()
     {
-        $quo = Transaction::with('destination','origin','quotation','goods', 'consignee')->where('status_id', 3)->get();
+        $quo = Transaction::with('destination','origin','quotation','goods', 'consignee')->where('status_id', '>=', 3)->get();
         return view('admin.quotation.approved',compact('quo'));
     }
 
     public function sendSms($id) {
-
         $client = Client::findOrFail($id);
         $client->phone_number = $client->phone;
         $client->notify(new SMSNotification($client));
+
+    }
+
+
+    public function shipment($id, $transact){
+        $client = Client::with('transaction')->findOrFail($id);
+        $transaction = Transaction::with('origin','destination','quotation','goods','documents')->where('client_id', $client->id)->where('transact', $transact)->first();
+        $consignee = Consignee::with('transaction')->findOrFail($transaction->consignee_id);
+        $ihaulage = Ihaulage::where('transaction_id',$transaction->id)->first();
+        $ehaulage = Ehaulage::where('transaction_id',$transaction->id)->first();
+        $vehicle = Vehicle::where('avail','Available')->pluck('driver_id','vehicle_model');
+        $vehicles = Vehicle::where('avail','Available')->get();
+        $driver = Driver::where('assigned',0)->pluck('fname','fname');
+        $status = Status::with('transaction')->where('id', '>',$transaction->status_id)->pluck('id','name');
+        $monitor = Monitor::where('transaction_id',$transaction->id)->latest('created_at')->get();
+        $place = Monitor::where('transaction_id',$transaction->id)->latest('created_at')->first();
+
+
+        return view('admin.shipment.index', compact('client','transaction','consignee','ihaulage','ehaulage','vehicle','vehicles','driver','status','monitor','place'));
+
 
     }
 

@@ -6,7 +6,7 @@
     <meta name="description" content="Modern admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities with bitcoin dashboard.">
     <meta name="keywords" content="admin template, modern admin template, dashboard template, flat admin template, responsive admin template, web app, crypto dashboard, bitcoin dashboard">
     <meta name="author" content="PIXINVENT">
-    <title>Account Admin
+    <title>Admin-Jexsan Logistics
     </title>
     <link rel="apple-touch-icon" href="{{URL::asset('app-assets/images/logo/Jexsan.png')}}">
     <link rel="shortcut icon" type="image/x-icon" href="{{URL::asset('app-assets/images/logo/Jexsan.png')}}">
@@ -47,7 +47,7 @@
                     <div class="card-body">
                         <div class="media d-flex">
                             <div class="media-body text-left">
-                                <h3 class="info">{{ App\Goods::where('transaction_id')->count() }}</h3>
+                                <h3 class="info">{{ App\Transaction::where('status_id','=','1')->count() }}</h3>
                                 <h6>Request Quotation</h6>
                             </div>
                             <div>
@@ -65,7 +65,7 @@
                     <div class="card-body">
                         <div class="media d-flex">
                             <div class="media-body text-left">
-                                <h3 class="warning">{{ App\Transaction::where('status_id','=','1')->count() }}</h3>
+                                <h3 class="warning">{{ App\Transaction::where('status_id','=','3')->count() }}</h3>
                                 <h6>Approved Quotation</h6>
                             </div>
                             <div>

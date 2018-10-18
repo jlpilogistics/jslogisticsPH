@@ -44,8 +44,6 @@
                         <div class="caption sfb big_orange clearfix"  data-x="100" data-y="350" data-speed="500" data-start="1900" data-easing="Power4.easeInOut">
                             <h2>Inland Haulage</h2>
                         </div>
-                        <div class="caption lfr medium_grey"  data-x="left" data-y="center" data-speed="300" data-start="2000">
-                        </div>
                     </div>
                 </li>
                 <li data-transition="random" data-slotamount="1">
@@ -56,9 +54,6 @@
                         </div>
                         <div class="caption sfb big_orange clearfix"  data-x="100" data-y="350" data-speed="500" data-start="1900" data-easing="Power4.easeInOut">
                             <h2>Air Freight Services</h2>
-                        </div>
-                        <div class="caption lfr medium_grey" data-x="left" data-y="center" data-speed="300" data-start="2000">
-
                         </div>
                     </div>
                 </li>
@@ -71,15 +66,8 @@
                         <div class="caption sfb big_orange clearfix"  data-x="100" data-y="350" data-speed="500" data-start="1900" data-easing="Power4.easeInOut">
                             <h2>Air Freight Services</h2>
                         </div>
-                        <div class="caption lfr medium_grey"  data-x="left" data-y="center" data-speed="300" data-start="2000">
-
-                        </div>
-
                     </div>
                 </li>
-
-
-
             </ul>
         </div>
     </div>
@@ -178,86 +166,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="testimonial">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="heading">
-                                <span>what people say</span>
-                                <h2>testimonials</h2>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="feedback">
-                        <div class="feedback clearfix">
-                            <div class="feebback-person">
-                                <figure>
-                                    <a href="#"><img class="img-circle" src="{{URL::asset('app/images/person-1.jpg')}}" alt="" /></a>
-                                </figure>
-                            </div>
-                            <div class="feedback-text">
-                                <blockquote class="custom-quote">
-                                    <span class="fa fa-quote-left custom-fa"></span>
-                                    <p>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                                        the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
-                                        and scrambled it to make a type specimen book. It has survived not only five centuries, but
-                                    </p>
-                                    <footer>
-                                        <h6> JOHNATHAN DOE <span>DESIGNER, THEME DESIGNER</span></h6>
-                                    </footer>
-                                </blockquote>
-                            </div>
-                        </div>
-                        <div class="feedback clearfix">
-                            <div class="feebback-person">
-                                <figure>
-                                    <a href="#"><img class="img-circle" src="{{URL::asset('app/images/person-1.jpg')}}" alt="" /></a>
-                                </figure>
-                            </div>
-                            <div class="feedback-text">
-                                <blockquote class="custom-quote">
-                                    <span class="fa fa-quote-left custom-fa"></span>
-                                    <p>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                                        the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
-                                        and scrambled it to make a type specimen book. It has survived not only five centuries, but
-                                    </p>
-                                    <footer>
-                                        <h6> JOHNATHAN DOE <span>DESIGNER, THEME DESIGNER</span></h6>
-                                    </footer>
-                                </blockquote>
-                            </div>
-                        </div>
-                        <div class="feedback clearfix">
-                            <div class="feebback-person">
-                                <figure>
-                                    <a href="#"><img class="img-circle" src="{{URL::asset('app/images/person-1.jpg')}}" alt="" /></a>
-                                </figure>
-                            </div>
-                            <div class="feedback-text">
-                                <blockquote class="custom-quote">
-                                    <span class="fa fa-quote-left custom-fa"></span>
-                                    <p>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                                        the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
-                                        and scrambled it to make a type specimen book. It has survived not only five centuries, but
-                                    </p>
-                                    <footer>
-                                        <h6> JOHNATHAN DOE <span>DESIGNER, THEME DESIGNER</span></h6>
-                                    </footer>
-                                </blockquote>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <!-- Testimonial section ends here -->
-            <!-- Query section starts here -->
-
         </div>
         <!--Section box ends Here -->
     </section>

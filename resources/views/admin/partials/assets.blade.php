@@ -14,6 +14,9 @@
           rel="stylesheet">
     <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css"
           rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{URL::asset('app-assets/vendors/css/forms/icheck/custom.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{URL::asset('app-assets/vendors/css/forms/icheck/icheck.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{URL::asset('app-assets/css/plugins/forms/checkboxes-radios.css')}}">
     <!-- BEGIN VENDOR CSS-->
     <link rel="stylesheet" type="text/css" href="{{URL::asset('app-assets/css/vendors.css')}}">
     <!-- END VENDOR CSS-->
@@ -40,6 +43,7 @@
     <link rel="stylesheet" type="text/css" href="{{URL::asset('app-assets/vendors/css/pickers/pickadate/pickadate.css')}}">
     <link rel="stylesheet" type="text/css" href="{{URL::asset('app-assets/css/plugins/pickers/daterange/daterange.css')}}">
     <!-- EndPickers-->
+    <link rel="stylesheet" type="text/css" href="{{URL::asset('app-assets/vendors/css/extensions/sweetalert.css')}}">
     <!-- Jquery-->
     <link rel="stylesheet" type="text/css" href="{{URL::asset('app-assets/vendors/css/forms/selects/select2.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{URL::asset('app-assets/css/plugins/animate/animate.css')}}">
@@ -72,7 +76,9 @@
     <script src="{{URL::asset('app-assets/vendors/js/forms/icheck/icheck.min.js')}}" type="text/javascript"></script>
     <script src="{{URL::asset('app-assets/js/scripts/forms/checkbox-radio.js')}}" type="text/javascript"></script>
 
-
+    <script src="{{URL::asset('app-assets/vendors/js/vendors.min.js')}}" type="text/javascript"></script>
+    <script src="{{URL::asset('app-assets/vendors/js/forms/icheck/icheck.min.js')}}" type="text/javascript"></script>
+    <script src="{{URL::asset('app-assets/js/scripts/forms/checkbox-radio.js')}}" type="text/javascript"></script>
     <script src="{{URL::asset('app-assets/vendors/js/tables/datatable/datatables.min.js')}}" type="text/javascript"></script>
     <script src="{{URL::asset('app-assets/js/scripts/tables/datatables/datatable-styling.js')}}" type="text/javascript"></script>
     <script src="{{URL::asset('app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js')}}" type="text/javascript"></script>
@@ -98,6 +104,9 @@
     <!-- Modal Script-->
     <script src="{{URL::asset('app-assets/js/scripts/forms/select/form-select2.js')}}" type="text/javascript"></script>
     <script src="{{URL::asset('app-assets/js/scripts/modal/components-modal.js')}}" type="text/javascript"></script>
+    <script src="{{URL::asset('app-assets/js/scripts/extensions/sweet-alerts.js')}}" type="text/javascript"></script>
+    <script src="{{URL::asset('app-assets/vendors/js/extensions/sweetalert.min.js')}}" type="text/javascript"></script>
+
     <script>
         $(document).on('click','.open_modal',function(){
             var url = "duties";
@@ -127,4 +136,8 @@
         });
 
     </script>
+    <script src="{{URL::asset('app-assets/js/scripts/tables/components/table-components.js')}}" type="text/javascript"></script>
+    <script src="{{URL::asset('app-assets/vendors/js/charts/jquery.sparkline.min.js')}}" type="text/javascript"></script>
+    <script src="{{URL::asset('app-assets/vendors/js/forms/toggle/bootstrap-checkbox.min.js')}}" type="text/javascript"></script>
+
 @stop

@@ -65,6 +65,6 @@ class SMSNotification extends Notification
     {
 
         return (new NexmoMessage)
-            ->content('Good day. Thank for considering our company to cater your needs. We have already sent you an email consisting the quote document.');
+            ->content('Good day. We have already sent you a quote to your email valid for 7 days from the date of request. Thank you.');
     }
 }

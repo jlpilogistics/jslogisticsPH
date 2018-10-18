@@ -43,12 +43,12 @@
     <!--Section area starts Here -->
     <section id="section" class="spacetop">
         <!--Section box starts Here -->
-        <div class="section" style="background-image: url('{{url('/app/images/bg1.jpg')}}');background-repeat: no-repeat;background-size: cover">
+        <div class="section" style="background-image: url('{{url('/app/images/img1.jpg')}}');background-repeat: no-repeat;background-size: cover">
             <div class="top-content">
                 <div class="inner-bg">
                     <div class="container">
                         <div class="row">
-                            <div class="col-sm-4" >
+                            <div class="col-sm-6" >
                                 <div class="banner-text"  >
                                     <div class="form-box"  >
                                         {{--<h2  style="position: relative;bottom: 5px; height: 200px; width: 50%;">Sign Up now--}}
@@ -58,10 +58,6 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-1">
-
-                            </div>
-
                             <div class="col-sm-7">
                                 <div class="form-box">
                                     <div class="form-top">

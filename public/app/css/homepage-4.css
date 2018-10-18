@@ -135,7 +135,7 @@
 	margin: 0 auto;
 }
 .bullet {
-	background: url("../images/pagination-2.png") center top no-repeat;
+	background: url("../images/use.jpeg") center top no-repeat;
 	background-size: 100% 100%;
 	display: block;
 	float: left;
@@ -147,11 +147,11 @@
 	cursor: pointer;
 }
 .bullet.first {
-	background: url("../images/pagination-1.png") center top no-repeat;
+	background: url("../images/use.jpeg") center top no-repeat;
 	background-size: 100% 100%;
 }
 .bullet.last {
-	background: url("../images/pagination-3.png") center top no-repeat;
+	background: url("../images/use.jpeg") center top no-repeat;
 	background-size: 100% 100%;
 	margin-right: 0;
 }

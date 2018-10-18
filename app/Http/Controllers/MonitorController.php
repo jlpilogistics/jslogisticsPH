@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Driver;
+use App\Transaction;
 use Illuminate\Http\Request;
 
 class MonitorController extends Controller
@@ -19,16 +20,29 @@ class MonitorController extends Controller
     }
     public function index()
     {
-        $tasks = Driver::all();
+        $tasks =Transaction::whereHas('goods', function ($query){$query->where('shiptypes','=','Export');
+        })->with('destination','origin','quotation','goods', 'consignee')->get();
+
         return view('admin.monitor.monitor',compact('tasks'));
     }
     public function importMonitor()
     {
-        return view('admin.monitor.ImportMonitor');
+
+        $import =Transaction::whereHas('goods', function ($query){$query->where('shiptypes','=','Import');
+        })->with('destination','origin','quotation','goods', 'consignee')->get();
+        return view('admin.monitor.ImportMonitor',compact('import'));
     }
     public function domesticMonitor()
     {
-        return view('admin.monitor.DomesticMonitor');
+        $domestic =Transaction::whereHas('goods', function ($query){$query->where('shiptypes','=','Import');
+        })->with('destination','origin','quotation','goods', 'consignee')->get();
+        return view('admin.monitor.DomesticMonitor',compact('domestic'));
+    }
+
+    public function viewInventory()
+    {
+        $transaction = Transaction::with('origin','destination','quotation','goods','documents')->get();
+       return view('admin.shipment.inventory', compact('transaction'));
     }
     /**
      * Show the form for creating a new resource.

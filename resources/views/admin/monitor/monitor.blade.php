@@ -17,6 +17,7 @@
               <div class="card-body card-dashboard">
                 <table class="table table-striped table-bordered zero-configuration">
                   <thead>
+
                   <tr>
                     <th>Client No.</th>
                     <th>Commodity</th>
@@ -27,13 +28,17 @@
                   </tr>
                   </thead>
                   <tbody>
+                  @foreach($tasks as $export)
+                    <?php
+                            $client = \App\Client::where('id',$export->client_id)->first();
+                    $consignee = \App\Consignee::where('id',$export->client_id)->first();
+                    ?>
                   <tr>
-                    <td>Tiger Nixon</td>
-
-                    <td>Edinburgh</td>
-                    <td>61</td>
-                    <td>2011/04/25</td>
-                    <td>Cebu port</td>
+                    <td>{{$export->client_id}}</td>
+                    <td>{{$export->goods->goods}}</td>
+                    <td>{{$export->destination->deta}}</td>
+                    <td>{{$export->destination->dcountry}}</td>
+                    <td>{{$export->status_id}}</td>
                     <td>
                       <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="form-group">
@@ -107,7 +112,7 @@
 
                     </td>
                   </tr>
-
+  @endforeach
 
                   </tbody>
                   <tfoot>

@@ -12,9 +12,11 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-0">
             <div class="panel panel-default">
-                <div class="panel-heading">Maintenance Record</div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-header"><h2><b>Maintenance Record</b></h2></div>
                 <div class="panel-body">
-                    <table class="table">
+                    <table class="table table-bordered">
 
                         <tr>
                             <th>Date</th>
@@ -27,7 +29,7 @@
                             <td>{{$main->date}}</td>
                             <td>{{$main->description}}</td>
                             <td>{{$main->vModel}}</td>
-                            <td>{{$main->total}}</td>
+                            <td>{{$main->number_format(total,2)}}</td>
                           
                          
                 </tr>
@@ -35,8 +37,10 @@
                     </table>
                 </div>
             </div>
+                </div>
+            </div>
             <!-- { !! link_to_route('insert','Add New',null,['class' =>'btn btn-primary']) !!} -->
-            <a href="" class="btn btn-success" data-toggle="modal" data-target="#mymain" id="adds">Add Maintenance Record</a>
+            <a href="" class="btn btn-success" data-toggle="modal" data-target="#mymain" id="adds">Add Record</a>
         </div>
     </div>
  <script type="text/javascript">

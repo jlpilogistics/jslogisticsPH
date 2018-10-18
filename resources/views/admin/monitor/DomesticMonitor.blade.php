@@ -27,87 +27,92 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
 
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td>Cebu port</td>
-                                        <td>
-                                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <button type="button" class="btn btn-blue-grey" data-toggle="modal"
-                                                            data-backdrop="false" data-target="#info">
-                                                        Delivered
-                                                    </button>
-                                                    <!-- Modal -->
-                                                    <div class="modal fade text-left" id="info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel11"
-                                                         aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header bg-info white">
-                                                                    <h4 class="modal-title white" id="myModalLabel11">Update Status to Delivered</h4>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <table>
-                                                                        <tbody>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <p> Client No. : </p>
-                                                                            </td>
-                                                                            <td class="type-info text-right">ISJLP1102</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <p>Shipper : </p>
-                                                                            </td>
-                                                                            <td class="type-info text-right">Pernod</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <p>Origin : </p>
-                                                                            </td>
-                                                                            <td class="type-info text-right">Singapore</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <p>Destination : </p>
-                                                                            </td>
-                                                                            <td class="type-info text-right">Cebu</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <p>Commodity : </p>
-                                                                            </td>
-                                                                            <td class="type-info text-right">BAGS</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <p>Product Name : </p>
-                                                                            </td>
-                                                                            <td class="type-info text-right">Hershel</td>
-                                                                        </tr>
+                                    @foreach($domestic as $dom)
+                                        <?php
+                                        $client = \App\Client::where('id',$dom->client_id)->first();
+                                        $consignee = \App\Consignee::where('id',$dom->client_id)->first();
+                                        ?>
+                                        <tr>
+                                            <td>{{$dom->client_id}}</td>
+                                            <td>{{$dom->goods->goods}}</td>
+                                            <td>{{$dom->destination->deta}}</td>
+                                            <td>{{$dom->destination->dcountry}}</td>
+                                            <td>{{$dom->status_id}}</td>
+                                            <td>
+                                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                                    <div class="form-group">
+                                                        <button type="button" class="btn btn-blue-grey" data-toggle="modal"
+                                                                data-backdrop="false" data-target="#info">
+                                                            Delivered
+                                                        </button>
+                                                        <!-- Modal -->
+                                                        <div class="modal fade text-left" id="info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel11"
+                                                             aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header bg-info white">
+                                                                        <h4 class="modal-title white" id="myModalLabel11">Update Status to Delivered</h4>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <table>
+                                                                            <tbody>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <p> Client No. : </p>
+                                                                                </td>
+                                                                                <td class="type-info text-right">ISJLP1102</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <p>Shipper : </p>
+                                                                                </td>
+                                                                                <td class="type-info text-right">Pernod</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <p>Origin : </p>
+                                                                                </td>
+                                                                                <td class="type-info text-right">Singapore</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <p>Destination : </p>
+                                                                                </td>
+                                                                                <td class="type-info text-right">Cebu</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <p>Commodity : </p>
+                                                                                </td>
+                                                                                <td class="type-info text-right">BAGS</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <p>Product Name : </p>
+                                                                                </td>
+                                                                                <td class="type-info text-right">Hershel</td>
+                                                                            </tr>
 
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Close</button>
-                                                                    <button type="button" class="btn btn-outline-info">Confirm</button>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Close</button>
+                                                                        <button type="button" class="btn btn-outline-info">Confirm</button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                        </td>
-                                    </tr>
-
+                                            </td>
+                                        </tr>
+                                    @endforeach
 
                                     </tbody>
                                     <tfoot>

@@ -12,9 +12,11 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-0">
             <div class="panel panel-default">
-                <div class="panel-heading">Fuelling Records</div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-header"><h2><b>FUEL RECORDS</b></h2></div>
                 <div class="panel-body">
-                    <table class="table">
+                    <table class="table table-bordered ">
 
                         <tr>
                             <th>Fuel Date</th>
@@ -26,7 +28,7 @@
                         </tr>
                           @foreach($getFuel as $fuels)
                         <tr>
-                            <td>{{$fuels->fueldate}}</td>
+                            <td>{{$fuels->fuel_date}}</td>
                             <td>{{$fuels->plate_no}}</td>
                             <td>{{$fuels->driver}}</td>
                             <td>{{$fuels->price}}</td>
@@ -35,6 +37,8 @@
                 </tr>
                       @endforeach
                     </table>
+                </div>
+                </div>
                 </div>
             </div>
             <!-- { !! link_to_route('insert','Add New',null,['class' =>'btn btn-primary']) !!} -->

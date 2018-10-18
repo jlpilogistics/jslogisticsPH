@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Transaction;
 class CategoryController extends Controller
 {
     /**
@@ -19,17 +19,32 @@ class CategoryController extends Controller
 
     public function import()
     {
-        return view('admin.quotation.importTbl');
+
+        $quote = Transaction::whereHas('goods', function ($query){$query->where('shiptypes','=','Import');
+        })->with('destination','origin','quotation','goods', 'consignee')->get();
+
+        return view('admin.quotation.importTbl',compact('quote'));
     }
     public function export()
     {
-        return view('admin.quotation.exportTbl');
+
+        $export = Transaction::whereHas('goods', function ($query){$query->where('shiptypes','=','Export');
+        })->with('destination','origin','quotation','goods', 'consignee')->get();
+
+        return view('admin.quotation.exportTbl',compact('export'));
     }
     public function domestic()
     {
-        return view('admin.quotation.domesticTbl');
-    }
 
+        $get = Transaction::whereHas('goods', function ($query){$query->where('shiptypes','=','Domestic');
+        })->with('destination','origin','quotation','goods', 'consignee')->get();
+
+        return view('admin.quotation.domesticTbl',compact('get'));
+    }
+    public function approved()
+    {
+        return view('admin.quotation.approved');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -37,9 +52,33 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $dispatch = Vehicle::all()->where('avail','=','Available');
+        return view('admin.quotation.Fleet',compact('dispatch'));
     }
+    public function Reportimport()
+    {
 
+        $quote = Transaction::whereHas('goods', function ($query){$query->where('shiptypes','=','Import');
+        })->with('destination','origin','quotation','goods', 'consignee')->get();
+
+        return view('admin.generate.reportImport',compact('quote'));
+    }
+    public function Reportexport()
+    {
+
+        $export = Transaction::whereHas('goods', function ($query){$query->where('shiptypes','=','Export');
+        })->with('destination','origin','quotation','goods', 'consignee')->get();
+
+        return view('admin.generate.reportExport',compact('export'));
+    }
+    public function Reportdomestic()
+    {
+
+        $get = Transaction::whereHas('goods', function ($query){$query->where('shiptypes','=','Domestic');
+        })->with('destination','origin','quotation','goods', 'consignee')->get();
+
+        return view('admin.generate.reportDomestic',compact('get'));
+    }
     /**
      * Store a newly created resource in storage.
      *

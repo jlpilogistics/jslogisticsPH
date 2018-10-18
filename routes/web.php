@@ -36,7 +36,7 @@
     Route::get('/admin/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
     Route::post('/admin/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
     Route::get('/admin/index', 'HomeController@index')->name('admin.index');
-    Route::post('/admin/logout','Auth\AdminLoginController@logout')->name('admin.logout');
+    Route::post('/ad    min/logout','Auth\AdminLoginController@logout')->name('admin.logout');
 
 
     Route::resource('duties', 'tarffRateController');
@@ -69,6 +69,10 @@ Route::get('export', 'Client\HomeController@showExport');
 Route::get('imports', 'CategoryController@import');
 Route::get('exports', 'CategoryController@export');
 Route::get('domestics', 'CategoryController@domestic');
+Route::get('report-imports', 'CategoryController@Reportimport');
+Route::get('report-exports', 'CategoryController@Reportexport');
+Route::get('report-domestics', 'CategoryController@Reportdomestic');
+Route::get('Fleet', 'CategoryController@create');
 Route::get('approved', 'QuotesController@approved');
 Route::get('monitor-export', 'monitorController@index');
 Route::get('monitor-import', 'monitorController@importMonitor');
@@ -77,10 +81,10 @@ Route::get('client-lists', 'BillingController@index');
 Route::get('profile', 'BillingController@clientprofile');
 Route::get('invoice', 'BillingController@create');
 Route::get('search', 'BillingController@search');
-Route::resource('/fuel', 'FuelMaintenanceController@addFuel');
-Route::resource('/maintenance', 'FuelMaintenanceController@addMain');
-Route::get('/maintenance', 'FuelMaintenanceController@showMain');
-Route::get('/fuel', 'FuelMaintenanceController@showFuel');
+Route::get('/fuel', 'FuelMaintenanceController@index');
+Route::post('/fuel', 'FuelMaintenanceController@addFuel');
+Route::post('/maintenance', 'FuelMaintenanceController@addMain');
+Route::get('/maintenance', 'FuelMaintenanceController@main');
 Route::get('/haulage-import', 'HaulageController@index');
 Route::get('/haulage-export', 'HaulageController@haulageExport');
 Route::get('/sched-import', 'HaulageController@show');
@@ -90,8 +94,19 @@ Route::post('quote/summary', 'Client\QuotesController@summary');
 Route::get('/users/login', 'Auth\LoginController@showLoginForm')->name('user.login');
 Route::post('/users/login', 'Auth\LoginController@login')->name('user.login.submit');
 Route::get('/users/logout','Auth\LoginController@userLogout')->name('user.logout');
+Route::get('/shipment/show/{id}/{transact}', 'QuotesController@shipment')->name('shipment.index');
+Route::get('driver/get/{id}', 'HaulageController@getDriver');
+Route::post('haulage/assign/{id}/{shiptypes}', 'HaulageController@assign')->name('haulage.assign');
 
 
+Route::get('client-lists', 'BillingController@index');
+Route::get('export-lists', 'BillingController@billExport');
+Route::get('generate-import/{id}', 'BillingController@clientprofile')->name('import-gen');
+Route::post('generate', 'BillingController@generate');
+Route::get('Reports', 'BillingController@generateReport');
+Route::get('generate-export', 'BillingController@clientprofileExport');
+Route::get('generate-domestic', 'BillingController@clientprofileDomestic');
+Route::get('taxes', 'BillingController@taxes');
 
 Route::get('/products', 'Client\ProductController@index');
 
@@ -120,6 +135,8 @@ Route::post('/image-upload/{id}','Client\HomeController@imageUpload');
 Route::get('/charges/Export/{id}/{mode}', 'QuotesController@findcharge');
 Route::get('/charges/Import/{id}/{mode}', 'QuotesController@findImport');
 Route::get('/send/sms/notication/{id}', 'QuotesController@sendSms')->name('quotations.send-sms');
+Route::post('/status/update', 'HaulageController@status');
+Route::get('/inventory/goods', 'MonitorController@viewInventory');
 
 
 

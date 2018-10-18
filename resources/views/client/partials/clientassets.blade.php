@@ -82,7 +82,7 @@
         }
 
 
-      
+
         input[type="text"][disabled] {
             color: red;
         }
@@ -207,23 +207,34 @@
                     var weight = row.find('.weight').val();
 
                     var charge = quan * weight;
+
                     row.find('.charge').val("");
                     row.find('.charge').val(charge);
 
                     if (dim == "cm"){
+                        row.find('.cbf').val(0);
                         var dimCm = ((length * width * height)*quan)/6000;
                         dimCm = dimCm.toFixed(2);
                         row.find('.volumetric').val("");
                         row.find('.volumetric').val(dimCm);
+                        var cbm = ((length*0.01) * (width*0.01) * (height*0.01))*quan;
+                        row.find('.cbm').val("");
+                        row.find('.cbm').val(cbm);
+                        total();
                     }
                     if (dim == "inch"){
+                        row.find('.cbm').val(0);
                         var dimInch = ((length * width * height)*quan)/366;
                         dimInch = dimInch.toFixed(2);
                         row.find('.volumetric').val("");
                         row.find('.volumetric').val(dimInch);
+                        var cbf = ((length*width*height)/1728)*quan;
+                        row.find('.cbf').val("");
+                        row.find('.cbf').val(cbf);
+                        total();
                     }
                     // row.find('.charge').val(charge);
-                    total();
+
 
                 });
             });
@@ -232,6 +243,8 @@
         function total(){
             var total = 0;
             var tot = 0;
+            var totcbm = 0;
+            var totcbf = 0;
             $('.charge').each(function (i,e) {
                 var totalRow = $(this).val()-0;
                 total = total + totalRow;
@@ -240,12 +253,21 @@
                 var totalVol = $(this).val()-0;
                 tot = tot + totalVol;
             });
+            $('.cbm').each(function (i,e) {
+                var totalcbm = $(this).val()-0;
+                totcbm = totcbm + totalcbm;
+            });
+            $('.cbf').each(function (i,e) {
+                var totalcbf = $(this).val()-0;
+                totcbf = totcbf + totalcbf;
+            });
             var totalSub = total;
             var totalVolume = tot;
+            var totalCubic = totcbm;
+            var totalCubicft = totcbf/35.31;
             $('.chargee').val(totalSub);
             $('.volumetrics').val(totalVolume);
-
-
+            $('.cubic').val(totalCubic + totalCubicft);
         }
     </script>
 
@@ -284,79 +306,79 @@
         });
     </script>
     {{--<script>--}}
-        {{--// This example displays an address form, using the autocomplete feature--}}
-        {{--// of the Google Places API to help users fill in the information.--}}
+    {{--// This example displays an address form, using the autocomplete feature--}}
+    {{--// of the Google Places API to help users fill in the information.--}}
 
-        {{--// This example requires the Places library. Include the libraries=places--}}
-        {{--// parameter when you first load the API. For example:--}}
-        {{--// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">--}}
+    {{--// This example requires the Places library. Include the libraries=places--}}
+    {{--// parameter when you first load the API. For example:--}}
+    {{--// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">--}}
 
-        {{--var placeSearch, autocomplete;--}}
-        {{--var componentForm = {--}}
-            {{--street_number: 'short_name',--}}
-            {{--route: 'long_name',--}}
-            {{--locality: 'long_name',--}}
-            {{--administrative_area_level_1: 'short_name',--}}
-            {{--country: 'long_name',--}}
-            {{--postal_code: 'short_name'--}}
-        {{--};--}}
+    {{--var placeSearch, autocomplete;--}}
+    {{--var componentForm = {--}}
+    {{--street_number: 'short_name',--}}
+    {{--route: 'long_name',--}}
+    {{--locality: 'long_name',--}}
+    {{--administrative_area_level_1: 'short_name',--}}
+    {{--country: 'long_name',--}}
+    {{--postal_code: 'short_name'--}}
+    {{--};--}}
 
-        {{--function initAutocomplete() {--}}
-            {{--// Create the autocomplete object, restricting the search to geographical--}}
-            {{--// location types.--}}
-            {{--autocomplete = new google.maps.places.Autocomplete(--}}
-                {{--/** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),--}}
-                {{--{types: ['geocode']});--}}
+    {{--function initAutocomplete() {--}}
+    {{--// Create the autocomplete object, restricting the search to geographical--}}
+    {{--// location types.--}}
+    {{--autocomplete = new google.maps.places.Autocomplete(--}}
+    {{--/** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),--}}
+    {{--{types: ['geocode']});--}}
 
-            {{--// When the user selects an address from the dropdown, populate the address--}}
-            {{--// fields in the form.--}}
-            {{--autocomplete.addListener('place_changed', fillInAddress);--}}
-        {{--}--}}
+    {{--// When the user selects an address from the dropdown, populate the address--}}
+    {{--// fields in the form.--}}
+    {{--autocomplete.addListener('place_changed', fillInAddress);--}}
+    {{--}--}}
 
-        {{--function fillInAddress() {--}}
-            {{--// Get the place details from the autocomplete object.--}}
-            {{--var place = autocomplete.getPlace();--}}
+    {{--function fillInAddress() {--}}
+    {{--// Get the place details from the autocomplete object.--}}
+    {{--var place = autocomplete.getPlace();--}}
 
-            {{--for (var component in componentForm) {--}}
-                {{--document.getElementById(component).value = '';--}}
-                {{--document.getElementById(component).disabled = false;--}}
-            {{--}--}}
+    {{--for (var component in componentForm) {--}}
+    {{--document.getElementById(component).value = '';--}}
+    {{--document.getElementById(component).disabled = false;--}}
+    {{--}--}}
 
-            {{--// Get each component of the address from the place details--}}
-            {{--// and fill the corresponding field on the form.--}}
-            {{--for (var i = 0; i < place.address_components.length; i++) {--}}
-                {{--var addressType = place.address_components[i].types[0];--}}
-                {{--if (componentForm[addressType]) {--}}
-                    {{--var val = place.address_components[i][componentForm[addressType]];--}}
-                    {{--document.getElementById(addressType).value = val;--}}
-                {{--}--}}
-            {{--}--}}
-        {{--}--}}
+    {{--// Get each component of the address from the place details--}}
+    {{--// and fill the corresponding field on the form.--}}
+    {{--for (var i = 0; i < place.address_components.length; i++) {--}}
+    {{--var addressType = place.address_components[i].types[0];--}}
+    {{--if (componentForm[addressType]) {--}}
+    {{--var val = place.address_components[i][componentForm[addressType]];--}}
+    {{--document.getElementById(addressType).value = val;--}}
+    {{--}--}}
+    {{--}--}}
+    {{--}--}}
 
-        {{--// Bias the autocomplete object to the user's geographical location,--}}
-        {{--// as supplied by the browser's 'navigator.geolocation' object.--}}
-        {{--function geolocate() {--}}
-            {{--if (navigator.geolocation) {--}}
-                {{--navigator.geolocation.getCurrentPosition(function(position) {--}}
-                    {{--var geolocation = {--}}
-                        {{--lat: position.coords.latitude,--}}
-                        {{--lng: position.coords.longitude--}}
-                    {{--};--}}
-                    {{--var circle = new google.maps.Circle({--}}
-                        {{--center: geolocation,--}}
-                        {{--radius: position.coords.accuracy--}}
-                    {{--});--}}
-                    {{--autocomplete.setBounds(circle.getBounds());--}}
-                {{--});--}}
-            {{--}--}}
-        {{--}--}}
+    {{--// Bias the autocomplete object to the user's geographical location,--}}
+    {{--// as supplied by the browser's 'navigator.geolocation' object.--}}
+    {{--function geolocate() {--}}
+    {{--if (navigator.geolocation) {--}}
+    {{--navigator.geolocation.getCurrentPosition(function(position) {--}}
+    {{--var geolocation = {--}}
+    {{--lat: position.coords.latitude,--}}
+    {{--lng: position.coords.longitude--}}
+    {{--};--}}
+    {{--var circle = new google.maps.Circle({--}}
+    {{--center: geolocation,--}}
+    {{--radius: position.coords.accuracy--}}
+    {{--});--}}
+    {{--autocomplete.setBounds(circle.getBounds());--}}
+    {{--});--}}
+    {{--}--}}
+    {{--}--}}
     {{--</script>--}}
     {{--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41YlDT32uBPo5SPSrtcoDvv1VXX6_4Rw&libraries=places&callback=initAutocomplete"--}}
-            {{--async defer></script>--}}
+    {{--async defer></script>--}}
     {{--<script>--}}
-        {{--var placesAutocomplete = places({--}}
-            {{--container: document.querySelector('#address-input')--}}
-        {{--});--}}
+    {{--var placesAutocomplete = places({--}}
+    {{--container: document.querySelector('#address-input')--}}
+    {{--});--}}
     {{--</script>--}}
     <script>
         (function() {
@@ -373,9 +395,9 @@
                 document.querySelector('#country').value = e.suggestion.country || '';
                 document.querySelector('#city').value = e.suggestion.city || '';
                 document.querySelector('#zip').value = e.suggestion.postcode || '';
-                document.querySelector('#state').value = e.suggestion.administrative || '';
             });
         })();
+
         (function() {
             var placesAutocomplete = places({
                 container: document.querySelector('#searchDest'),

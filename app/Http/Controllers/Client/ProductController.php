@@ -47,7 +47,7 @@ class ProductController extends Controller
      */
     public function createStep1(Request $request)
     {
-        $type = Shiptype::all()->pluck('name','name');
+        $type = Shiptype::all()->pluck('name','name')->prepend('Please Select','');
         $origin = $request->session()->get('origin');
         $dest = $request->session()->get('dest');
         $quote = $request->session()->get('quote');
@@ -67,6 +67,22 @@ class ProductController extends Controller
         $packages = Package::all()->pluck('type','type');
 
         return view('client.quote',compact('origin', 'quote', 'dest','goods', 'type', 'commodity','terms','quote', 'packages','currency','clients'));
+    }
+    public function createStep2(Request $request)
+    {
+        $request->session()->forget('quote');
+        $request->session()->forget('origin');
+        $request->session()->forget('dest');
+        $request->session()->forget('goods');
+        if($request->session()->get('quote1')){
+            for($x = 1 ; $x<20; $x++){
+                if($request->session()->get('quote'.$x)){
+                    $request->session()->forget('quote'.$x);
+                }
+            }
+        }
+
+        return redirect('/client-request');
     }
 
     /**
@@ -105,6 +121,7 @@ class ProductController extends Controller
             'avolume' => 'required',
             'currency' => 'required',
             'insurance' => 'required',
+            'acbm' => 'required',
         ]);
 
         if(empty($request->session()->get('origin'))) {
@@ -169,7 +186,6 @@ class ProductController extends Controller
         $goods = $request->session()->get('goods');
         return view('client.quote-step4',compact('quote', 'origin', 'dest', 'goods'));
     }
-
     /**
      * Store product
      *

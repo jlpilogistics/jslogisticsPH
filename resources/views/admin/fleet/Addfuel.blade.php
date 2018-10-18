@@ -19,7 +19,7 @@
           <h4 class="modal-title">Modal Header</h4>
         </div>
         <div class="modal-body">
-          <form action="Addfuel" method="post" id="frmFuel">
+          <form action="/fuel" method="post" id="frmFuel">
       <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="col-lg-4 col-sm-4">
           <div class="form-group">  

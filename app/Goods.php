@@ -21,6 +21,7 @@ class Goods extends Model
         'mode',
         'aweight',
         'avolume',
+        'acbm'
     ];
     public function transaction(){
         return $this->belongsTo('App\Transaction');

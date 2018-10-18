@@ -135,12 +135,12 @@
 
             <ul class="nav nav-sidebar list-group">
                 <li class="list-group-item">
-
-                    <a href="{{route('account',$clients->id)}}">
-                        <i class="ft-user-check"></i>
-                        <p> My Profile</p>
+                    <a href="/client-request/">
+                        <i class="ft-edit-3"></i>
+                        <p>Request Quotation</p>
                     </a>
                 </li>
+
                 <li class="list-group-item" >
                     <a href="{{route('status', $clients->id)}}">
                         <i class="ft-monitor"></i>
@@ -153,13 +153,14 @@
                         <p>Received Billing</p>
                     </a>
                 </li>
+
                 <li class="list-group-item">
-                    <a href="/client-request/">
-                        <i class="ft-edit-3"></i>
-                        <p>Request Quotation</p>
+
+                    <a href="{{route('account',$clients->id)}}">
+                        <i class="ft-user-check"></i>
+                        <p> My Profile</p>
                     </a>
                 </li>
-
             </ul>
         </div>
     </div>
@@ -184,6 +185,7 @@
                                 </div>
                             </div>
                         </div>
+                        @if($latest->status_id == 2)
                         <table class="table table-striped tableW-hover">
                             <thead>
                             <tr>
@@ -197,23 +199,51 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($request as $data)
-                                <tr>
-                                    @foreach($data->invoices as $invoice)
-                                        <td style="font-size: 14px;">{{$getInv = $invoice->reference}}</td>
-                                    @endforeach
-                                    <td>{{$data->status->name}}</td>
-                                    @foreach($data->invoices as $invoice)
-                                        <td style="font-size: 14px;">{{$invoice->created_at->toFormattedDateString()}}</td>
-                                    @endforeach
-                                    <td  style="font-size: 14px;">{{$data->goods->mode}}</td>
-                                    <td style="font-size: 14px;">{{$data->origin->city}}, {{$data->origin->country}}</td>
-                                    <td style="font-size: 14px;">{{$data->destination->dcity}}, {{$data->destination->dcountry}}</td>
-                                    <td style="font-size: 14px;"><button type="button" onclick="window.location='{{ route('confirm.quote', [$data->transact, $getInv ,$data->client_id]) }}'" class="btn btn-success mr-1 mb-1">{{{ ($data->status_id != 2) ? 'View shipment' : 'Confirm shipment' }}}</button></td>
-                                </tr>
-                            @endforeach
+
+                                @foreach($request as $data)
+                                    <tr>
+                                        @foreach($data->invoices as $invoice)
+                                            <td style="font-size: 14px;">{{$getInv = $invoice->reference}}</td>
+                                        @endforeach
+                                        <td>{{$data->status->name}}</td>
+                                        @foreach($data->invoices as $invoice)
+                                            <td style="font-size: 14px;">{{$invoice->created_at->toFormattedDateString()}}</td>
+                                        @endforeach
+                                        <td  style="font-size: 14px;">{{$data->goods->mode}}</td>
+                                        <td style="font-size: 14px;">{{$data->origin->city}}, {{$data->origin->country}}</td>
+                                        <td style="font-size: 14px;">{{$data->destination->dcity}}, {{$data->destination->dcountry}}</td>
+                                        <td style="font-size: 14px;"><button type="button" onclick="window.location='{{ route('confirm.quote', [$data->transact, $getInv ,$data->client_id]) }}'" class="btn btn-success mr-1 mb-1">{{{ ($data->status_id != 2) ? 'View shipment' : 'Confirm shipment' }}}</button></td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
+                            @elseif($latest->status_id > 2)
+                            <table class="table table-striped tableW-hover">
+                                <thead>
+                                <tr>
+                                    <th style="font-size: 14px;">Date</th>
+                                    <th style="font-size: 14px;">Status</th>
+                                    <th style="font-size: 14px;">Location</th>
+                                    <th style="font-size: 14px;">Remarks</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                @foreach($monitor as $data)
+                                    <tr>
+                                       <td>{{$data->created_at}}</td>
+                                        <?php
+                                        $stats = \App\Status::where('id', $data->status)->first()
+                                        ?>
+                                        <td>{{$stats->name}}</td>
+                                        <td>{{$data->location}}</td>
+                                        <td>{{$data->remarks}}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                            @endif
                     </div>
                     </div>
                     @else

@@ -73,6 +73,8 @@ class QuoteSent extends Notification
 
 
 
+
+
     }
 
     /**

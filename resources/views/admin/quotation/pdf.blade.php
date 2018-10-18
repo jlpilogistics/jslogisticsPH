@@ -49,7 +49,8 @@
                 <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
                     <form class="form form-horizontal" method="post" action="{{route('quotations.send-quote')}}">
                         {{csrf_field()}}
-                        <input type="submit" class="btn btn-primary" value=" Send to Client ">
+
+                        <button type="submit" class="btn btn-lg btn-block btn-outline-success mb-2">Send to Client</button>
                     </form>
                 </div>
 
@@ -129,7 +130,12 @@
                                         @else
                                             <td class="text-right" style="padding: 0px 0px;" ></td>
                                         @endif
+                                        @if($item['amount'] == 0)
+                                            <td class="text-right" style="padding: 0px 40px 0px 0px;">At Cost</td>
+                                        @else
                                         <td class="text-right" style="padding: 0px 40px 0px 0px;">{{number_format($item['amount'], 2, '.', ',')}}</td>
+
+                                            @endif
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -182,7 +188,7 @@
                                     </tr>
                                 @endforeach
                             </table>
-                            <table class="body" cellpadding="0" cellspacing="0" style="width: 250px; float: right">
+                            <table class="body " cellpadding="0" cellspacing="0" style="width: 250px; float: right">
                                 <tr>
                                     <td width="30%" ></td>
                                     <td width="70%" >Total Amount</td>

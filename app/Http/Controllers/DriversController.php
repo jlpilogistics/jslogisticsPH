@@ -49,7 +49,7 @@ class DriversController extends Controller
         $user = new Driver;
         if ($file = $request->file('image')) {
             $file->move(public_path(). '/', $file->getClientOriginalName());
-            $user->driver_ref = $request->driver_id;
+            $user->driver_id = $request->driver_id;
             $user->fname= $request->driver_name;
             $user->address= $request->driver_address;
             $user->dateofbirth= $request->driver_bday;

@@ -104,12 +104,12 @@
 
             <ul class="nav nav-sidebar list-group">
                 <li class="list-group-item">
-
-                    <a href="{{url('account')}}">
-                        <i class="ft-user-check"></i>
-                        <p> My Profile</p>
+                    <a href="/client-request/">
+                        <i class="ft-edit-3"></i>
+                        <p>Request Quotation</p>
                     </a>
                 </li>
+
                 <li class="list-group-item" >
                     <a href="{{url('status')}}">
                         <i class="ft-monitor"></i>
@@ -123,9 +123,10 @@
                     </a>
                 </li>
                 <li class="list-group-item">
-                    <a href="/client-request/">
-                        <i class="ft-edit-3"></i>
-                        <p>Request Quotation</p>
+
+                    <a href="{{url('account')}}">
+                        <i class="ft-user-check"></i>
+                        <p> My Profile</p>
                     </a>
                 </li>
 

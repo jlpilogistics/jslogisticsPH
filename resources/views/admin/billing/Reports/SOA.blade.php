@@ -28,7 +28,6 @@
         }
 
 
-
     </style>
 </head>
     <div class="modal fade" id="soa" role="dialog">

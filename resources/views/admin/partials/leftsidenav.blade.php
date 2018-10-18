@@ -28,6 +28,17 @@
                         </li>
                         <li><a class="menu-item" href="/duties" data-i18n="nav.page_layouts.2_columns">Tariff Rates</a>
                         </li>
+                        <li><a class="menu-item" href="#" data-i18n="nav.page_layouts.3_columns.main">Generate Reports</a>
+                            <ul class="menu-content">
+                                <li><a class="menu-item" href="{{url('report-imports')}}" data-i18n="nav.page_layouts.3_columns.left_sidebar">Import</a>
+                                </li>
+                                <li><a class="menu-item" href="{{url('report-exports')}}"
+                                       data-i18n="nav.page_layouts.3_columns.left_sticky_sidebar">Export</a>
+                                </li>
+                                <li><a class="menu-item" href="{{url('report-domestics')}}" data-i18n="nav.page_layouts.3_columns.right_sidebar">Domestic</a>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="navigation-divider"></li>
 
                     </ul>
@@ -76,7 +87,7 @@
                                 <li><a class="menu-item" href="/drivers"
                                        data-i18n="nav.page_layouts.3_columns.left_sticky_sidebar">Driver</a>
                                 </li>
-                                <li><a class="menu-item" href="/Maintenance" data-i18n="nav.page_layouts.3_columns.right_sidebar">Maintenance</a>
+                                <li><a class="menu-item" href="/maintenance" data-i18n="nav.page_layouts.3_columns.right_sidebar">Maintenance</a>
                                 </li>
                                 <li><a class="menu-item" href="/fuel" data-i18n="nav.page_layouts.3_columns.right_sidebar">Fuel</a>
                                 </li>
@@ -117,9 +128,16 @@
                 <li class=" navigation-header">
                     <span data-i18n="nav.category.layouts">Billing  Management</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Layouts"></i>
                 </li>
-                <li class=" nav-item"><a href="/client-lists"><i class="la la-book"></i><span class="menu-title" data-i18n="nav.page_layouts.main">Customers</span></a>
-                </li>
-            @endcan
-        </ul>
+                <li class=" nav-item"><a href=""><i class="la la-book"></i><span class="menu-title" data-i18n="nav.page_layouts.main">Customers</span></a>
+                    <ul class="menu-content">
+                        <li><a class="menu-item" href="{{url('client-lists')}}" data-i18n="nav.page_layouts.3_columns.left_sidebar">Import</a>
+                        </li>
+                        <li><a class="menu-item" href="{{url('export-lists')}}"
+                               data-i18n="nav.page_layouts.3_columns.left_sticky_sidebar">Export</a>
+                        </li>
+                        <li><a class="menu-item" href="{{url('domestics')}}" data-i18n="nav.page_layouts.3_columns.right_sidebar">Domestic</a>
+                        </li>
+                        @endcan
+                    </ul>
     </div>
 </div>

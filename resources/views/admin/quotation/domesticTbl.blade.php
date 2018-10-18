@@ -11,7 +11,9 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
+                            <div id="printablediv">
                             <div class="card-header">
+
                                 <h4 class="card-title">Domestics Shipment Table</h4>
                             </div>
                             <div class="card-content collapse show">
@@ -20,47 +22,42 @@
                                         <thead class="bg-green bg-lighten-4">
                                         <tr>
                                             <th>Date Requested</th>
-                                            <th>Client</th>
-                                            <th>Quantity</th>
-                                            <th>Status</th>
+                                            <th>Shipper Id</th>
+                                            <th>Shipper Name </th>
+                                            <th>Origin</th>
+                                            <th>Consignee Name</th>
+                                            <th>Destination</th>
+                                            <th>Commodity</th>
+
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tokyo</td>
-                                            <td>63</td>
-                                            <td>2011/07/25</td>
-                                            <td>$170,750</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ashton Cox</td>
-                                            <td>Junior Technical Author</td>
-                                            <td>2009/01/12</td>
-                                            <td>$86,000</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>Cedric Kelly</td>
-                                            <td>Senior Javascript Developer</td>
-                                            <td>2012/03/29</td>
-                                            <td>$433,060</td>
-
-                                        </tr>
-
+                                        @foreach( $get as $ex)
+                                            <?php
+                                            $client = \App\Client::where('id', $ex->client_id)->first();
+                                            $consignee = \App\Consignee::where('id', $ex->consignee_id)->first();
+                                            ?>
+                                            <tr>
+                                                <td>{{$ex->updated_at}}</td>
+                                                <td>{{$ex->transact}}</td>
+                                                <td>{{$client->firstName}}</td>
+                                                <td>{{$ex->origin->port}}</td>
+                                                <td>{{$ex->consignee_id}}</td>
+                                                <td>{{$ex->destination->dport}}</td>
+                                                <td>{{$ex->goods->goods}}</td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                         <tfoot>
                                         <tr>
                                             <th>Date Requested</th>
-                                            <th>Client</th>
-                                            <th>Quantity</th>
-                                            <th>Status</th>
+                                            <th>Shipper Id</th>
+                                            <th>Shipper Name </th>
+                                            <th>Origin</th>
+                                            <th>Consignee Name</th>
+                                            <th>Destination</th>
+                                            <th>Commodity</th>
+
                                         </tr>
                                         </tfoot>
                                     </table>
@@ -72,4 +69,16 @@
             </section>
         </div>
     </section>
+    </div>
+</html>
+<script language="javascript">
+    function printContent(el){
+        var restorepage = $('body').html();
+        var printcontent = $('#' + el).clone();
+        $('body').empty().html(printcontent);
+        window.print();
+        $('body').html(restorepage);
+    }
+
+</script>
 @endsection
